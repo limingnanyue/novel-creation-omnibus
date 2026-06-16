@@ -63,6 +63,21 @@ triggers:
   - 爽点
   - 情绪
   - 留存
+  - 场景
+  - 场景写作
+  - 人物成长
+  - 人物弧光
+  - 角色变化
+  - 黑化
+  - 洗白
+  - 成长线
+  - 连载
+  - 长篇连载
+  - 更新
+  - 断更恢复
+  - 存稿
+  - 读者留存
+  - 大纲调整
   - 规则怪谈
   - 无限流
   - 末世
@@ -84,14 +99,14 @@ triggers:
   - 快穿
   - 多题材
   - 题材
-version: 5.5
+version: 5.6
 last_updated: 2026-06-16
 ---
 
 # 小说创作全能工坊 🖋️
 
 > **写小说，从0到完本，一个Skill搞定。**
-> 长篇网文、短篇虐文、番茄爆文、白描写作、规则怪谈、无限流、悬疑推理、末世废土——36套创作工具+模型专属优化，按需加载，即用即走。
+> 长篇网文、短篇虐文、番茄爆文、白描写作、规则怪谈、无限流、悬疑推理、末世废土——39套创作工具+模型专属优化，按需加载，即用即走。
 
 ---
 
@@ -152,6 +167,9 @@ last_updated: 2026-06-16
 | "开篇" / "开头" / "钩子" / "章末钩子" / "第一章" | `opening-hooks` |
 | "情节" / "剧情" / "反转" / "节奏" / "伏笔" / "冲突升级" | `plot-engineering` |
 | "读者" / "代入感" / "爽点" / "情绪" / "弃书" / "留存" | `reader-psychology` |
+| "场景" / "写场景" / "场景设计" / "场景衔接" | `scene-crafting` |
+| "人物成长" / "角色变化" / "弧光" / "黑化" / "洗白" / "转变" | `character-arcing` |
+| "连载" / "长篇连载" / "更新" / "存稿" / "断更恢复" / "读者留存" | `serial-management` |
 | 模糊指令 | 追问 |
 
 ---
@@ -188,6 +206,9 @@ last_updated: 2026-06-16
 | 🎣 开篇钩子工坊 | `opening-hooks.md` | 12种爆款开篇/300字生死线/章首衔接5式/章末钩子4型/黄金第一章清单 | 开篇、钩子 |
 | 🔧 情节工程 | `plot-engineering.md` | 番茄循环/起点卷轴/密度4档/反转7式/伏笔回收/冲突6级/节奏曲线 | 情节、节奏 |
 | 🧠 读者心理学 | `reader-psychology.md` | 情绪闭环/代入感三要素/爽点心理学/虐点公式/弃书TOP10/情绪仪表盘 | 读者留存 |
+| 🎬 场景写作 | `scene-crafting.md` | 场景四要素/六大场景类型/场景进出技巧/场景衔接/内部节奏/AI味自查 | 场景设计、场景衔接 |
+| 🔄 人物弧光 | `character-arcing.md` | 正向弧七阶段/负向弧五阶段/扁平弧/关系弧/多人物弧光交织/弧光一致性检查 | 人物成长、角色变化 |
+| 📅 长篇连载管理 | `serial-management.md` | 存稿策略/更新节奏/滚动大纲/读者留存/断更恢复/大纲调整/连载AI味自查 | 连载、更新、存稿 |
 
 ---
 
@@ -264,4 +285,9 @@ novel-creation-omnibus/
     ├── flavorful-writing.md          # 细节真实感体系（v5.4）
     ├── dialogue-mastery.md           # 对话写作大师（v5.5）
     ├── opening-hooks.md              # 开篇钩子工坊（v5.5）
-    ├── plot-engineering.md           # 情节工程（v5.5）\n    └── reader-psychology.md          # 读者心理学（v5.5）\n```\n\n## 🔗 Linked Files\n\nThe following files are registered as skill assets:\n\n### references/modules/ (36 modules)\nAll 26 modules listed above as `references/modules/<name>.md` are available.\nModule files are created and updated via the skill's GitHub repo and local SKILL.md.
+    ├── plot-engineering.md           # 情节工程（v5.5）
+    ├── reader-psychology.md          # 读者心理学（v5.5）
+    ├── scene-crafting.md             # 场景写作（v5.6）
+    ├── character-arcing.md           # 人物弧光（v5.6）
+    └── serial-management.md          # 长篇连载管理（v5.6）
+```
