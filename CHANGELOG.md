@@ -1,5 +1,22 @@
 # Changelog
 
+## [v5.8] — 2026-06-16
+
+### Added
+- Emotional Climax module: 4 climax types (fiery/tearful/sweet/shocking),
+  formula-driven 7-step structures for each type, genre-climax matching table,
+  long-novel climax placement strategy (30-chapter distribution), post-climax buffer design
+- Idea Generator module: 8 idea generation methods (cross-domain/role reversal/
+  extreme hypothetical/rule-breaking/time-shift/perspective shift/scale push/
+  rule extrapolation), character formula, 30 plot templates, worldbuilding formula,
+  idea evaluation checklist, idea warehouse management system
+- 12+ new trigger words: 高潮, 燃, 催泪, 甜, 震惊, 灵感, 脑洞, 卡文, etc.
+
+### Changed
+- SKILL.md → v5.8: 42 modules (was 40), +2 routing entries, updated module index
+- Description updated to v5.8 with emotional-climax and idea-generator
+- Version bumped to 5.8
+
 ## [v5.7] — 2026-06-16
 
 ### Added
