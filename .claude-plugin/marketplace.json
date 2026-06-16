@@ -1,0 +1,12 @@
+{
+  "schema_version": "v1",
+  "name": "novel-creation-omnibus",
+  "description": "🖋️ 小说创作全能工坊 —— 从网文长篇到短篇故事，从番茄爆文到白描克制，从发刀虐心到通感痛觉，一站式搞定。25套创作工具，按需加载。",
+  "skills": [
+    {
+      "name": "novel-creation-omnibus",
+      "path": "SKILL.md",
+      "description": "小说创作全能工坊，含长篇写作、短篇故事、番茄爆文、白描克制、通感痛觉等19个模块"
+    }
+  ]
+}
