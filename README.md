@@ -1,13 +1,13 @@
 <div align="center">
 
-# 🖋️ 小说创作全能工坊 v5.6
+# 🖋️ 小说创作全能工坊 v5.7
 
 > **写小说，从0到完本，一个Skill搞定。**
-> 长篇网文 · 短篇虐文 · 番茄爆文 · 白描克制 · 通感痛觉 · 规则怪谈 · 对话大师 · 读者心理 · 39套工具
+> 长篇网文 · 短篇虐文 · 番茄爆文 · 白描克制 · 通感痛觉 · 规则怪谈 · 对话大师 · 读者心理 · 平台适配 · 40套工具
 
-[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-5.6-blueviolet)](SKILL.md)
+[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-5.7-blueviolet)](SKILL.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Module Count](https://img.shields.io/badge/Modules-39-brightgreen)](references/modules/)
+[![Module Count](https://img.shields.io/badge/Modules-40-brightgreen)](references/modules/)
 [![AI 去味](https://img.shields.io/badge/AI%E5%8E%BB%E5%91%B3-6%E9%97%A8%E7%A6%81%E2%9C%A8-orange)](references/modules/anti-ai-polish.md)
 
 </div>
@@ -28,6 +28,7 @@
 - **让文字更有味道**：五感缺失检测+口语化六法+小动作体系+食物描写
 - **设计人物弧光**：正向弧7阶段+负向弧5阶段+关系弧+多人物弧交织
 - **管理长篇连载**：存稿策略+滚动大纲+断更恢复4步+读者留存策略
+- **适配平台规则**：起点/飞卢/晋江三大平台写作标准+签约门槛+跨平台改编
 - **理解读者心理**：情绪闭环+代入感三要素+弃书TOP10对策+情绪仪表盘
 
 ## 它会交付什么？
@@ -134,6 +135,7 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 
 | 版本 | 亮点 |
 |:-----|:------|
+| **v5.7** | 🆕 平台规则(起点/飞卢/晋江) + 字数统计工具 |
 | **v5.6** | 🆕 场景写作 + 人物弧光 + 长篇连载管理 |
 | **v5.5** | 🆕 对话大师 + 开篇钩子 + 情节工程 + 读者心理 |
 | **v5.4** | 🆕 模型优化 + 新题材 + 风味写作 + AI味模型感知 |
