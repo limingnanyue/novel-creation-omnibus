@@ -1,5 +1,20 @@
 # Changelog
 
+## [v5.7] — 2026-06-16
+
+### Added
+- Platform Rules module: 起点/飞卢/晋江 writing rules covering reader demographics,
+  genre preferences, first 3 chapters, contract standards, writing style, 
+  cross-platform adaptation guide, platform selection decision tree
+- Word count tool (scripts/word-count-tool.py): per-chapter stats, batch directory 
+  analysis, dialog-to-narrative ratio, AI-smell keyword density, chapter length 
+  distribution, estimated reading time, chapter comparison, writing quality grading
+
+### Changed
+- SKILL.md → v5.7: 40 modules (was 39), +platform-rules routing
+- README → v5.7: added platform rules section
+- Version bumped to 5.7
+
 ## [v5.6] — 2026-06-16
 
 ### Added
