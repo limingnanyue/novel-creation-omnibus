@@ -1,5 +1,26 @@
 # Changelog
 
+## [v5.5] — 2026-06-16
+
+### Added
+- Dialogue Mastery module: 8 dialogue functions, 4-speed pacing, 3-level subtext,
+  5-voice dimensions, action interleaving, group conversation management,
+  AI dialogue detection & correction, scene-specific (arguments, confessions, farewells)
+- Opening Hooks module: 12 blockbuster opening patterns, 300-word survival checklist,
+  5 chapter-bridge techniques, 4 cliffhanger types, full Chapter 1 audit checklist
+- Plot Engineering module: Super-short loop (Tomato) / scroll (Qidian) structures,
+  4 density tiers, 7 reversal types, foreshadowing management, 6-level conflict escalation,
+  tension-relaxation rhythm curve
+- Reader Psychology module: Emotional closure mechanism, 3-factor immersion,
+  gratification psychology, angst formulas, TOP10 dropout causes, reader mood dashboard,
+  genre-specific psychological profiles
+- 20+ new trigger words for dialogue, hooks, plot, and reader psychology
+- All 4 modules are model-aware and genre-aware
+
+### Changed
+- SKILL.md → v5.5: 36 modules (was 32), 12 new routing entries, updated index table
+- Version bumped to 5.5
+
 ## [v5.4] — 2026-06-16
 
 ### Added
