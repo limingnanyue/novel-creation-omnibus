@@ -1,5 +1,23 @@
 # Changelog
 
+## [v5.6] — 2026-06-16
+
+### Added
+- Scene Crafting module: 4-scene elements, 6 scene types (action/dialogue/emotional/
+  suspense/transition/reveal), scene entry/exit techniques, scene bridging,
+  internal scene rhythm, scene writing AI-smell checklist
+- Character Arcing module: 3 arc types (positive/negative/flat), 7-stage positive arc,
+  5-stage negative arc, relationship arcs, multi-character arc weaving,
+  arc consistency checklist
+- Serial Management module: draft strategy, update cadence management, rolling outline,
+  reader retention tactics (new + old readers), recovery after hiatus, outline adjustment
+  during serialization, serialization AI-smell checklist
+- 18+ new trigger words for scene, character arc, and serial management
+
+### Changed
+- SKILL.md → v5.6: 39 modules (was 36), 3 new routing entries, updated module index
+- Version bumped to 5.6
+
 ## [v5.5] — 2026-06-16
 
 ### Added
