@@ -3,8 +3,10 @@
 小说字数统计与分析工具 (Novel Word Count Analyzer)
 Usage:
   python3 word-count-tool.py <chapter-file-or-directory>
-  python3 word-count-tool.py --watch          # watch mode: monitor word count trends
-  python3 word-count-tool.py --compare A.md B.md  # compare two chapters
+  python3 word-count-tool.py --watch                # watch mode: snapshot current dir
+  python3 word-count-tool.py --compare A.md B.md    # compare two chapters
+  python3 word-count-tool.py --json <path>          # output structured JSON report
+  python3 word-count-tool.py --json --compare A.md B.md
 
 Features:
   - Per-file word/char stats
@@ -14,6 +16,7 @@ Features:
   - Chapter length distribution
   - Estimated reading time
   - Daily/weekly output tracking
+  - JSON export for pipeline integration
 """
 
 import sys, os, re, json
@@ -149,14 +152,57 @@ def analyze_dir(path: str):
 
     return results
 
+def build_summary(results):
+    """Build aggregate summary dict from a list of per-file results."""
+    if not results:
+        return {"files": 0, "total_chars": 0}
+    total_chars = sum(r["total_chars"] for r in results)
+    avg_dialog = sum(r["dialog_ratio"] for r in results) / len(results)
+    avg_ai = sum(r["ai_smell_total"] for r in results) / len(results)
+    avg_len = total_chars / len(results)
+    return {
+        "files": len(results),
+        "total_chars": total_chars,
+        "avg_chars_per_file": round(avg_len, 1),
+        "avg_dialog_ratio": round(avg_dialog, 1),
+        "avg_ai_smell_per_file": round(avg_ai, 1),
+        "estimated_total_read_time_min": round(total_chars / 400, 1),
+    }
+
+
 def main():
-    if len(sys.argv) < 2:
+    args = sys.argv[1:]
+    if not args:
         print(__doc__)
         sys.exit(1)
 
-    target = sys.argv[1]
+    json_mode = False
+    positional = []
+    for a in args:
+        if a == "--json":
+            json_mode = True
+        else:
+            positional.append(a)
 
-    if target == "--watch":
+    # --watch (positional[0] == "--watch"); ignores --json
+    if positional and positional[0] == "--watch":
+        if json_mode:
+            cwd = os.getcwd()
+            if os.path.isdir(cwd):
+                files = sorted(set(Path(cwd).rglob("*.md")) | set(Path(cwd).rglob("*.txt")))
+                results = []
+                for f in files:
+                    try:
+                        results.append(analyze_file(str(f)))
+                    except (OSError, UnicodeDecodeError):
+                        pass
+                print(json.dumps({
+                    "mode": "watch",
+                    "timestamp": datetime.now().isoformat(timespec="seconds"),
+                    "summary": build_summary(results),
+                    "files": results,
+                }, ensure_ascii=False, indent=2))
+            sys.exit(0)
         print(f"📡 Watch mode — {datetime.now().strftime('%Y-%m-%d %H:%M')}")
         print("   Run regularly (e.g. cron daily) to track word count trends.\n")
         cwd = os.getcwd()
@@ -164,12 +210,22 @@ def main():
             analyze_dir(cwd)
         sys.exit(0)
 
-    if target == "--compare":
-        if len(sys.argv) < 4:
+    # --compare A.md B.md  (optionally with --json)
+    if positional and positional[0] == "--compare":
+        if len(positional) < 3:
             print("Usage: word-count-tool.py --compare A.md B.md")
             sys.exit(1)
-        a = analyze_file(sys.argv[2])
-        b = analyze_file(sys.argv[3])
+        a = analyze_file(positional[1])
+        b = analyze_file(positional[2])
+        if json_mode:
+            keys = ["total_chars", "total_paragraphs", "dialog_ratio",
+                    "ai_smell_total", "avg_para_len"]
+            diff = {k: {"a": a.get(k, 0), "b": b.get(k, 0)} for k in keys}
+            print(json.dumps({
+                "mode": "compare",
+                "a": a, "b": b, "diff": diff,
+            }, ensure_ascii=False, indent=2))
+            sys.exit(0)
         print(f"\n📊 对比: {a['filename']} vs {b['filename']}\n")
         print(f"{'指标':<20} {a['filename']:<20} {b['filename']:<20}")
         print("-"*60)
@@ -180,16 +236,42 @@ def main():
             print(f"{k:<20} {str(va)+u:<20} {str(vb)+u:<20}")
         sys.exit(0)
 
+    # Default: analyze file or directory (optionally with --json)
+    target = positional[0] if positional else None
+    if target is None:
+        print(__doc__)
+        sys.exit(1)
+
     if os.path.isdir(target):
-        analyze_dir(target)
+        files = sorted(Path(target).glob("*.md")) + sorted(Path(target).glob("*.txt"))
+        if not files:
+            files = sorted(set(Path(target).rglob("*.md")) | set(Path(target).rglob("*.txt")))
+        results = []
+        for f in files:
+            try:
+                results.append(analyze_file(str(f)))
+            except (OSError, UnicodeDecodeError):
+                pass
+        if json_mode:
+            print(json.dumps({
+                "mode": "directory",
+                "path": target,
+                "summary": build_summary(results),
+                "files": results,
+            }, ensure_ascii=False, indent=2))
+        else:
+            analyze_dir(target)
     elif os.path.isfile(target):
         r = analyze_file(target)
-        print(f"\n📄 {r['filename']}")
-        print(f"{'='*40}")
-        for k, v in r.items():
-            if k in ["file", "filename"]:
-                continue
-            print(f"  {k}: {v}")
+        if json_mode:
+            print(json.dumps(r, ensure_ascii=False, indent=2))
+        else:
+            print(f"\n📄 {r['filename']}")
+            print(f"{'='*40}")
+            for k, v in r.items():
+                if k in ["file", "filename"]:
+                    continue
+                print(f"  {k}: {v}")
     else:
         print(f"File not found: {target}")
         sys.exit(1)

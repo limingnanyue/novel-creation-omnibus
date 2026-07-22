@@ -1,5 +1,26 @@
 # Changelog
 
+## [v5.9.2] — 2026-07-22
+### Feature Upgrades — Tooling & Test Coverage
+
+### Added
+- `scripts/novel-tools.py --check-continuity`: new command that enforces the
+  core-writing.md rule "章首禁用任何时间词". Scans chapter openings (skipping
+  titles/headings) and flags 15 forbidden time words + 5 filler words, with
+  context snippets. Supports single-file and directory batch mode.
+- `scripts/word-count-tool.py --json`: structured JSON export for all three
+  modes (file / directory / compare). Directory mode includes an aggregate
+  `summary` block (files, total chars, avg dialog ratio, avg AI smell,
+  estimated read time). Enables pipeline/CI integration.
+- `examples/test-prompts.json`: 8 new test cases (test-09 ~ test-16) covering
+  all v5.9 modules — descriptive-craft, narrative-weaving, pacing-dynamics,
+  world-systems, revision-workflow, subplot-craft, atmosphere-mood,
+  market-strategy. Total now 16 cases (was 8).
+
+### Changed
+- `scripts/novel-tools.py` docstring updated with new command usage
+- `scripts/word-count-tool.py` docstring updated with `--json` usage
+
 ## [v5.9.1] — 2026-07-22
 ### Maintenance & Consistency Fixes
 

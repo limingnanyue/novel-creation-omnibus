@@ -62,5 +62,69 @@
     "expected_outcome": "明线时间顺叙，暗线情感变化，物象三出场，结尾留白不煽情",
     "module": "restrained-writing",
     "difficulty": "hard"
+  },
+  {
+    "id": "test-09",
+    "name": "描写技法·战斗三秒规则",
+    "prompt": "写一段战斗描写，主角用刀对战三名敌人，要用三拍式节奏和三秒规则。",
+    "expected_outcome": "起势→执行→结果三拍结构，关键动作到L3感知层，快慢句交替，环境参与战斗",
+    "module": "descriptive-craft",
+    "difficulty": "normal"
+  },
+  {
+    "id": "test-10",
+    "name": "多线叙事·POV切换",
+    "prompt": "设计三条线的交织节奏：主角潜入、同伴在外接应、反派追踪。写一个汇流式结构的大纲。",
+    "expected_outcome": "三POV各自时间锚点，同一场景不切POV，线索铺设密度符合公式，结尾汇流",
+    "module": "narrative-weaving",
+    "difficulty": "hard"
+  },
+  {
+    "id": "test-11",
+    "name": "节奏动力学·疲劳管理",
+    "prompt": "我这本悬疑文写到30章读者反馈疲劳，帮我分析节奏并给出重置方案。",
+    "expected_outcome": "输出密度曲线诊断，识别疲劳点，给出微/小/中重置策略，长短章交替建议",
+    "module": "pacing-dynamics",
+    "difficulty": "normal"
+  },
+  {
+    "id": "test-12",
+    "name": "世界体系·修仙力量等级",
+    "prompt": "设计一个修仙世界的力量等级体系，要有跨级战斗的合理范围和经济系统配套。",
+    "expected_outcome": "等级设计三原则符合，跨级战斗边界明确，货币资源层级清晰，经济有叙事功能",
+    "module": "world-systems",
+    "difficulty": "hard"
+  },
+  {
+    "id": "test-13",
+    "name": "修改工作流·4层精修",
+    "prompt": "帮我用4层流程改这章初稿，重点解决结构松散和AI味重的问题。",
+    "expected_outcome": "L1结构打乱重排→L2章节五问→L3逐句七刀→L4校对，每层输出修改清单，去AI味用词过滤",
+    "module": "revision-workflow",
+    "difficulty": "hard"
+  },
+  {
+    "id": "test-14",
+    "name": "副线编织·收束时机",
+    "prompt": "我这本有主线+感情线+阴谋线，写到第二卷结尾，帮我安排副线收束。",
+    "expected_outcome": "主副线比例符合题材，每卷至少收1条，副线生命周期完整，轮换节奏合理",
+    "module": "subplot-craft",
+    "difficulty": "normal"
+  },
+  {
+    "id": "test-15",
+    "name": "氛围渲染·压抑三叠法",
+    "prompt": "写一个场景：主角深夜回到空荡荡的家，要用三叠法层层加重压抑氛围。",
+    "expected_outcome": "三阶段（引入→加深→释放），三叠递进，环境即情绪映射，POV情绪滤网匹配",
+    "module": "atmosphere-mood",
+    "difficulty": "normal"
+  },
+  {
+    "id": "test-16",
+    "name": "市场战略·平台选择",
+    "prompt": "我写的是都市重生+系统流，男频，目标是快速签约，帮我选平台并给定位建议。",
+    "expected_outcome": "输出平台对比，差异化三问分析，竞争度评估，给出平台选择决策和签约门槛对照",
+    "module": "market-strategy",
+    "difficulty": "easy"
   }
 ]
