@@ -20,7 +20,9 @@
 
 ## 效果示例
 
-> 以下为真实输出节选，完整版见 [examples/demo-output.md](examples/demo-output.md)。
+![demo](assets/demo.gif)
+
+> 上图为脚本真实运行录屏（3帧循环）。完整章节示例见 [examples/sample-chapter.md](examples/sample-chapter.md)，工具输出见 [examples/demo-output.md](examples/demo-output.md)。
 
 **输入：** "写番茄爆文第一章。主角：被裁员的中年程序员，回家路上发现世界变了"
 
@@ -232,12 +234,17 @@ novel-creation-omnibus/
 ├── LICENSE                           # MIT
 ├── examples/
 │   ├── test-prompts.json             # 16个测试用例
-│   └── demo-output.md                # 真实输出示例
-├── assets/                           # 截图/GIF
+│   ├── demo-output.md                # 真实输出示例
+│   └── sample-chapter.md             # 真实示例章节（约2000字，供工具分析）
+├── assets/
+│   ├── demo.gif                      # 终端运行录屏（3帧循环）
+│   └── demo.tape                     # vhs 录制脚本（可复现）
 ├── scripts/
 │   ├── novel-tools.py                # 章节验证/字数统计/大纲生成/连续性检查
 │   ├── word-count-tool.py            # 字数统计与AI味分析（含JSON导出）
-│   └── install.sh                    # 一键安装脚本
+│   ├── check-skill-repo.sh           # 发布就绪度自检（鲁班结构尺）
+│   ├── gen-demo-gif.py               # 生成 demo.gif 的脚本
+│   └── install.sh                    # 一键安装脚本（含验证）
 └── references/modules/               # 40个模块，按需加载
     ├── core-writing.md               # 长篇正文写作
     └── ...                           # 完整列表见 SKILL.md
@@ -247,6 +254,8 @@ novel-creation-omnibus/
 
 | 版本 | 亮点 |
 |:-----|:------|
+| **v5.9.4** | 🔧 自托管体检脚本 + demo.gif录屏 + 真实示例章节 + install.sh验证（check全绿14/0/0） |
+| **v5.9.3** | 🔧 鲁班house-style对齐 + marketplace标准格式 + skills.sh徽章 + 验证测试节 |
 | **v5.9.2** | 🔧 脚本升级：章首连续性检查 + JSON结构化导出 + 测试用例翻倍(8→16) + 鲁班框架对齐 |
 | **v5.9** | 🆕 描写技法 + 多线叙事 + 节奏动力学 + 世界体系 + 修改工作流 + 副线编织法 + 氛围渲染术 + 市场战略 |
 | **v5.8** | 🆕 情绪高潮设计(燃/泪/甜/震) + 灵感生成器(8法+30模板) |

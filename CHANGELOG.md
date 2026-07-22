@@ -1,5 +1,24 @@
 # Changelog
 
+## [v5.9.4] — 2026-07-22
+### Self-Contained Tooling & Full Birth-Checklist Pass
+
+### Added
+- `scripts/check-skill-repo.sh`: 自托管鲁班结构尺检查脚本(源自
+  LearnPrompt/luban-skill),项目可独立体检,不依赖外部 luban 路径。
+  运行 `bash scripts/check-skill-repo.sh .` 即可发布前自检。
+- `scripts/gen-demo-gif.py`: 用 PIL 渲染终端输出生成 demo.gif,展示
+  novel-tools 与 word-count-tool 的真实运行结果(3帧循环)。
+- `examples/sample-chapter.md`: 真实示例章节(约2000字,含对话/叙述/场景),
+  供 word-count-tool 和 check-continuity 演示真实分析能力。
+- `assets/demo.gif`: 真实录屏产物(47KB,3帧),清除最后一个 WARN。
+
+### Changed
+- `scripts/install.sh`: 增加安装前 Node.js 版本检查(v18+)、安装失败提示、
+  安装后 novel-tools.py 可运行性验证、装完第一句话指引。
+- README 效果示例节: 产物前置——demo.gif 嵌入展示位置。
+- check-skill-repo 结果: 12 PASS/1 WARN → **14 PASS/0 WARN/0 FAIL**(全绿)。
+
 ## [v5.9.3] — 2026-07-22
 ### Luban Framework Alignment — House-Style & Marketplace
 
