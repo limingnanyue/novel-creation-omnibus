@@ -88,13 +88,13 @@ def analyze_file(path: str) -> dict:
 def analyze_dir(path: str):
     files = sorted(Path(path).glob("*.md")) + sorted(Path(path).glob("*.txt"))
     if not files:
-        files = sorted(Path(path).rglob("*.[mdt][dx]*t"))  # .md, .txt
+        files = sorted(set(Path(path).rglob("*.md")) | set(Path(path).rglob("*.txt")))
     results = []
     for f in files:
         try:
             r = analyze_file(str(f))
             results.append(r)
-        except:
+        except (OSError, UnicodeDecodeError):
             pass
 
     # Summary
@@ -157,9 +157,11 @@ def main():
     target = sys.argv[1]
 
     if target == "--watch":
-        print("📡 Watch mode — run regularly to track word count trends")
-        print("   Recommended: cronjob every 24h")
-        print("   hermes cronjob create --schedule '0 9 * * *' --prompt 'run word count'")
+        print(f"📡 Watch mode — {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+        print("   Run regularly (e.g. cron daily) to track word count trends.\n")
+        cwd = os.getcwd()
+        if os.path.isdir(cwd):
+            analyze_dir(cwd)
         sys.exit(0)
 
     if target == "--compare":
@@ -175,7 +177,7 @@ def main():
             va = a.get(k, 0)
             vb = b.get(k, 0)
             u = "%" if k == "dialog_ratio" else (" 处" if k == "ai_smell_total" else "")
-            print(f"{k:<20} {va:<20} {vb:<20}")
+            print(f"{k:<20} {str(va)+u:<20} {str(vb)+u:<20}")
         sys.exit(0)
 
     if os.path.isdir(target):

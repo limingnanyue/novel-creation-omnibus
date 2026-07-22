@@ -1,5 +1,32 @@
 # Changelog
 
+## [v5.9.1] — 2026-07-22
+### Maintenance & Consistency Fixes
+
+### Fixed
+- marketplace.json: updated stale description (said 25 tools/19 modules, now correctly 40 modules v5.9)
+- CHANGELOG.md: corrected inconsistent module counts in v5.4-v5.8 entries
+  (trajectory now consistent: 19→22→26→29→30→32→40)
+- SKILL.md: removed duplicate `反转` trigger (appeared at both line 56 and 107)
+- examples/demo-output.md: fixed stray English word `highway` in Chinese text
+- scripts/word-count-tool.py: fixed broken rglob pattern `*.[mdt][dx]*t`
+  (replaced with proper `*.md` + `*.txt` set union)
+- scripts/word-count-tool.py: replaced bare `except:` with specific exceptions
+- scripts/word-count-tool.py: `--compare` mode now displays units (% / 处)
+  instead of computing and discarding them
+- scripts/word-count-tool.py: `--watch` mode now produces an actual directory
+  snapshot with timestamp instead of only printing usage text
+- scripts/novel-tools.py: added FileNotFoundError/UnicodeDecodeError handling
+- scripts/novel-tools.py: `--count` now excludes whitespace (consistent with
+  word-count-tool.py) and reports CJK char count
+- scripts/novel-tools.py: `--validate` now also reports paragraph count
+- scripts/novel-tools.py: `--outline` now generates a usable template
+  (volume table + per-chapter detail skeleton) instead of an empty table
+- LICENSE: added missing copyright holder
+
+### Changed
+- SKILL.md `last_updated` bumped to 2026-07-22
+
 ## [v5.9] — 2026-06-16
 ### Major Expansion — 8 New Modules (32→40)
 
@@ -90,7 +117,7 @@
 - 12+ new trigger words: 高潮, 燃, 催泪, 甜, 震惊, 灵感, 脑洞, 卡文, etc.
 
 ### Changed
-- SKILL.md → v5.8: 42 modules (was 40), +2 routing entries, updated module index
+- SKILL.md → v5.8: 32 modules (was 30), +2 routing entries, updated module index
 - Description updated to v5.8 with emotional-climax and idea-generator
 - Version bumped to 5.8
 
@@ -105,7 +132,7 @@
   distribution, estimated reading time, chapter comparison, writing quality grading
 
 ### Changed
-- SKILL.md → v5.7: 40 modules (was 39), +platform-rules routing
+- SKILL.md → v5.7: 30 modules (was 29), +platform-rules routing
 - README → v5.7: added platform rules section
 - Version bumped to 5.7
 
@@ -124,7 +151,7 @@
 - 18+ new trigger words for scene, character arc, and serial management
 
 ### Changed
-- SKILL.md → v5.6: 39 modules (was 36), 3 new routing entries, updated module index
+- SKILL.md → v5.6: 29 modules (was 26), 3 new routing entries, updated module index
 - Version bumped to 5.6
 
 ## [v5.5] — 2026-06-16
@@ -145,7 +172,7 @@
 - All 4 modules are model-aware and genre-aware
 
 ### Changed
-- SKILL.md → v5.5: 36 modules (was 32), 12 new routing entries, updated index table
+- SKILL.md → v5.5: 26 modules (was 22), 12 new routing entries, updated index table
 - Version bumped to 5.5
 
 ## [v5.4] — 2026-06-16
@@ -160,7 +187,7 @@
   and 15-second quick fix cheat sheet
 
 ### Changed
-- SKILL.md → v5.4: 28 tool modules (was 25), updated routing table with 10 new entries
+- SKILL.md → v5.4: 22 modules (was 19), updated routing table with 10 new entries
 - anti-ai-polish.md: added 8.6 model-aware section
 - Version bumped to 5.4
 
