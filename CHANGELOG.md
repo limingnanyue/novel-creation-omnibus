@@ -1,5 +1,29 @@
 # Changelog
 
+## [v5.9.3] — 2026-07-22
+### Luban Framework Alignment — House-Style & Marketplace
+
+### Added
+- `assets/demo.tape`: 可复现的 vhs 录制脚本，展示 novel-tools.py 和
+  word-count-tool.py 的真实终端输出，填补 check-skill-repo 的 demo WARN
+- README 新增「验证与测试」节：含章首连续性检查、字数与AI味分析、JSON
+  导出三条验收命令，符合 luban house-style 的"可验证产物"要求
+- README 新增「文件结构」节（luban house-style 标准节）
+- README 新增 skills.sh 安装计数徽章（luban 出生证必备件）
+- README 新增锚点导航（luban house-style 铁律：首屏10秒讲清价值）
+- README 首屏新增引语钩子（luban house-style 铁律：钩子是引语不是功能清单）
+- README 产物前置：效果示例节移至安装命令之前（luban house-style 铁律）
+
+### Changed
+- `.claude-plugin/marketplace.json`: 升级为 luban plugin marketplace 标准格式
+  （owner/metadata/plugins[]/version/author/source/category/homepage），
+  原 schema_version+skills[] 格式已弃用
+- README 对比表：删除"全行业独一份"大词（luban 铁律：不写大词），
+  改为具体描述"900行通感体系（六大原型+四式+剂量管控）"
+- README 版本历史表新增 v5.9.2 和 v5.9.3 条目
+- README 致谢节后新增 License 节（luban house-style 标准节）
+- README 装完第一句话改为可复制的 text 代码块（luban 出生证：装完第一句话）
+
 ## [v5.9.2] — 2026-07-22
 ### Feature Upgrades — Tooling & Test Coverage
 

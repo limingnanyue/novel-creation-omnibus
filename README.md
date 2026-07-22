@@ -2,21 +2,84 @@
 
 # 🖋️ 小说创作全能工坊 v5.9
 
-> **写小说，从0到完本，一个Skill搞定。**
-> 长篇网文 · 短篇虐文 · 番茄爆文 · 白描克制 · 通感痛觉 · 规则怪谈 · 对话大师 · 读者心理 · 平台适配 · 描写技法 · 节奏控制 · 世界体系 · **40套工具**
+> *「写小说最难的不是写，是写完不烂尾、不水、不带AI味。」*
 
 [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-5.9-blueviolet)](SKILL.md)
+[![skills.sh](https://skills.sh/b/limingnanyue/novel-creation-omnibus)](https://skills.sh/limingnanyue/novel-creation-omnibus)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Module Count](https://img.shields.io/badge/Modules-40-brightgreen)](references/modules/)
+[![Modules](https://img.shields.io/badge/Modules-40-brightgreen)](references/modules/)
 [![AI 去味](https://img.shields.io/badge/AI%E5%8E%BB%E5%91%B3-6%E9%97%A8%E7%A6%81%E2%9C%A8-orange)](references/modules/anti-ai-polish.md)
-[![描写技法](https://img.shields.io/badge/%E6%8F%8F%E5%86%99%E6%8A%80%E6%B3%95-NEW-blue)](references/modules/descriptive-craft.md)
-[![多线叙事](https://img.shields.io/badge/%E5%A4%9A%E7%BA%BF%E5%8F%99%E4%BA%8B-NEW-blue)](references/modules/narrative-weaving.md)
-[![世界体系](https://img.shields.io/badge/%E4%B8%96%E7%95%8C%E4%BD%93%E7%B3%BB-NEW-blue)](references/modules/world-systems.md)
-[![修改工作流](https://img.shields.io/badge/%E4%BF%AE%E6%94%B9%E5%B7%A5%E4%BD%9C%E6%B5%81-NEW-blue)](references/modules/revision-workflow.md)
+
+**从0到完本，40套工具按需加载——长篇网文、短篇虐文、番茄爆文、白描克制，一个工坊搞定。**
+
+[看效果](#效果示例) · [安装](#快速开始) · [触发方式](#触发方式) · [40个模块](#40个模块按需加载) · [它和同类有什么不同](#它和同类有什么不同) · [安全边界](#安全边界) · [验证与测试](#验证与测试)
 
 </div>
 
 ---
+
+## 效果示例
+
+> 以下为真实输出节选，完整版见 [examples/demo-output.md](examples/demo-output.md)。
+
+**输入：** "写番茄爆文第一章。主角：被裁员的中年程序员，回家路上发现世界变了"
+
+**输出节选：**
+
+```
+标题：《刚被裁，全人类进了数据副本》
+
+第一章
+
+手机震了三下。
+
+陈默看了一眼手机，是HR发来的离职证明。他锁屏，把手机塞回口袋。
+
+今天第三家公司了。
+
+三个月，投了76份简历，面试23家，全部卡在「年龄超35岁」这一条上。
+```
+
+<sub>↑ 300字内入题，短句口语化，无AI味禁用词，章首不用时间词——符合 core-writing 铁律</sub>
+
+---
+
+## 快速开始
+
+```bash
+# 一行安装
+npx skills add limingnanyue/novel-creation-omnibus -g
+```
+
+装完直接对 Agent 说：
+
+```text
+写小说
+```
+
+## 触发方式
+
+| 你想做什么 | 对 Agent 说 |
+|:-----------|:----------|
+| 写正文 | "写第X章，接上章结尾" |
+| 搭世界观 | "搭一个修仙世界的世界观" |
+| 做人设 | "设计一个反派" |
+| 写对话 | "帮我优化这段对话，加潜台词" |
+| 开篇钩子 | "帮我写个第一章开头，要抓人" |
+| 去AI味 | "去AI味，我是用Claude写的" |
+| 写短篇 | "写个短篇BE，3000字" |
+| 规则怪谈 | "写个规则怪谈，办公室题材" |
+| 模型优化 | "针对DeepSeek优化我的写作策略" |
+| 读者心理 | "分析我这章的读者留存问题" |
+| 断更重启 | "好久没写了，帮我恢复" |
+| 动作描写 | "帮我写一段打斗，三拍式节奏" |
+| 多线叙事 | "帮我设计三条线的交织节奏" |
+| 世界体系 | "设计一个修仙力量体系" |
+| 修改初稿 | "帮我改一下这章，4层流程" |
+| 氛围渲染 | "这一段要压抑氛围" |
+| 市场分析 | "这个题材选哪个平台好" |
+
+完整触发词列表见 [SKILL.md](SKILL.md) 路由表。
 
 ## 你什么时候需要它？
 
@@ -58,45 +121,6 @@
 - ✅ **描写提升报告**（动作/环境/外貌/战斗等维度改进建议）
 - ✅ **节奏分析**（密度曲线+疲劳点+长短章优化建议）
 - ✅ **修改审计**（修改层次/删除比例/读者反馈整合状态）
-
-## 快速开始
-
-```bash
-# 一行安装
-npx skills add limingnanyue/novel-creation-omnibus -g
-```
-
-装完直接对Agent说：
-
-```
-写小说
-```
-
-或者更具体：
-
-| 你想做什么 | 对Agent说 |
-|:-----------|:----------|
-| 写正文 | "写第X章，接上章结尾" |
-| 搭世界观 | "搭一个修仙世界的世界观" |
-| 做人设 | "设计一个反派" |
-| 写对话 | "帮我优化这段对话，加潜台词" |
-| 开篇钩子 | "帮我写个第一章开头，要抓人" |
-| 去AI味 | "去AI味，我是用Claude写的" |
-| 写短篇 | "写个短篇BE，3000字" |
-| 规则怪谈 | "写个规则怪谈，办公室题材" |
-| 模型优化 | "针对DeepSeek优化我的写作策略" |
-| 读者心理 | "分析我这章的读者留存问题" |
-| 断更重启 | "好久没写了，帮我恢复" |
-| 直播文 | "写个直播文第一章" |
-| 动作描写 | "帮我写一段打斗，三拍式节奏" |
-| 多线叙事 | "帮我设计三条线的交织节奏" |
-| 世界体系 | "设计一个修仙力量体系" |
-| 修改初稿 | "帮我改一下这章，4层流程" |
-| 副线设计 | "我这章需要一个支线推进" |
-| 氛围渲染 | "这一段要压抑氛围" |
-| 市场分析 | "这个题材选哪个平台好" |
-
-完整触发词列表见 [SKILL.md](SKILL.md) 路由表。
 
 ## 40个模块，按需加载
 
@@ -149,7 +173,7 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 | 模块数 | 1-10个 | **40个**，覆盖写作全流程 |
 | 去AI味 | 简单禁用词替换 | 六门禁+三刀流+**模型感知去AI味** |
 | 模型适配 | 无 | **6大模型**各有专属策略和负面提示 |
-| 通感痛觉 | 无 | **全行业独一份**：900行通感体系 |
+| 通感痛觉 | 无 | 900行通感体系（六大原型+四式+剂量管控） |
 | 题材覆盖 | 1-3种 | **12+题材**含规则怪谈/无限流/直播等新锐 |
 | AI对话修正 | 无 | 6大AI对话通病+各模型修正速查 |
 | 读者心理 | 无 | 情绪闭环+代入感+爽点/虐点公式 |
@@ -174,27 +198,77 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 - ✅ 每次写正文前都会读取最新状态文件
 - ✅ 所有关键决策等你确认
 
+## 验证与测试
+
+本仓库含 16 个测试用例（[examples/test-prompts.json](examples/test-prompts.json)），覆盖全部 40 个模块。
+
+**验收命令——章首连续性检查（core-writing 铁律）：**
+
+```bash
+# 检查章首是否误用禁用时间词（第二天/次日/翌日…）
+python3 scripts/novel-tools.py --check-continuity your-chapters/
+```
+
+**验收命令——字数与AI味分析：**
+
+```bash
+# 单章分析（对话占比/AI味密度/段落分布）
+python3 scripts/word-count-tool.py chapter-01.md
+
+# 目录批量分析 + 综合评级
+python3 scripts/word-count-tool.py chapters/
+
+# JSON 结构化导出（供 CI/流水线集成）
+python3 scripts/word-count-tool.py --json chapters/
+```
+
+## 文件结构
+
+```
+novel-creation-omnibus/
+├── SKILL.md                          # 主路由（任务调度+模块索引+冲突裁决）
+├── README.md                         # 安装说明与展示
+├── CHANGELOG.md                      # 版本更新记录
+├── LICENSE                           # MIT
+├── examples/
+│   ├── test-prompts.json             # 16个测试用例
+│   └── demo-output.md                # 真实输出示例
+├── assets/                           # 截图/GIF
+├── scripts/
+│   ├── novel-tools.py                # 章节验证/字数统计/大纲生成/连续性检查
+│   ├── word-count-tool.py            # 字数统计与AI味分析（含JSON导出）
+│   └── install.sh                    # 一键安装脚本
+└── references/modules/               # 40个模块，按需加载
+    ├── core-writing.md               # 长篇正文写作
+    └── ...                           # 完整列表见 SKILL.md
+```
+
 ## 版本历史
 
 | 版本 | 亮点 |
 |:-----|:------|
-| **v5.9** | 🆕 描写技法(动作三拍/环境五感/战斗三秒) + 多线叙事(POV/线索) + 节奏动力学(密度/疲劳) + 世界体系(力量/经济/政治) + 修改工作流(4层) + 副线编织法 + 氛围渲染术 + 市场战略 |
+| **v5.9.2** | 🔧 脚本升级：章首连续性检查 + JSON结构化导出 + 测试用例翻倍(8→16) + 鲁班框架对齐 |
+| **v5.9** | 🆕 描写技法 + 多线叙事 + 节奏动力学 + 世界体系 + 修改工作流 + 副线编织法 + 氛围渲染术 + 市场战略 |
 | **v5.8** | 🆕 情绪高潮设计(燃/泪/甜/震) + 灵感生成器(8法+30模板) |
 | **v5.7** | 🆕 平台规则(起点/飞卢/晋江) + 字数统计工具 |
 | **v5.6** | 🆕 场景写作 + 人物弧光 + 长篇连载管理 |
 | **v5.5** | 🆕 对话大师 + 开篇钩子 + 情节工程 + 读者心理 |
 | **v5.4** | 🆕 模型优化 + 新题材 + 风味写作 + AI味模型感知 |
-| **v5.3** | 模块化重构：2540行→22模块，首版发布 |
+| **v5.3** | 模块化重构：2540行→模块化，首版发布 |
 
 ## 致谢
 
 - 鲁班 | Luban 打磨框架：https://github.com/LearnPrompt/luban-skill
 - 持续迭代于 Hermes Agent 环境
 
+## License
+
+[MIT](LICENSE)
+
 ---
 
 <div align="center">
 
-**写小说，一个工坊就够了。**
+*写小说，一个工坊就够了。*
 
 </div>
