@@ -1,5 +1,43 @@
 # Changelog
 
+## [v10.2.0] — 2026-07-25
+### Handoff Backend — 交接后端（新增第 48 个模块）
+
+> 集成 Microsoft SkillOpt v0.2.0 Unreleased `--backend handoff` + `/skillopt-sleep-handoff` 命令：让 Sleep 在零模型调用、零 API key 下完成——把模型决策外移到用户的本地 agent session，每夜 3-6 轮即可完成。**突破 v8.0 Sleep 对 API key 的硬依赖，让无凭证/隐私敏感/离线环境也能跑自进化。**
+
+### Added · 新增第 48 个模块：handoff-backend.md
+- **PROMPTS.md / pending.json 双文件交接**
+  - PROMPTS.md：人类可读，列出待答 prompt + expected format + answer 路径
+  - pending.json：机器可读 schema（id/stage/module/prompt_id/prompt_text/expected_format/answer_path/status）
+- **Exit Code 3 协议**
+  - 0=完成 / 1=错误 / **3=等待答案**
+  - 状态机：START→Engine→遇模型调用?→写PROMPTS/exit 3 OR 完成/exit 0
+- **无状态恢复**
+  - 重跑同命令即可从 answers/ 恢复
+  - Engine 扫 answers/，已答的标 resolved 跳过，未答的继续等待
+  - 答案校验：必须满足 expected_format，否则标 invalid 重答
+- **Mined Tasks 每夜锁定**
+  - Handoff 模式下 mined_tasks 在每夜开始时锁定
+  - 回答 session 不能修改任务集（保护 held-out gate 纯洁性）
+  - lock_ts / locked_by / lock_hash / modifiable=false
+- **Fresh-Context Subagent（held-out gate 保护）**
+  - 每个 prompt 用独立 fresh-context subagent 回答
+  - 不让一个 subagent 同时看多个 prompt（防训练集泄露到验证集）
+  - /skillopt-sleep-handoff 命令自动化整个循环
+- **三种部署场景对比**
+  - 有 API key+网络：传统 Sleep（推荐）/ Handoff（可用但慢）
+  - 无 API key/隐私敏感：Handoff（推荐）
+  - 想用本地 agent（Claude Code/Codex/Cursor）：Handoff（推荐）
+
+### Changed
+- SKILL.md：版本 10.1→10.2，模块数 47→48，新增 10 个触发词+路由+索引
+- README.md：模块数 47→48，新增 Handoff 徽章，版本历史新增 v10.2
+- marketplace.json：版本 10.1.0→10.2.0
+- test-prompts.json：新增 test-30（总数 30）
+- 鲁班结构尺自检：14 PASS / 0 WARN / 0 FAIL
+
+---
+
 ## [v10.1.0] — 2026-07-25
 ### Evidence Chain & Prompt Registry — 证据链与提示模板注册表（新增第 47 个模块，解冻宣告）
 

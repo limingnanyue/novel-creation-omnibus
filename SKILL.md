@@ -238,7 +238,16 @@ triggers:
   - replay evidence
   - 解冻
   - unfreeze
-version: 10.1
+  - handoff backend
+  - 交接后端
+  - 无模型 Sleep
+  - 无 API key Sleep
+  - PROMPTS.md
+  - pending.json
+  - exit code 3
+  - fresh-context subagent
+  - 无凭证自进化
+version: 10.2
 last_updated: 2026-07-25
 ---
 
@@ -327,6 +336,7 @@ last_updated: 2026-07-25
 | "多目标优化" / "meta optimizer" / "帕累托" / "dream rollout" / "做梦探索" / "突破探索" / "慢更新" / "SlowUpdate" / "EMA" / "元反思" / "训练健康度" / "跨书迁移" / "cross book transfer" / "查看帕累托前沿" / "pareto frontier" | `meta-optimizer` |
 | "技能压缩" / "skill compaction" / "best_skill 压缩" / "蒸馏" / "distill" / "跨基准迁移" / "cross benchmark" / "版本回滚" / "rollback skill" / "零成本部署" / "minimal skill" / "蒸馏版" / "compact skill" / "技能瘦身" / "知识沉淀" / "收敛判定" / "终态冻结" / "模块数冻结" | `skill-compaction` |
 | "证据链" / "evidence chain" / "evidence.jsonl" / "决策重建" / "提示模板注册" / "prompt registry" / "user overrides" / "用户覆盖" / "每晚证据" / "sleep evidence" / "审计重建" / "replay evidence" / "解冻" / "unfreeze" | `evidence-chain` |
+| "handoff backend" / "交接后端" / "无模型 Sleep" / "无 API key Sleep" / "PROMPTS.md" / "pending.json" / "exit code 3" / "fresh-context subagent" / "无凭证自进化" / "/skillopt-sleep-handoff" | `handoff-backend` |
 | 模糊指令 | 追问 |
 
 ---
@@ -384,6 +394,7 @@ last_updated: 2026-07-25
 | 🎯 多目标元优化器 | `meta-optimizer.md` | 四维帕累托(质量×速度×token×留存)+Dream-Rollout探索+SlowUpdate EMA慢更新+元反思五问+跨书迁移三模式+增强版验证门 | 多目标优化、帕累托、dream rollout、慢更新、元反思、跨书迁移 |
 | 📦 自适应技能压缩 | `skill-compaction.md` | Distill蒸馏+Cross-Benchmark三基准迁移+Compact四类差异化+Rollback-Guard版本回滚+Converge终态收敛+三档部署(full/standard/minimal)+8k token零成本部署 | 技能压缩、蒸馏、跨基准迁移、版本回滚、零成本部署、收敛判定 |
 | 🔗 证据链与提示注册 | `evidence-chain.md` | 每夜evidence.jsonl五阶段链(harvest/mine/replay/reflect/gate)+hash完整性+prompt-template registry+user overrides三态+决策重建replay-evidence+解冻五问 | 证据链、决策重建、提示词覆盖、审计重建、解冻 |
+| 🤝 Handoff Backend 交接后端 | `handoff-backend.md` | 无模型/API key的Sleep+PROMPTS.md/pending.json+exit code 3协议+无状态恢复+mined tasks每夜锁定+fresh-context subagent保护held-out gate+3-6轮/夜 | 交接后端、无凭证自进化、无API key Sleep、PROMPTS.md |
 
 ---
 
@@ -487,5 +498,6 @@ novel-creation-omnibus/
     ├── sleep-evolution.md            # 离线自进化引擎（v8.0 新增，SkillOpt-Sleep 集成）
     ├── meta-optimizer.md             # 多目标元优化器（v9.0 新增，帕累托+Dream+EMA）
     ├── skill-compaction.md           # 自适应技能压缩（v10.0 新增，Distill+Compact+Rollback+Converge）
-    └── evidence-chain.md             # 证据链与提示注册（v10.1 新增，解冻后第47个模块）
+    ├── evidence-chain.md             # 证据链与提示注册（v10.1 新增，解冻后第47个模块）
+    └── handoff-backend.md            # Handoff Backend 交接后端（v10.2 新增，第48个模块）
 ```

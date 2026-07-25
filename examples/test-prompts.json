@@ -230,5 +230,13 @@
     "expected_outcome": "Evidence Record schema(evidence_id/date/stage/ts/input/output/decision/rationale/hash)；五阶段(harvest_ev/mine_ev/replay_ev/reflect_ev/gate_ev)全记录；hash 链完整性校验通过；每夜 evidence_summary.md 人类可读；prompt-registry 三态(default/user_override/pinned)；覆盖审计(override_ts/override_by/override_reason/previous_override)落盘 prompt-overrides.jsonl；replay-evidence 三态(reproducible/diverged/incomplete)；divergence_log 落盘；解冻五问全中触发模块数 46→47；evidence.jsonl 只追加不修改；30 天归档保留",
     "module": "evidence-chain",
     "difficulty": "hard"
+  },
+  {
+    "id": "test-30",
+    "name": "v10.2 Handoff Backend·无模型Sleep+exit 3+fresh-context",
+    "prompt": "用 Handoff Backend 跑一夜 Sleep：PROMPTS.md/pending.json 交接 + exit code 3 协议 + 无状态恢复 + mined tasks 每夜锁定 + fresh-context subagent 保护 held-out gate。",
+    "expected_outcome": "PROMPTS.md 人类可读(列出待答prompt+expected_format+answer_path)；pending.json schema(id/stage/module/prompt_id/prompt_text/expected_format/answer_path/status)；exit code 0完成/1错误/3等待；无状态恢复(重跑同命令从answers/恢复)；答案校验满足expected_format否则标invalid重答；mined_tasks每夜锁定(lock_ts/locked_by/lock_hash/modifiable=false)；fresh-context subagent每个prompt独立subagent(防训练集泄露验证集)；/skillopt-sleep-handoff自动化循环；3-6轮/夜完成；handoff evidence 落 evidence.jsonl",
+    "module": "handoff-backend",
+    "difficulty": "hard"
   }
 ]
