@@ -246,5 +246,13 @@
     "expected_outcome": "三模式对比(单失败v7.0/单成功/对比v10.3)；四步流程(Pair→Diff→Aggregate→Reflect)；七维差异(句式/结构/词汇/节奏/伏笔/信息密度/情绪)；Diff schema(pair_id/task_id/failure_id/success_id/diffs/dominant_diff/severity_sum)；预算三档(快速20k/2min/1对+标准50k/5min/3对+深度100k/15min/5对)；频次≥3聚合(is_recurring判定)；通用Edit(scope=universal+support_count+source=contrastive_reflection)；与v7.0单失败并行不替代；v9.0元反思动态调整预算",
     "module": "contrastive-reflection",
     "difficulty": "hard"
+  },
+  {
+    "id": "test-32",
+    "name": "v10.4 LLM矿工·语义聚类+抽象泛化+双门过滤",
+    "prompt": "跑 LLM Miner 四步：Extract 提取候选 + Cluster 语义聚类 + Abstract 抽象模式骨架 + Generalize 泛化适用范围，最后双门过滤进 Replay。",
+    "expected_outcome": "四步流程(Extract→Cluster→Abstract→Generalize)；语义聚类(LLM判定同义，如'他不禁想到'='他暗自思忖')；抽象(pattern_skeleton去掉具体章节保留通用特征)；泛化(applicable_scenes+applicable_modules)；双门过滤(频次≥3 AND LLM置信度≥0.7)；观察池(低置信高频/高置信低频)；连续3夜升级进Replay/7夜降级丢弃；Pattern schema(pattern_id/miner/cluster_members/semantic_label/pattern_skeleton/instances/freq/llm_confidence/composite_confidence/filter_decision)；与v8.0协同(在Mine候选池上聚类)；与v10.3协同(抽象骨架喂给对比反思)",
+    "module": "llm-miner",
+    "difficulty": "hard"
   }
 ]

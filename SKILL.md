@@ -254,7 +254,16 @@ triggers:
   - 正负样本对照
   - 通用 Edit
   - 频次排序
-version: 10.3
+  - LLM 矿工
+  - llm miner
+  - 智能模式挖掘
+  - 模式抽象
+  - 模式泛化
+  - 频次+置信度双门
+  - 语义聚类
+  - 模式骨架
+  - 观察池
+version: 10.4
 last_updated: 2026-07-25
 ---
 
@@ -345,6 +354,7 @@ last_updated: 2026-07-25
 | "证据链" / "evidence chain" / "evidence.jsonl" / "决策重建" / "提示模板注册" / "prompt registry" / "user overrides" / "用户覆盖" / "每晚证据" / "sleep evidence" / "审计重建" / "replay evidence" / "解冻" / "unfreeze" | `evidence-chain` |
 | "handoff backend" / "交接后端" / "无模型 Sleep" / "无 API key Sleep" / "PROMPTS.md" / "pending.json" / "exit code 3" / "fresh-context subagent" / "无凭证自进化" / "/skillopt-sleep-handoff" | `handoff-backend` |
 | "多轮对比反思" / "contrastive reflection" / "失败 vs 成功" / "对照样本" / "正负样本对照" / "通用 Edit" / "频次排序" / "multi-rollout" / "对比反思" / "对照组反思" | `contrastive-reflection` |
+| "LLM 矿工" / "llm miner" / "智能模式挖掘" / "模式抽象" / "模式泛化" / "频次+置信度双门" / "语义聚类" / "模式骨架" / "观察池" / "Sleep 矿工升级" / "替代纯频次" | `llm-miner` |
 | 模糊指令 | 追问 |
 
 ---
@@ -404,6 +414,7 @@ last_updated: 2026-07-25
 | 🔗 证据链与提示注册 | `evidence-chain.md` | 每夜evidence.jsonl五阶段链(harvest/mine/replay/reflect/gate)+hash完整性+prompt-template registry+user overrides三态+决策重建replay-evidence+解冻五问 | 证据链、决策重建、提示词覆盖、审计重建、解冻 |
 | 🤝 Handoff Backend 交接后端 | `handoff-backend.md` | 无模型/API key的Sleep+PROMPTS.md/pending.json+exit code 3协议+无状态恢复+mined tasks每夜锁定+fresh-context subagent保护held-out gate+3-6轮/夜 | 交接后端、无凭证自进化、无API key Sleep、PROMPTS.md |
 | 🔀 多轮对比反思 | `contrastive-reflection.md` | 失败vs成功配对+七维差异特征提取+频次≥3聚合+token/时间预算三档+通用Edit(scope=universal)+与v7.0并行 | 对比反思、失败vs成功、通用Edit、频次排序 |
+| ⛏️ LLM 矿工 | `llm-miner.md` | 语义聚类(LLM判定同义)+抽象(模式骨架)+泛化(适用范围)+频次≥3 AND LLM置信度≥0.7双门+观察池三夜升级 | LLM矿工、智能模式挖掘、模式抽象、语义聚类、双门过滤 |
 
 ---
 
@@ -509,5 +520,6 @@ novel-creation-omnibus/
     ├── skill-compaction.md           # 自适应技能压缩（v10.0 新增，Distill+Compact+Rollback+Converge）
     ├── evidence-chain.md             # 证据链与提示注册（v10.1 新增，解冻后第47个模块）
     ├── handoff-backend.md            # Handoff Backend 交接后端（v10.2 新增，第48个模块）
-    └── contrastive-reflection.md     # 多轮对比反思（v10.3 新增，第49个模块）
+    ├── contrastive-reflection.md     # 多轮对比反思（v10.3 新增，第49个模块）
+    └── llm-miner.md                  # LLM 矿工（v10.4 新增，第50个模块）
 ```

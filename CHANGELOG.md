@@ -1,5 +1,34 @@
 # Changelog
 
+## [v10.4.0] — 2026-07-25
+### LLM Miner — 大模型矿工（新增第 50 个模块）
+
+> 集成 Microsoft SkillOpt v0.2.0 `skillopt_sleep/llm_miner.py`：让 v8.0 Sleep Mine 从"纯频次过滤"升级为"LLM 语义聚类+抽象+泛化+双门过滤"。解决纯频次漏掉语义相同但表述不同的模式的问题。
+
+### Added · 新增第 50 个模块：llm-miner.md
+- **四步流程**：Extract（提取）→ Cluster（语义聚类）→ Abstract（抽象）→ Generalize（泛化）
+- **语义聚类**：LLM 判定候选模式哪些语义相同（同一类病灶的不同表述）
+  - 例："他不禁想到"+"他暗自思忖"+"在这个瞬间他意识到" → 同类"内心独白用 AI 高频词"
+- **抽象**：提取模式骨架，去掉具体章节/段落数，保留通用特征
+- **泛化**：识别适用范围（applicable_scenes + applicable_modules）
+- **双门过滤**：频次≥3 AND LLM 置信度≥0.7（单门通过不进 Replay）
+- **观察池机制**：
+  - 低置信高频：等下夜 LLM 重判
+  - 高置信低频：等下夜频次累积
+  - 连续 3 夜升级进 Replay / 连续 7 夜降级丢弃
+- **Pattern Schema**：pattern_id/miner/cluster_members/semantic_label/pattern_skeleton/instances/applicable_scenes/freq/llm_confidence/composite_confidence/filter_decision
+- **与 v8.0 协同**：LLM Miner 在 v8.0 Mine 候选池上做语义聚类
+- **与 v10.3 协同**：抽象后的 pattern_skeleton 喂给对比反思，让通用 Edit 的 scope 更精准
+
+### Changed
+- SKILL.md：版本 10.3→10.4，模块数 49→50，新增 10 个触发词+路由+索引
+- README.md：模块数 49→50，版本历史新增 v10.4
+- marketplace.json：版本 10.3.0→10.4.0
+- test-prompts.json：新增 test-32（总数 32）
+- 鲁班结构尺自检：14 PASS / 0 WARN / 0 FAIL
+
+---
+
 ## [v10.3.0] — 2026-07-25
 ### Contrastive Reflection — 多轮对比反思（新增第 49 个模块）
 
