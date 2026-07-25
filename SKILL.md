@@ -247,7 +247,14 @@ triggers:
   - exit code 3
   - fresh-context subagent
   - 无凭证自进化
-version: 10.2
+  - 多轮对比反思
+  - contrastive reflection
+  - 失败 vs 成功
+  - 对照样本
+  - 正负样本对照
+  - 通用 Edit
+  - 频次排序
+version: 10.3
 last_updated: 2026-07-25
 ---
 
@@ -337,6 +344,7 @@ last_updated: 2026-07-25
 | "技能压缩" / "skill compaction" / "best_skill 压缩" / "蒸馏" / "distill" / "跨基准迁移" / "cross benchmark" / "版本回滚" / "rollback skill" / "零成本部署" / "minimal skill" / "蒸馏版" / "compact skill" / "技能瘦身" / "知识沉淀" / "收敛判定" / "终态冻结" / "模块数冻结" | `skill-compaction` |
 | "证据链" / "evidence chain" / "evidence.jsonl" / "决策重建" / "提示模板注册" / "prompt registry" / "user overrides" / "用户覆盖" / "每晚证据" / "sleep evidence" / "审计重建" / "replay evidence" / "解冻" / "unfreeze" | `evidence-chain` |
 | "handoff backend" / "交接后端" / "无模型 Sleep" / "无 API key Sleep" / "PROMPTS.md" / "pending.json" / "exit code 3" / "fresh-context subagent" / "无凭证自进化" / "/skillopt-sleep-handoff" | `handoff-backend` |
+| "多轮对比反思" / "contrastive reflection" / "失败 vs 成功" / "对照样本" / "正负样本对照" / "通用 Edit" / "频次排序" / "multi-rollout" / "对比反思" / "对照组反思" | `contrastive-reflection` |
 | 模糊指令 | 追问 |
 
 ---
@@ -395,6 +403,7 @@ last_updated: 2026-07-25
 | 📦 自适应技能压缩 | `skill-compaction.md` | Distill蒸馏+Cross-Benchmark三基准迁移+Compact四类差异化+Rollback-Guard版本回滚+Converge终态收敛+三档部署(full/standard/minimal)+8k token零成本部署 | 技能压缩、蒸馏、跨基准迁移、版本回滚、零成本部署、收敛判定 |
 | 🔗 证据链与提示注册 | `evidence-chain.md` | 每夜evidence.jsonl五阶段链(harvest/mine/replay/reflect/gate)+hash完整性+prompt-template registry+user overrides三态+决策重建replay-evidence+解冻五问 | 证据链、决策重建、提示词覆盖、审计重建、解冻 |
 | 🤝 Handoff Backend 交接后端 | `handoff-backend.md` | 无模型/API key的Sleep+PROMPTS.md/pending.json+exit code 3协议+无状态恢复+mined tasks每夜锁定+fresh-context subagent保护held-out gate+3-6轮/夜 | 交接后端、无凭证自进化、无API key Sleep、PROMPTS.md |
+| 🔀 多轮对比反思 | `contrastive-reflection.md` | 失败vs成功配对+七维差异特征提取+频次≥3聚合+token/时间预算三档+通用Edit(scope=universal)+与v7.0并行 | 对比反思、失败vs成功、通用Edit、频次排序 |
 
 ---
 
@@ -499,5 +508,6 @@ novel-creation-omnibus/
     ├── meta-optimizer.md             # 多目标元优化器（v9.0 新增，帕累托+Dream+EMA）
     ├── skill-compaction.md           # 自适应技能压缩（v10.0 新增，Distill+Compact+Rollback+Converge）
     ├── evidence-chain.md             # 证据链与提示注册（v10.1 新增，解冻后第47个模块）
-    └── handoff-backend.md            # Handoff Backend 交接后端（v10.2 新增，第48个模块）
+    ├── handoff-backend.md            # Handoff Backend 交接后端（v10.2 新增，第48个模块）
+    └── contrastive-reflection.md     # 多轮对比反思（v10.3 新增，第49个模块）
 ```

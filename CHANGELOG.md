@@ -1,5 +1,32 @@
 # Changelog
 
+## [v10.3.0] — 2026-07-25
+### Contrastive Reflection — 多轮对比反思（新增第 49 个模块）
+
+> 集成 Microsoft SkillOpt v0.2.0 `multi-rollout contrastive reflection under a token/time budget`：让 v7.0 Reflect 从"单失败局部修补"升级为"失败 vs 成功对比 → 通用 Edit"。受 token/时间预算约束，对比数有界。
+
+### Added · 新增第 49 个模块：contrastive-reflection.md
+- **三模式对比**：单失败反思（v7.0）/ 单成功反思 / 对比反思（v10.3）
+- **四步流程**：Pair（配对）→ Diff（差异提取）→ Aggregate（聚合）→ Reflect（通用 Edit 产出）
+- **七维差异特征**：句式/结构/词汇/节奏/伏笔处理/信息密度/情绪曲线
+- **Token/时间预算三档**：快速档(20k/2min/1对) / 标准档(50k/5min/3对) / 深度档(100k/15min/5对)
+- **频次≥3 聚合规则**：单一对比差异可能偶发，频次≥3 才视为反复病灶
+- **通用 Edit vs 局部 Edit**
+  - 局部："修这一处"（如"第 12 段的'他不禁想到'改为'他猛地抬头'"）
+  - 通用："修这一类"（如"内心独白场景禁用 AI 高频词，改为动作+对话"）
+  - scope=universal / support_count / source=contrastive_reflection
+- **与 v7.0 并行**：对比反思不替代单失败反思，两路 Edit 都进 Aggregate
+- **与 v9.0 协同**：元反思五问检查对比反思接受率，动态调整预算
+
+### Changed
+- SKILL.md：版本 10.2→10.3，模块数 48→49，新增 8 个触发词+路由+索引
+- README.md：模块数 48→49，版本历史新增 v10.3
+- marketplace.json：版本 10.2.0→10.3.0
+- test-prompts.json：新增 test-31（总数 31）
+- 鲁班结构尺自检：14 PASS / 0 WARN / 0 FAIL
+
+---
+
 ## [v10.2.0] — 2026-07-25
 ### Handoff Backend — 交接后端（新增第 48 个模块）
 

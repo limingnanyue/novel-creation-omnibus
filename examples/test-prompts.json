@@ -238,5 +238,13 @@
     "expected_outcome": "PROMPTS.md 人类可读(列出待答prompt+expected_format+answer_path)；pending.json schema(id/stage/module/prompt_id/prompt_text/expected_format/answer_path/status)；exit code 0完成/1错误/3等待；无状态恢复(重跑同命令从answers/恢复)；答案校验满足expected_format否则标invalid重答；mined_tasks每夜锁定(lock_ts/locked_by/lock_hash/modifiable=false)；fresh-context subagent每个prompt独立subagent(防训练集泄露验证集)；/skillopt-sleep-handoff自动化循环；3-6轮/夜完成；handoff evidence 落 evidence.jsonl",
     "module": "handoff-backend",
     "difficulty": "hard"
+  },
+  {
+    "id": "test-31",
+    "name": "v10.3 多轮对比反思·失败vs成功+七维差异+通用Edit",
+    "prompt": "跑多轮对比反思：失败vs成功配对 + 七维差异提取 + 频次≥3聚合 + token/时间预算约束 + 通用Edit产出。",
+    "expected_outcome": "三模式对比(单失败v7.0/单成功/对比v10.3)；四步流程(Pair→Diff→Aggregate→Reflect)；七维差异(句式/结构/词汇/节奏/伏笔/信息密度/情绪)；Diff schema(pair_id/task_id/failure_id/success_id/diffs/dominant_diff/severity_sum)；预算三档(快速20k/2min/1对+标准50k/5min/3对+深度100k/15min/5对)；频次≥3聚合(is_recurring判定)；通用Edit(scope=universal+support_count+source=contrastive_reflection)；与v7.0单失败并行不替代；v9.0元反思动态调整预算",
+    "module": "contrastive-reflection",
+    "difficulty": "hard"
   }
 ]
