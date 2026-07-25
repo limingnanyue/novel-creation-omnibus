@@ -1,5 +1,98 @@
 # Changelog
 
+## [v6.2.0] — 2026-07-25
+### Asset Completion — 深度资产补完（5 大资产集成）
+
+> 基于 novel-audit-v6.0.0.zip 中尚未集成的核心资产进行补完：风格配置系统、MBTI 16 型、温度词库、评分治理红线、16 维事实快照 schema。
+
+### Added · 新增第 42 个模块：style-configuration.md（风格配置系统）
+- **8 风格维度**（来源：style_dimensions.json v1.4）
+  - 写作风格 / 语气 / 视角 / 时态 / 节奏 / 场景密度 / 对白风格 / 描写密度
+  - 每维度含完整选项列表和默认值
+- **8 典型档位**（维度组合速查）
+  - 冷峻克制档 / 温暖治愈档 / 电影感档 / 古风文白档 / 意识流档 / 纪实白描档 / 爽文爆爽档 / 煽情虐心档
+- **7 题材路由**（来源：intent_router.json v1.4）
+  - 玄幻/都市/科幻/历史/言情/悬疑/武侠 7 大题材触发关键词
+  - 题材 × 风格档推荐映射
+  - 题材 × 11 维评估器权重调整矩阵
+- **风格档案 schema**（style_config.json）
+  - 8 维度配置 + lock_until_chapter + allow_drift_after + drift_threshold
+- **风格漂移检测**
+  - 写章前读取 + 写章后对账 + 漂移维度数 > threshold 告警
+  - 风格漂移 5 大典型（语气/视角/节奏/对白/描写）
+- **风格档案变更纪律**
+  - 前 10 章锁定 / 10-30 章微调 / 30 章后允许调整但必须落盘
+- **跨模块联动**：7 个模块与 style_config 联动
+
+### Enhanced · audit-workflow.md v2.0 → v3.0（审计工作流深度补强）
+- **新增评分治理红线 P0**（来源：score_governance.json）
+  - 4 条禁令：禁止覆写 / 禁止主观调分 / 禁止评级操纵 / 禁止 LLM 覆盖确定性结果
+  - 5 档评分 band：A(90-100) / B(80-89) / C(70-79) / D(60-69)🔒freeze / F(0-59)🔒freeze
+  - 复评纪律：最大 3 轮 / 解冻门 / 禁止表面修补（F 级须触及根因维度）
+  - 禁止字段：manual_override / adjusted_by / human_score
+  - 硬门禁与总评联动：AI 句式≥1 锁 3.0 / CT 矛盾≥1 锁 2.5 / 事实硬伤≥1 锁 2.0
+- **新增预算护栏**（来源：audit_budget.json）
+  - 单章最大子 Agent 派生数 6 / token 软上限 60000 / 超限降级 code-only
+  - 自动降级链细化版（spawn → solo → code-only → 仅 E1+E4）
+- **新增专家 findings 完整输出 schema**（来源：expert_output_schema.md v5.6.1）
+  - 13 字段完整定义（含 module_summary / cross_cut_notes / sentence_review）
+  - severity 标尺 S1-S4 与代码层对齐
+  - 逐句审查契约（6 类必审 + 7 条纪律）
+- **新增 E3 / E5 完整角色卡**
+  - E3 人物与对白专家：5 大核心判断 + 3 个交叉区职责 + 硬约束
+  - E5 商业化与整体专家：4 大核心判断 + 2 个交叉区职责 + 仲裁优先级最高
+  - 5 专家主审维度速查表（完整版）
+
+### Enhanced · dialogue-mastery.md v1.0 → v2.0（集成 MBTI 16 型对白声线档案）
+- **来源**：mbti_16_full.json v1.4
+- **16 型对白声线速查表**：每型含对白节奏/词汇偏好/反应模式/典型口头禅
+- **4 气质组对照**：SJ 传统派 / SP 现实派 / NF 理想派 / NT 理性派
+- **对白声线判定流程**（E3 专家必经 4 步）
+- **MBTI 跨角色群戏冲突设计**：4 对典型冲突组合
+- **MBTI 与情绪表达契合**：4 气质组 × 4 情绪（愤怒/悲伤/喜悦/恐惧）对照表
+  - 解决 AI 把所有角色情绪表达标准化的问题
+
+### Enhanced · emotional-climax.md v1.0 → v2.0（集成语言温度词库）
+- **来源**：temperature_words.json v4.0.0
+- **8 类热词情绪档案**：愤怒(+3) / 喜悦(+3) / 紧张(+2) / 轻蔑(+1) / 平静(0) / 尴尬(0) / 恐惧(-2) / 悲伤(-1)
+  - 每类含典型词 + 微表情库
+- **冷词库**：客观描述(-1) / 抽象总结(-2) / 万能动词(-2)
+- **温度词在 4 类高潮中的应用**：燃/泪/甜/震 各自的温度区间和微表情密度
+- **5 条使用纪律**：禁止堆叠 / 温度递进 / 微表情锚定 / 冷热对比 / MBTI 契合
+- **温度词审计清单**（E1/E3 共审 7 项）
+
+### Enhanced · narrative-weaving.md v3.0 → v3.1（集成 16 维事实快照完整 schema）
+- **来源**：snapshot_schema_15d.json v1.4（实际 16 维）
+- **16 维字段定义**：characters_known/mentioned/present + items_held/lost/gained + locations_reached/left/described + time_markers/time_of_day + abilities_revealed/used + relationships_state + foreshadow_planted/recalled
+- **完整 JSONL 格式示例**
+- **16 维 × 8 类 CT 一致性检查对照**（E4 专家用此对账）
+- **事实快照抽取流程**（5 步必经）
+- **5 个硬指标预警**：角色过载/道具过多/场景过频/能力膨胀/关系变化过快
+
+### Changed
+- SKILL.md：版本升级到 v6.2，模块数 41 → 42
+  - description 新增 v6.2 强化说明
+  - 新增触发词 18 个（风格配置/写作风格/定调/题材路由/风格维度/风格统一/声口统一/风格漂移/定档风格/风格档/风格配置文件/统一调性/风格一致性/MBTI/声线档案/温度词/微表情/情绪温度/评分治理/预算护栏）
+  - 路由表新增风格配置行
+  - 模块索引新增 style-configuration 条目
+  - 文件结构新增 style-configuration.md
+- 各模块版本号升级：dialogue-mastery v1.0→v2.0 / emotional-climax v1.0→v2.0 / narrative-weaving v3.0→v3.1 / audit-workflow v2.0→v3.0
+
+### 资产来源
+- novel-audit-v6.0.0.zip 中尚未集成的核心文件：
+  - config/style_dimensions.json（8 风格维度）
+  - config/intent_router.json（7 题材路由）
+  - config/mbti_16_full.json（16 型完整档案）
+  - config/temperature_words.json（语言温度词库）
+  - config/score_governance.json（评分治理红线）
+  - config/audit_budget.json（预算护栏）
+  - config/snapshot_schema_15d.json（16 维事实快照 schema）
+  - experts/E3_character.md（人物与对白专家完整角色卡）
+  - experts/E5_commercial.md（商业化与整体专家完整角色卡）
+  - experts/expert_output_schema.md（专家 findings 完整输出 schema）
+
+---
+
 ## [v6.1.0] — 2026-07-25
 ### Deep Optimization — 着重强化去AI味/剧情设计/上下文流程
 

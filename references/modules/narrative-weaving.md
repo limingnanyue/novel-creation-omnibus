@@ -445,3 +445,111 @@ Phase 0 启动前：
 
 **版本：v3.0 | 最后更新：2026-07-25 | 集成三库协同 + 5 态伏笔状态机详细迁移 + 跨会话状态机**
 **关联模块：** state-tracking（状态追踪）、audit-workflow（审计工作流）、revision-workflow（修改流程）、plot-engineering（节拍×伏笔协同）
+
+---
+
+## 11. 16 维事实快照完整 schema（v6.2 集成）
+
+> 来源：novel-audit-v6.0.0 · `snapshot_schema_15d.json` v1.4（实际为 16 维，含 foreshadow_recalled）
+> **核心铁律**：每章写完必须抽取 16 维事实快照并追加到 `context_bank.json`。这是 E4 一致性专家判定事实矛盾的唯一依据。
+
+### 11.1 16 维字段定义
+
+| # | 字段 | 含义 | 示例 |
+|:---|:-----|:-----|:-----|
+| 1 | `characters_known` | 已知角色（出现在世界观中） | ["林川", "苏晚", "陈默"] |
+| 2 | `characters_mentioned` | 本章提及但未出场角色 | ["师父"] |
+| 3 | `characters_present` | 本章在场角色 | ["林川", "苏晚"] |
+| 4 | `items_held` | 主角当前持有道具 | ["玄铁剑", "玉佩"] |
+| 5 | `items_lost` | 本章失去的道具 | ["传家玉"] |
+| 6 | `items_gained` | 本章获得的道具 | ["密信"] |
+| 7 | `locations_reached` | 本章到达的地点 | ["青衫镇", "破庙"] |
+| 8 | `locations_left` | 本章离开的地点 | ["青衫镇"] |
+| 9 | `locations_described` | 本章描述过但未到的地点 | ["京城"] |
+| 10 | `time_markers` | 时间标记 | ["三日前", "黄昏"] |
+| 11 | `time_of_day` | 当日时段 | ["傍晚"] |
+| 12 | `abilities_revealed` | 本章揭示的能力 | ["剑气外放"] |
+| 13 | `abilities_used` | 本章使用的能力 | ["玄铁剑法第三式"] |
+| 14 | `relationships_state` | 关系状态变化 | {"林川-苏晚": "信任+10"} |
+| 15 | `foreshadow_planted` | 本章埋下的伏笔 ID | ["F003", "F007"] |
+| 16 | `foreshadow_recalled` | 本章回收的伏笔 ID | ["F001"] |
+
+### 11.2 事实快照 JSONL 格式
+
+```json
+{
+  "chapter": 14,
+  "timestamp": "2026-07-25T10:30:00+08:00",
+  "snapshot": {
+    "characters_known": ["林川", "苏晚", "陈默", "师父"],
+    "characters_mentioned": ["师父"],
+    "characters_present": ["林川", "苏晚"],
+    "items_held": ["玄铁剑", "玉佩", "密信"],
+    "items_lost": ["传家玉"],
+    "items_gained": ["密信"],
+    "locations_reached": ["青衫镇", "破庙"],
+    "locations_left": ["青衫镇"],
+    "locations_described": ["京城"],
+    "time_markers": ["三日前", "黄昏"],
+    "time_of_day": "傍晚",
+    "abilities_revealed": ["剑气外放"],
+    "abilities_used": ["玄铁剑法第三式"],
+    "relationships_state": {
+      "林川-苏晚": "信任+10",
+      "林川-陈默": "敌意+5"
+    },
+    "foreshadow_planted": ["F003", "F007"],
+    "foreshadow_recalled": ["F001"]
+  }
+}
+```
+
+### 11.3 16 维 × 8 类 CT 一致性检查对照
+
+> E4 专家用 16 维快照对账 8 类 CT 门禁（详见 revision-workflow.md §7）
+
+| CT | 检查类型 | 对照维度 | 典型矛盾 |
+|:---|:---------|:---------|:---------|
+| **CT1** | 时间矛盾 | `time_markers` / `time_of_day` | 上午变傍晚、三天变一周 |
+| **CT2** | 地点矛盾 | `locations_reached` / `characters_present` | A 在京城却出现在江南场景 |
+| **CT3** | 道具消失 | `items_held` / `items_lost` | 使用了未持有的道具 |
+| **CT4** | 角色信息越界 | `characters_known` / `characters_mentioned` | 角色知晓不该知道的信息 |
+| **CT5** | 性格不一致 | `relationships_state` + characters.json | 对白指纹违背 MBTI/声线 |
+| **CT6** | 设定矛盾 | `abilities_revealed` / `abilities_used` | 能力上限前后不一致 |
+| **CT7** | 数量/单位错误 | 全维度 | 三人变五人、百两变千两 |
+| **CT8** | 称谓错误 | `relationships_state` | 表哥变堂哥 |
+
+### 11.4 事实快照抽取流程（每章写完后必经）
+
+```
+Step 1: 通读本章正文
+Step 2: 逐维度抽取事实
+        ├─ 角色维度（1-3）：本章谁出场？谁被提及？
+        ├─ 道具维度（4-6）：本章获得了什么？失去了什么？
+        ├─ 地点维度（7-9）：本章去了哪？离开了哪？提到哪？
+        ├─ 时间维度（10-11）：时间标记是什么？时段？
+        ├─ 能力维度（12-13）：揭示了什么能力？使用了什么？
+        ├─ 关系维度（14）：关系状态如何变化？
+        └─ 伏笔维度（15-16）：埋了什么伏笔？回收了什么？
+Step 3: 与上一章 snapshot 对账
+        ├─ items_held = 上章 items_held - items_lost + items_gained
+        ├─ characters_known = 上章 known ∪ 本章新出场
+        └─ locations_reached = 上章 reached ∪ 本章新到
+Step 4: 落盘到 context_bank.json（JSONL 追加）
+Step 5: 触发 E4 一致性检查（8 类 CT）
+```
+
+### 11.5 事实快照的 5 个硬指标
+
+| 指标 | 阈值 | 触发动作 |
+|:-----|:-----|:---------|
+| 单章 `characters_present` 数 | > 8 | 警告：角色过载，读者记不住 |
+| `items_held` 总数 | > 15 | 警告：道具过多，难管理 |
+| `locations_reached` 单章新增 | > 3 | 警告：场景切换过频 |
+| `abilities_revealed` 单章新增 | > 2 | 警告：能力膨胀过快 |
+| `relationships_state` 单章变化数 | > 5 | 警告：关系变化过快，读者跟不上 |
+
+---
+
+**版本：v3.1 | 最后更新：2026-07-25 | 集成 16 维事实快照完整 schema + CT 对照 + 抽取流程**
+**关联模块：** state-tracking（状态追踪）、audit-workflow（审计工作流/E4）、revision-workflow（CT 检查）、plot-engineering（节拍×伏笔协同）
