@@ -1,13 +1,13 @@
 <div align="center">
 
-# 🖋️ 小说创作全能工坊 v10.8
+# 🖋️ 小说创作全能工坊 v10.9
 
 > *「写小说最难的不是写，是写完不烂尾、不水、不带AI味。」*
 
-[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-10.8-blueviolet)](SKILL.md)
+[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-10.9-blueviolet)](SKILL.md)
 [![skills.sh](https://skills.sh/b/limingnanyue/novel-creation-omnibus)](https://skills.sh/limingnanyue/novel-creation-omnibus)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Modules](https://img.shields.io/badge/Modules-54-brightgreen)](references/modules/)
+[![Modules](https://img.shields.io/badge/Modules-55-brightgreen)](references/modules/)
 [![AI 去味](https://img.shields.io/badge/AI%E5%8E%BB%E5%91%B3-L1--L4%E5%9B%9B%E5%B1%82%E7%A1%AC%E9%97%A8%E7%A6%81%E2%9C%A8-orange)](references/modules/anti-ai-polish.md)
 [![Audit](https://img.shields.io/badge/Audit-E1--E5%E4%BA%94%E4%B8%93%E5%AE%B6-red)](references/modules/audit-workflow.md)
 [![SkillOpt](https://img.shields.io/badge/SkillOpt-v0.2.0%20%E8%87%AA%E8%BF%9B%E5%8C%96-9cf)](references/modules/skill-evolution.md)
@@ -22,10 +22,11 @@
 [![Skill-Aware](https://img.shields.io/badge/Skill%20Aware-%E6%8A%80%E8%83%BD%E6%84%9F%E7%9F%A5%E5%8F%8D%E6%80%9D-7950f2)](references/modules/skill-aware-reflection.md)
 [![Density](https://img.shields.io/badge/Density-%E8%AF%AD%E4%B9%89%E5%AF%86%E5%BA%A6%E9%97%A8-d63384)](references/modules/semantic-density.md)
 [![Staging](https://img.shields.io/badge/Staging-%E6%9A%82%E5%AD%98%E9%A2%84%E7%AE%97%7CAtomic-0ca6c2)](references/modules/staging-budget.md)
+[![3-Way](https://img.shields.io/badge/3--Way-%E4%B8%89%E5%90%91%E5%88%87%E5%88%86%7CMeta--Hold--out-6f42c1)](references/modules/three-way-split.md)
 
-**从0到完本，54套工具按需加载——长篇网文、短篇虐文、番茄爆文、白描克制、五专家审计、技能自进化、夜间离线自进化、多目标元优化、自适应技能压缩、证据链与决策重建、无模型交接后端、多轮对比反思、LLM 矿工、自主学习率、技能感知反思、语义密度验证门、暂存与预算，一个工坊搞定。**
+**从0到完本，55套工具按需加载——长篇网文、短篇虐文、番茄爆文、白描克制、五专家审计、技能自进化、夜间离线自进化、多目标元优化、自适应技能压缩、证据链与决策重建、无模型交接后端、多轮对比反思、LLM 矿工、自主学习率、技能感知反思、语义密度验证门、暂存与预算、三向切分门控，一个工坊搞定。**
 
-[看效果](#效果示例) · [安装](#快速开始) · [触发方式](#触发方式) · [54个模块](#47个模块按需加载) · [它和同类有什么不同](#它和同类有什么不同) · [安全边界](#安全边界) · [验证与测试](#验证与测试)
+[看效果](#效果示例) · [安装](#快速开始) · [触发方式](#触发方式) · [55个模块](#47个模块按需加载) · [它和同类有什么不同](#它和同类有什么不同) · [安全边界](#安全边界) · [验证与测试](#验证与测试)
 
 </div>
 
@@ -164,7 +165,7 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 - ✅ **节拍审计报告**（Dramatica 11拍定位 + 节拍×伏笔×角色协同检查）
 - ✅ **跨会话状态文件**（meta_review_log.jsonl + next_focus 注入）
 
-## 54个模块，按需加载
+## 55个模块，按需加载
 
 | 模块 | 说明 |
 |:-----|:-----|
