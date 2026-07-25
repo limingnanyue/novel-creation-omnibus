@@ -262,5 +262,13 @@
     "expected_outcome": "accept率滑动窗口(N=10)；四档multiplier(1.2/1.0/0.8/2.0)；多维accept(Q/S/T/R短板效应)；LR回升探测(持续低accept触发×2跑3epoch)；状态机(NORMAL/PROBING/ESCAPED/STUCK)；LR边界[0.001,0.3]；lr_autonomous_log.jsonl落盘",
     "module": "lr-autonomous",
     "difficulty": "hard"
+  },
+  {
+    "id": "test-34",
+    "name": "v10.6 技能感知反思·段落定位+模板路由+段落级Edit",
+    "prompt": "跑技能感知反思：skill_section_anchor 段落定位 + 按模块族路由 4 模板 + 段落级 Edit + grounding_skill_hash 校验。",
+    "expected_outcome": "skill_section_anchor(在best_skill.md扫module段+失败信号关键词匹配1-3子段+anchor_verified)；4模板路由(writing_failure_tmpl/evolution_failure_tmpl/audit_failure_tmpl/data_failure_tmpl)；段落级Edit(target_skill_section+old_text+new_text精确落点)；验证门增强(anchor_verified+grounding_hash_match+grounding_rollout_id三必填)；与v7.0通用反思并行(不替代,两路都进Aggregate)；与v10.3协同(通用Edit→段落定位→落skill_section)；定位失败退回v7.0；skill_aware_reflect_log.jsonl落盘；审计指标(anchor_verification_rate≥0.9/grounding_hash_match_rate=1.0/edit_section_precision≥0.85/template_coverage=1.0)",
+    "module": "skill-aware-reflection",
+    "difficulty": "hard"
   }
 ]

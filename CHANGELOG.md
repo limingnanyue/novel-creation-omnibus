@@ -1,5 +1,34 @@
 # Changelog
 
+## [v10.6.0] — 2026-07-25
+### Skill-Aware Reflection — 技能感知反思（新增第 52 个模块）
+
+> 集成 Microsoft SkillOpt v0.2.0 `skillopt/reflect/skill_aware_reflect.py` + `skillopt/prompts/skill_aware_reflect.md`：让 v7.0 的 Reflect 步骤从"通用 5 问模板"升级为"按模块族路由 + 注入 best_skill 相关段作为 grounding"，反思产出"段落级精确 Edit"而非"模块级模糊建议"。
+
+### Added · 新增第 52 个模块：skill-aware-reflection.md
+- **Skill Section Anchor 段落定位**：在 best_skill.md 中扫 module 段 + 失败信号关键词匹配 1-3 子段
+- **按模块族路由 4 模板**：
+  - `writing_failure_tmpl`（去AI味/对话/情节…）：技法是否落地+技能段是否够具体+反例+可执行性
+  - `evolution_failure_tmpl`（skill-evolution/sleep/meta/compaction）：流程断点+验证门漏洞+边界+日志+协同
+  - `audit_failure_tmpl`（audit/anti-ai-polish 硬门禁）：评分操纵+阈值合理性+跨专家冲突+复评纪律+预算护栏
+  - `data_failure_tmpl`（state-tracking/foreshadow/narrative）：schema 字段+5态迁移+对账+抽取流程+16维完整
+- **段落级 Edit 落点**：target_skill_section + old_text + new_text + skill_anchor_verified + grounding_skill_hash
+- **验证门增强**：anchor_verified + grounding_hash_match + grounding_rollout_id 三必填
+- **与 v7.0 通用反思并行**：不替代，两路产出都进 Aggregate 按频次+置信度排序
+- **与 v10.3 对比反思协同**：v10.3 通用 Edit → v10.6 段落定位 → 落到具体 skill_section
+- **审计指标**：anchor_verification_rate(≥0.9) + grounding_hash_match_rate(=1.0) + edit_section_precision(≥0.85) + template_coverage(=1.0)
+- **配置**：.skillopt/skill-aware-reflect.yaml（fallback_to_v7 + max_sections=3 + 验证门必填项）
+- **日志**：skill_aware_reflect_log.jsonl
+
+### Changed
+- SKILL.md：版本 10.5→10.6，模块数 51→52，新增 9 个触发词+路由+索引
+- README.md：模块数 51→52，新增 Skill-Aware 徽章，版本历史新增 v10.5/v10.6
+- marketplace.json：版本 10.5.0→10.6.0
+- test-prompts.json：新增 test-34（总数 34）
+- 鲁班结构尺自检：14 PASS / 0 WARN / 0 FAIL
+
+---
+
 ## [v10.5.0] — 2026-07-25
 ### Autonomous Learning Rate — 自主学习率（新增第 51 个模块）
 

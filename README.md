@@ -1,13 +1,13 @@
 <div align="center">
 
-# 🖋️ 小说创作全能工坊 v10.5
+# 🖋️ 小说创作全能工坊 v10.6
 
 > *「写小说最难的不是写，是写完不烂尾、不水、不带AI味。」*
 
-[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-10.5-blueviolet)](SKILL.md)
+[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-10.6-blueviolet)](SKILL.md)
 [![skills.sh](https://skills.sh/b/limingnanyue/novel-creation-omnibus)](https://skills.sh/limingnanyue/novel-creation-omnibus)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Modules](https://img.shields.io/badge/Modules-51-brightgreen)](references/modules/)
+[![Modules](https://img.shields.io/badge/Modules-52-brightgreen)](references/modules/)
 [![AI 去味](https://img.shields.io/badge/AI%E5%8E%BB%E5%91%B3-L1--L4%E5%9B%9B%E5%B1%82%E7%A1%AC%E9%97%A8%E7%A6%81%E2%9C%A8-orange)](references/modules/anti-ai-polish.md)
 [![Audit](https://img.shields.io/badge/Audit-E1--E5%E4%BA%94%E4%B8%93%E5%AE%B6-red)](references/modules/audit-workflow.md)
 [![SkillOpt](https://img.shields.io/badge/SkillOpt-v0.2.0%20%E8%87%AA%E8%BF%9B%E5%8C%96-9cf)](references/modules/skill-evolution.md)
@@ -19,10 +19,11 @@
 [![Contrastive](https://img.shields.io/badge/Contrastive-%E5%A4%9A%E8%BD%AE%E5%AF%B9%E6%AF%94%E5%8F%8D%E6%80%9D-fd7e14)](references/modules/contrastive-reflection.md)
 [![LLM Miner](https://img.shields.io/badge/LLM%20Miner-%E8%AF%AD%E4%B9%89%E8%81%9A%E7%B1%BB%E7%9F%BF%E5%B7%A5-198754)](references/modules/llm-miner.md)
 [![Auto LR](https://img.shields.io/badge/Auto%20LR-%E8%87%AA%E4%B8%BB%E5%AD%A6%E4%B9%A0%E7%8E%87-20c997)](references/modules/lr-autonomous.md)
+[![Skill-Aware](https://img.shields.io/badge/Skill%20Aware-%E6%8A%80%E8%83%BD%E6%84%9F%E7%9F%A5%E5%8F%8D%E6%80%9D-7950f2)](references/modules/skill-aware-reflection.md)
 
-**从0到完本，51套工具按需加载——长篇网文、短篇虐文、番茄爆文、白描克制、五专家审计、技能自进化、夜间离线自进化、多目标元优化、自适应技能压缩、证据链与决策重建、无模型交接后端、多轮对比反思、LLM 矿工、自主学习率，一个工坊搞定。**
+**从0到完本，52套工具按需加载——长篇网文、短篇虐文、番茄爆文、白描克制、五专家审计、技能自进化、夜间离线自进化、多目标元优化、自适应技能压缩、证据链与决策重建、无模型交接后端、多轮对比反思、LLM 矿工、自主学习率、技能感知反思，一个工坊搞定。**
 
-[看效果](#效果示例) · [安装](#快速开始) · [触发方式](#触发方式) · [51个模块](#47个模块按需加载) · [它和同类有什么不同](#它和同类有什么不同) · [安全边界](#安全边界) · [验证与测试](#验证与测试)
+[看效果](#效果示例) · [安装](#快速开始) · [触发方式](#触发方式) · [52个模块](#47个模块按需加载) · [它和同类有什么不同](#它和同类有什么不同) · [安全边界](#安全边界) · [验证与测试](#验证与测试)
 
 </div>
 
@@ -161,7 +162,7 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 - ✅ **节拍审计报告**（Dramatica 11拍定位 + 节拍×伏笔×角色协同检查）
 - ✅ **跨会话状态文件**（meta_review_log.jsonl + next_focus 注入）
 
-## 51个模块，按需加载
+## 52个模块，按需加载
 
 | 模块 | 说明 |
 |:-----|:-----|
@@ -214,13 +215,14 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 | `handoff-backend` | 🤝 **v10.2：无模型/API key的Sleep+PROMPTS.md/pending.json双文件交接+exit code 3协议(0完成/1错误/3等待)+无状态恢复+mined tasks每夜锁定(保护held-out gate)+fresh-context subagent(防训练集泄露)+3-6轮/夜** |
 | `contrastive-reflection` | 🔀 **v10.3：失败vs成功配对+七维差异特征(句式/结构/词汇/节奏/伏笔/信息密度/情绪)+频次≥3聚合+token/时间预算三档(快速20k/标准50k/深度100k)+通用Edit(scope=universal修这一类)+与v7.0单失败并行** |
 | `llm-miner` | ⛏️ **v10.4：LLM语义聚类(同义归一)+抽象(模式骨架)+泛化(适用范围)+频次≥3 AND LLM置信度≥0.7双门过滤+观察池(低置信高频/高置信低频)+连续3夜升级/7夜降级+Pattern Schema** |
-| `lr-autonomous` | 📈 **🆕 v10.5：accept率滑动窗口(N=10)+四档multiplier(1.2加大/1.0保持/0.8保守/2.0回升)+多维accept(Q/S/T/R短板效应)+LR回升探测(持续低accept触发×2跑3epoch)+局部最优逃逸+状态机(NORMAL/PROBING/ESCAPED/STUCK)+LR边界[0.001,0.3]** |
+| `lr-autonomous` | 📈 **v10.5：accept率滑动窗口(N=10)+四档multiplier(1.2加大/1.0保持/0.8保守/2.0回升)+多维accept(Q/S/T/R短板效应)+LR回升探测(持续低accept触发×2跑3epoch)+局部最优逃逸+状态机(NORMAL/PROBING/ESCAPED/STUCK)+LR边界[0.001,0.3]** |
+| `skill-aware-reflection` | 🎯 **🆕 v10.6：skill_section_anchor段落定位+按模块族路由4模板(writing/evolution/audit/data)+段落级Edit(target_skill_section+old_text+new_text)+grounding_skill_hash校验(防基于过期技能反思)+与v7.0通用反思/v10.3对比反思并行协同+anchor验证率审计** |
 
 ## 它和同类有什么不同？
 
-| 维度 | 其他写作Skill | **本工坊 v10.5** |
+| 维度 | 其他写作Skill | **本工坊 v10.6** |
 |:-----|:-------------|:----------------|
-| 模块数 | 1-10个 | **51个**，覆盖写作全流程（v10.1 解冻，v10.5 扩展） |
+| 模块数 | 1-10个 | **52个**，覆盖写作全流程（v10.1 解冻，v10.6 扩展） |
 | 技能自进化 | 无 | **SkillOpt 六步循环**+EditOp有界编辑+验证门+学习率预算+拒绝编辑缓冲+best_skill版本管理 |
 | 夜间离线自进化 | 无 | **SkillOpt-Sleep 四阶段**(Harvest→Mine→Replay→Consolidate)+跨书籍迁移+降级策略+sleep_history索引 |
 | 多目标元优化 | 无 | **四维帕累托**(质量×速度×token×留存)+Dream-Rollout探索+SlowUpdate EMA慢更新+元反思五问+跨书迁移三模式 |
@@ -385,7 +387,7 @@ novel-creation-omnibus/
 │   ├── check-skill-repo.sh           # 发布就绪度自检（鲁班结构尺）
 │   ├── gen-demo-gif.py               # 生成 demo.gif 的脚本
 │   └── install.sh                    # 一键安装脚本（含验证）
-└── references/modules/               # 50个模块，按需加载
+└── references/modules/               # 52个模块，按需加载
     ├── core-writing.md               # 长篇正文写作
     ├── anti-ai-polish.md             # 去AI味 v3.0（L1-L4 四层硬门禁）
     ├── audit-workflow.md             # 审计工作流 v3.0（五专家+评分治理红线）
@@ -402,7 +404,9 @@ novel-creation-omnibus/
     ├── evidence-chain.md             # v10.1 证据链与提示注册（evidence.jsonl+registry+解冻）
     ├── handoff-backend.md            # v10.2 Handoff Backend 交接后端（无模型 Sleep+exit 3+fresh-context）
     ├── contrastive-reflection.md     # v10.3 多轮对比反思（失败vs成功+七维差异+通用Edit）
-    ├── llm-miner.md                  # 🆕 v10.4 LLM 矿工（语义聚类+抽象泛化+双门过滤）
+    ├── llm-miner.md                  # v10.4 LLM 矿工（语义聚类+抽象泛化+双门过滤）
+    ├── lr-autonomous.md              # v10.5 自主学习率（accept率+回升探测+状态机）
+    ├── skill-aware-reflection.md     # 🆕 v10.6 技能感知反思（段落级Edit+模板路由+grounding校验）
     └── ...                           # 完整列表见 SKILL.md
 ```
 
@@ -410,6 +414,8 @@ novel-creation-omnibus/
 
 | 版本 | 亮点 |
 |:-----|:------|
+| **v10.6** | 🎯 🆕 技能感知反思：skill_section_anchor段落定位(在best_skill.md中扫module段+失败信号关键词匹配1-3子段)+按模块族路由4模板(writing/evolution/audit/data)+段落级Edit(target_skill_section+old_text+new_text精确落点)+grounding_skill_hash校验(防基于过期技能反思)+anchor验证率审计+与v7.0通用反思/v10.3对比反思并行协同(不替代)+定位失败退回v7.0+模块数51→52 |
+| **v10.5** | 📈 🆕 自主学习率：accept率滑动窗口(N=10)+四档multiplier(1.2加大/1.0保持/0.8保守/2.0回升)+多维accept(Q/S/T/R短板效应最差维度定LR)+LR回升探测(持续低accept<0.1达5epoch触发×2跑3epoch)+局部最优逃逸(探测成功接受新LR/失败回退触发Dream-Rollout)+状态机(NORMAL/PROBING/ESCAPED/STUCK)+LR边界[0.001,0.3]+与v7.0(三档作上下界)/v9.0(元反思检查健康度)协同+模块数50→51 |
 | **v10.4** | ⛏️ 🆕 LLM 矿工：四步流程(Extract→Cluster→Abstract→Generalize)+LLM语义聚类(同义归一"他不禁想到"="他暗自思忖")+抽象(模式骨架)+泛化(applicable_scenes+applicable_modules)+频次≥3 AND LLM置信度≥0.7双门过滤+观察池(低置信高频/高置信低频)+连续3夜升级/7夜降级+Pattern Schema+与v8.0/v10.3协同+模块数49→50 |
 | **v10.3** | 🔀 🆕 多轮对比反思：失败vs成功配对+七维差异特征(句式/结构/词汇/节奏/伏笔/信息密度/情绪曲线)+频次≥3聚合(反复病灶判定)+token/时间预算三档(快速20k/2min/1对+标准50k/5min/3对+深度100k/15min/5对)+通用Edit(scope=universal修这一类vs局部Edit修这一处)+与v7.0单失败反思并行(不替代)+v9.0元反思动态调整预算+模块数48→49 |
 | **v10.2** | 🤝 🆕 Handoff Backend 交接后端：无模型/API key的Sleep+PROMPTS.md/pending.json双文件交接+exit code 3协议(0完成/1错误/3等待)+无状态恢复(重跑同命令从answers恢复)+mined tasks每夜锁定(lock_ts/locked_by/lock_hash/modifiable=false保护held-out gate)+fresh-context subagent(每个prompt独立subagent防训练集泄露验证集)+/skillopt-sleep-handoff命令自动化+3-6轮/夜+三种部署场景对比+模块数47→48 |

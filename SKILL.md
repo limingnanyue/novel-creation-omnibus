@@ -272,7 +272,13 @@ triggers:
   - LR 回升
   - 回升探测
   - 局部最优逃逸
-version: 10.5
+  - 技能感知反思
+  - skill-aware reflection
+  - 反思带技能上下文
+  - 按模块反思模板
+  - 技能段定位反思
+  - 段落级 Edit
+version: 10.6
 last_updated: 2026-07-25
 ---
 
@@ -365,6 +371,7 @@ last_updated: 2026-07-25
 | "多轮对比反思" / "contrastive reflection" / "失败 vs 成功" / "对照样本" / "正负样本对照" / "通用 Edit" / "频次排序" / "multi-rollout" / "对比反思" / "对照组反思" | `contrastive-reflection` |
 | "LLM 矿工" / "llm miner" / "智能模式挖掘" / "模式抽象" / "模式泛化" / "频次+置信度双门" / "语义聚类" / "模式骨架" / "观察池" / "Sleep 矿工升级" / "替代纯频次" | `llm-miner` |
 | "自主学习率" / "autonomous LR" / "lr_autonomous" / "动态学习率" / "accept 率自适应" / "学习率自调度" / "LR 回升" / "回升探测" / "局部最优逃逸" / "训练健康度自适应" | `lr-autonomous` |
+| "技能感知反思" / "skill-aware reflection" / "skill_grounded_reflect" / "反思带技能上下文" / "按模块反思模板" / "reflection grounding" / "技能段定位反思" / "段落级 Edit" / "反思模板路由" | `skill-aware-reflection` |
 | 模糊指令 | 追问 |
 
 ---
@@ -426,6 +433,7 @@ last_updated: 2026-07-25
 | 🔀 多轮对比反思 | `contrastive-reflection.md` | 失败vs成功配对+七维差异特征提取+频次≥3聚合+token/时间预算三档+通用Edit(scope=universal)+与v7.0并行 | 对比反思、失败vs成功、通用Edit、频次排序 |
 | ⛏️ LLM 矿工 | `llm-miner.md` | 语义聚类(LLM判定同义)+抽象(模式骨架)+泛化(适用范围)+频次≥3 AND LLM置信度≥0.7双门+观察池三夜升级 | LLM矿工、智能模式挖掘、模式抽象、语义聚类、双门过滤 |
 | 📈 自主学习率 | `lr-autonomous.md` | accept率滑动窗口(N=10)+四档multiplier(1.2/1.0/0.8/2.0)+LR回升探测(持续低accept触发)+局部最优逃逸+状态机(NORMAL/PROBING/ESCAPED/STUCK) | 自主学习率、动态LR、accept率自适应、回升探测、局部最优逃逸 |
+| 🎯 技能感知反思 | `skill-aware-reflection.md` | skill_section_anchor段落定位+按模块族路由4模板(writing/evolution/audit/data)+段落级Edit(target_skill_section+old_text+new_text)+grounding_skill_hash校验+与v7.0/v10.3并行协同 | 技能感知反思、反思带技能上下文、段落级Edit、技能段定位、反思模板路由 |
 
 ---
 
@@ -533,5 +541,6 @@ novel-creation-omnibus/
     ├── handoff-backend.md            # Handoff Backend 交接后端（v10.2 新增，第48个模块）
     ├── contrastive-reflection.md     # 多轮对比反思（v10.3 新增，第49个模块）
     ├── llm-miner.md                  # LLM 矿工（v10.4 新增，第50个模块）
-    └── lr-autonomous.md              # 自主学习率（v10.5 新增，第51个模块）
+    ├── lr-autonomous.md              # 自主学习率（v10.5 新增，第51个模块）
+    └── skill-aware-reflection.md     # 技能感知反思（v10.6 新增，第52个模块）
 ```
