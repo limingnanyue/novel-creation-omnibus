@@ -286,5 +286,21 @@
     "expected_outcome": "三预算(token 4000/time 600s/count 20 任一达上限触发)；暂存区状态机(STAGING→CHECKING→APPLYING→COMMITTED/ROLLED_BACK 含CONFLICT分支)；五类交叉冲突检测(同段冲突old_text重叠/矛盾冲突语义相反/累计越界token超上限/引用断裂删段被引用/结构破坏删多章节)；4解决策略(FIRST_WINS/HIGH_CONFIDENCE_WINS/HUMAN_REVIEW/AUTO_MERGE)；atomic apply(应用前备份best_skill.md.bak.{ts}+逐个应用+任一失败整批回滚)；与v7.0 Update协同(暂存区入口+Evaluate在COMMITTED后跑)；与v10.6反思协同(CONFLICT/ROLLED_BACK触发)；与v10.7密度协同(应用后跑密度门密度下降触发回滚)；staging_budget_log.jsonl落盘；audit 5指标(atomic_success_rate≥0.9/conflict_rate 0.05-0.15/rollback_rate<0.1/avg_batch_size 8-15/budget_utilization 0.7-0.9)",
     "module": "staging-budget",
     "difficulty": "hard"
+  },
+  {
+    "id": "test-37",
+    "name": "v10.9 三向切分·过拟合检测+假收敛",
+    "prompt": "跑三向切分：60/20/20切分 + meta 查询限制 + 过拟合信号检测 + 假收敛判定。",
+    "expected_outcome": "三向切分比例(train 60%/val 20%/meta 20%)；meta仅3场景查询(epoch_end/meta_reflect/converge_check)；过拟合信号(val_trend>0且meta_trend≤0→触发回滚到过拟合前版本+标记过拟合Edit+重切分val/meta)；4态判定(过拟合/真提升/双停滞/异常)；meta_converged加Converge第4判据(前3判据过但meta未过→假收敛)；three_way_split.json落盘(split_id/ratios/counts/freeze_until_epoch/trend_analysis)；three_way_split_log.jsonl落盘(epoch/query_reason/meta_score/val_score/gap/trend_signal/action)；审计5指标(meta_query_rate≤1/epoch/val_meta_gap<0.05/overfitting_detection_rate 0-0.1/false_convergence_rate<0.05/split_rotation_rate每10 epoch一次)",
+    "module": "three-way-split",
+    "difficulty": "hard"
+  },
+  {
+    "id": "test-38",
+    "name": "v11.0 二阶段终态收敛·七判据+解冻七问",
+    "prompt": "跑二阶段终态收敛：七判据全中判定 + FinalConvergeResult 落盘 + 维护期训练降频 + 解冻七问门槛。",
+    "expected_outcome": "七判据全中(compact_converged连续3次Compact提升<0.005/train_converged连续5epoch提升<0.01/pareto_converged连续3次Dream无breakthrough/evidence_converged连续7夜hash链无断裂AND replay divergence<0.05AND override audit<0.1/reflection_converged contrastive accept∈[0.3,0.7]AND llm_miner confidence≥0.7持续7夜AND skill-aware anchor≥0.9/gate_converged density pass≥0.7AND staging atomic≥0.9AND rollback<0.1AND three-way overfitting∈[0,0.1]AND false_convergence<0.05/meta_converged LR状态机连续30epoch NORMALAND元反思五问连续3次无新增缺口)；FinalConvergeResult Schema落盘(skill_version=v11.0/stage=phase_2_final/module_count=55/phase_1_frozen_at/phase_2_frozen_at/modules_added_in_phase_2九模块/training_frequency=monthly/sleep_frequency=weekly/dream_frequency=quarterly/meta_reflect_frequency=quarterly/next_review=2026-10-25)；模块数冻结55(不新增功能模块)；维护期训练降频(训练每月/Sleep每周/Dream季度/元反思季度)；三档重切(full 36k/standard 18k/minimal 8k)；解冻七问门槛(在v10.1解冻五问基础上+第6问55模块协同饱和度+第7问meta-hold-out非过拟合验证val_trend>0 AND meta_trend>0)；任一判据未中→不收敛继续训练",
+    "module": "skill-compaction",
+    "difficulty": "hard"
   }
 ]

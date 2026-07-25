@@ -305,14 +305,22 @@ triggers:
   - skill 过拟合
   - 假收敛
   - meta_score
-version: 10.9
+  - 二阶收敛
+  - final convergence
+  - 第二阶段终态
+  - 模块数冻结55
+  - 七判据
+  - 解冻七问
+  - 维护期
+  - 季度元反思
+version: 11.0
 last_updated: 2026-07-25
 ---
 
 # 小说创作全能工坊 🖋️
 
 > **写小说，从0到完本，一个Skill搞定。**
-> 长篇网文、短篇虐文、番茄爆文、白描写作、规则怪谈、无限流、悬疑推理、末世废土——46套创作工具+模型专属优化+平台适配+审计工作流+技能自进化引擎+夜间离线自进化+多目标元优化+自适应技能压缩，按需加载，即用即走。
+> 长篇网文、短篇虐文、番茄爆文、白描写作、规则怪谈、无限流、悬疑推理、末世废土——55套创作工具+模型专属优化+平台适配+审计工作流+技能自进化引擎+夜间离线自进化+多目标元优化+自适应技能压缩+证据链与决策重建+无模型交接后端+多轮对比反思+LLM矿工+自主学习率+技能感知反思+语义密度验证门+暂存与预算+三向切分门控+**v11.0 二阶段终态收敛**，按需加载，即用即走。
 
 ---
 
@@ -402,6 +410,7 @@ last_updated: 2026-07-25
 | "语义密度" / "semantic density" / "信息密度门" / "density gate" / "novelty per token" / "信息熵验证" / "稀薄文本检测" / "水分检测" / "density_score" / "空心文本" / "论点密度" / "实体密度" | `semantic-density` |
 | "暂存预算" / "staging budget" / "edit staging" / "批量提交" / "atomic apply" / "token 预算" / "时间预算" / "暂存区" / "staging area" / "atomic commit" / "整批回滚" / "交叉冲突检测" | `staging-budget` |
 | "三向切分" / "3-way split" / "三向门控" / "meta hold-out" / "meta 验证集" / "训练/验证/元验证" / "三层隔离" / "meta gate" / "过拟合检测" / "skill 过拟合" / "假收敛" / "meta_score" | `three-way-split` |
+| "二阶收敛" / "final convergence" / "第二阶段终态" / "模块数冻结55" / "七判据" / "解冻七问" / "维护期" / "季度元反思" / "v11.0 收敛" / "二阶段收敛判定" | `skill-compaction§46.14` |
 | 模糊指令 | 追问 |
 
 ---
@@ -467,6 +476,7 @@ last_updated: 2026-07-25
 | 🌡️ 语义密度验证门 | `semantic-density.md` | 三维密度(info_entropy+entity_density+claim_density)+四态门控(ACCEPT/ACCEPT_WITH_WARNING/REJECT_DILUTE/REJECT_HOLLOW)+稀薄段定位+watermark追溯+与v7.0串联+v10.6反思协同 | 语义密度、信息密度门、稀薄文本检测、水分检测、density_score、空心文本 |
 | 📦 暂存与预算 | `staging-budget.md` | 三预算(token/time/count)+暂存区状态机(STAGING→CHECKING→APPLYING→COMMITTED/ROLLED_BACK)+五类冲突检测(同段/矛盾/累计越界/引用断裂/结构破坏)+atomic apply+整批回滚+与v7.0Update/v10.6反思/v10.7密度协同 | 暂存预算、批量提交、atomic apply、整批回滚、交叉冲突检测、暂存区 |
 | 🪞 三向切分门控 | `three-way-split.md` | 60/20/20切分(train/val/meta-hold-out)+meta仅3场景查询+过拟合信号(val升meta停滞→回滚)+4态判定(过拟合/真提升/双停滞/异常)+meta_converged加Converge第4判据+假收敛检测 | 三向切分、meta hold-out、过拟合检测、假收敛、meta_score、三层隔离 |
+| 🏁 **v11.0 二阶段终态收敛** | `skill-compaction.md§46.14-46.15` | 七判据(compact/train/pareto/evidence/reflection/gate/meta)+FinalConvergeResult+模块数冻结55+维护期(训练每月/Sleep每周/Dream季度/元反思季度)+三档重切(full36k/standard18k/minimal8k)+解冻七问(加严:55协同饱和+meta-hold-out非过拟合) | 二阶收敛、final convergence、第二阶段终态、模块数冻结55、七判据、解冻七问、维护期、季度元反思 |
 
 ---
 
@@ -578,5 +588,6 @@ novel-creation-omnibus/
     ├── skill-aware-reflection.md     # 技能感知反思（v10.6 新增，第52个模块）
     ├── semantic-density.md           # 语义密度验证门（v10.7 新增，第53个模块）
     ├── staging-budget.md             # 暂存与预算（v10.8 新增，第54个模块）
-    └── three-way-split.md            # 三向切分门控（v10.9 新增，第55个模块）
+    ├── three-way-split.md            # 三向切分门控（v10.9 新增，第55个模块）
+    └── skill-compaction.md§46.14-46.15  # v11.0 二阶段终态收敛（模块数冻结55，不新增功能模块）
 ```

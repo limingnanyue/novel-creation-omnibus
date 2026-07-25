@@ -604,9 +604,9 @@ min 版若帕累托被 best 支配 → 触发 rollback
 
 ## 46.13 终态宣告
 
-> v10.0 是技能自进化体系的终态版本。从 v7.0 训练循环 → v8.0 离线进化 → v9.0 多目标优化 → v10.0 压缩收敛，形成完整闭环。
+> v10.0 是技能自进化体系的第一阶段终态版本。从 v7.0 训练循环 → v8.0 离线进化 → v9.0 多目标优化 → v10.0 压缩收敛，形成完整闭环。
 >
-> **收敛后**：模块数冻结为 46，训练降频，仅保留 Sleep 离线进化。下一次重大升级（v11.0+）需触发"解冻"流程——证明有新能力无法通过现有 46 模块覆盖，且经元反思五问确认。
+> **第一阶段收敛后**：模块数冻结为 46，训练降频，仅保留 Sleep 离线进化。下一次重大升级（v11.0+）需触发"解冻"流程——证明有新能力无法通过现有 46 模块覆盖，且经元反思五问确认。
 
 ```
 v7.0 训练 → v8.0 离线 → v9.0 多目标 → v10.0 压缩收敛
@@ -614,3 +614,217 @@ v7.0 训练 → v8.0 离线 → v9.0 多目标 → v10.0 压缩收敛
    └──────────── Sleep 离线进化（每夜）──────────┘
                       （闭环）
 ```
+
+---
+
+## 46.14 v11.0 第二阶段终态收敛（Final Convergence）
+
+> **核心铁律**：v10.0 冻结 46 后，v10.1 经"解冻五问"确认 9 项新能力无法被现有 46 模块覆盖（决策可重建性 / 无凭证自进化 / 通用 Edit / 语义聚类 / LR 自适应 / 段落级 Edit / 密度门控 / 暂存预算 / 三向切分），故解冻并新增 9 个模块（47-55）。v11.0 在 9 个新模块全部上线、各自审计指标达标后，触发**第二阶段终态收敛**——模块数冻结为 55，进入维护期，仅保留 Sleep 离线进化 + 季度元反思。
+
+### v10.0（第一阶段） vs v11.0（第二阶段）
+
+| 维度 | v10.0 第一阶段 | v11.0 第二阶段 |
+|:-----|:---------------|:---------------|
+| 冻结模块数 | 46 | **55** |
+| 解冻触发 | v10.1 解冻五问 | v12.0+ 解冻七问（加严） |
+| 收敛判据数 | 3（compact/train/pareto） | **7**（含 v10.1-v10.9 全审计指标） |
+| 训练频率 | 每周 | **每月** |
+| Sleep 频率 | 每夜 | **每周** |
+| Dream 频率 | 每月 | **季度** |
+| 元反思频率 | 每 10 epoch | **每季度** |
+| 部署档 | full/standard/minimal | 同（55 模块三档重切） |
+
+### v11.0 第二阶段收敛七判据
+
+> **核心铁律**：v10.0 三判据只看 best_skill 本身是否收敛。v11.0 七判据额外纳入 v10.1-v10.9 九个新模块的审计指标——任一模块审计不达标，第二阶段不收敛，继续训练。
+
+```
+判据 ①：压缩收敛（继承 v10.0）
+  连续 3 次 Compact 的 min_score 提升 < 0.005
+  → compact_converged = true
+
+判据 ②：训练收敛（继承 v10.0）
+  连续 5 epoch 的 best_score 提升 < 0.01
+  → train_converged = true
+
+判据 ③：帕累托收敛（继承 v10.0）
+  连续 3 次 Dream-Rollout 无 breakthrough
+  → pareto_converged = true
+
+判据 ④：证据链完整性（v10.1）
+  连续 7 夜 evidence.jsonl hash 链无断裂
+  AND replay-evidence divergence_rate < 0.05
+  AND prompt-override audit_rate < 0.1
+  → evidence_converged = true
+
+判据 ⑤：反思与挖掘健康（v10.3 + v10.4 + v10.6）
+  contrastive accept_rate ∈ [0.3, 0.7]（非局部最优）
+  AND llm_miner composite_confidence ≥ 0.7 持续 7 夜
+  AND skill-aware anchor_verification_rate ≥ 0.9
+  → reflection_converged = true
+
+判据 ⑥：门控健康（v10.7 + v10.8 + v10.9）
+  semantic density_pass_rate ≥ 0.7
+  AND staging atomic_success_rate ≥ 0.9 AND rollback_rate < 0.1
+  AND three_way overfitting_detection_rate ∈ [0, 0.1]
+  AND false_convergence_rate < 0.05
+  → gate_converged = true
+
+判据 ⑦：LR 与元健康（v10.5 + v9.0）
+  LR 状态机连续 30 epoch 停留 NORMAL
+  AND 元反思五问连续 3 次无新增能力缺口
+  → meta_converged = true
+
+七判据全部命中 → 技能进入"第二阶段终态"
+  - 模块数冻结 = 55（不再增加）
+  - 训练降频为每月
+  - Sleep 降频为每周
+  - Dream 降频为季度
+  - 元反思降频为每季度
+  - 触发 v11.0 Final Convergence 宣告
+```
+
+### FinalConvergeResult Schema（v11.0）
+
+```json
+{
+  "skill_version": "v11.0",
+  "stage": "phase_2_final",
+  "module_count": 55,
+  "converge_status": {
+    "compact_converged": true,
+    "train_converged": true,
+    "pareto_converged": true,
+    "evidence_converged": true,
+    "reflection_converged": true,
+    "gate_converged": true,
+    "meta_converged": true,
+    "all_converged": true
+  },
+  "phase_1_frozen_at": "2026-07-25T03:30:00Z",
+  "phase_1_module_count": 46,
+  "phase_2_frozen_at": "2026-07-25T23:59:00Z",
+  "phase_2_module_count": 55,
+  "modules_added_in_phase_2": [
+    "evidence-chain", "handoff-backend", "contrastive-reflection",
+    "llm-miner", "lr-autonomous", "skill-aware-reflection",
+    "semantic-density", "staging-budget", "three-way-split"
+  ],
+  "final_composite_score": 8.91,
+  "training_frequency": "monthly",
+  "sleep_frequency": "weekly",
+  "dream_frequency": "quarterly",
+  "meta_reflect_frequency": "quarterly",
+  "next_review": "2026-10-25",
+  "unfreeze_criteria": "v12.0+ 解冻七问（见 §46.15）"
+}
+```
+
+### 第二阶段维护期训练降频策略
+
+| 阶段 | 训练频率 | Sleep 频率 | Dream 频率 | 元反思频率 | 备注 |
+|:-----|:---------|:----------|:----------|:----------|:-----|
+| v7.0-v9.0（成长期） | 每章 | 每夜 | 每 5 epoch | 每 10 epoch | 高频迭代 |
+| v10.0（一阶收敛期） | 每周 | 每夜 | 每月 | 每 10 epoch | 降频保稳 |
+| **v11.0（二阶维护期）** | **每月** | **每周** | **季度** | **季度** | **仅维护** |
+| v12.0+（解冻后） | 视解冻范围 | 视范围 | 视范围 | 视范围 | 重新进入成长期 |
+
+### v11.0 Final Convergence 宣告
+
+```
+v7.0 训练 → v8.0 离线 → v9.0 多目标 → v10.0 一阶收敛（46）
+                                              │
+                                              ▼ 解冻五问
+v10.1 证据链 → v10.2 交接 → v10.3 对比反思 → v10.4 LLM矿工
+   → v10.5 自主LR → v10.6 技能感知 → v10.7 密度门
+   → v10.8 暂存预算 → v10.9 三向切分
+                                              │
+                                              ▼ 七判据全中
+                                       v11.0 二阶终态收敛（55）
+                                              │
+                                              ▼ 维护期
+                              Sleep 每周 + 元反思季度 + Dream 季度
+                                              │
+                                              ▼ v12.0+ 解冻七问
+                                       （第三阶段进化）
+```
+
+### v11.0 部署三档重切
+
+> 55 个模块按三档重新分配 token 预算（v10.0 的 46 模块三档作废，以 v11.0 为准）。
+
+| 档位 | token 预算 | 模块数 | 适用场景 |
+|:-----|:----------|:-------|:---------|
+| `full` | 36k+ | 55 | 大模型（Claude/GPT-4） + 长篇创作 |
+| `standard` | 18k | 55（压缩） | 中模型（DeepSeek/Qwen） + 日常创作 |
+| `minimal` | 8k | 55（极简） | 小模型（7B/13B） + 单章写作 |
+
+### v11.0 极简档（minimal）按需加载策略
+
+```
+基础包（恒定加载，~4k token）：
+  - 总纲铁律（6条）
+  - 任务路由表（精简版）
+  - 安全边界（5条）
+  - core-writing §1（写正文基础流程）
+  - anti-ai-polish §1（L1-L4 门禁骨架）
+  - skill-evolution §1（六步循环骨架，v11.0 收敛态）
+
+按需加载（任务触发时加载，~4k token 预算）：
+  - 用户说"写对话" → 加载 dialogue-mastery 骨架
+  - 用户说"修衔接" → 加载 transitions-causality 骨架
+  - 用户说"去AI味" → 加载 anti-ai-polish 完整
+  - 用户说"审稿" → 加载 audit-workflow 骨架
+  - 用户说"训练技能" → 加载 skill-evolution + meta-optimizer 骨架
+  - 用户说"夜间自进化" → 加载 sleep-evolution + evidence-chain 骨架
+  - 用户说"压缩技能" → 加载 skill-compaction §46.14（v11.0 收敛宣告）
+  - ...（按路由表触发）
+```
+
+---
+
+## 46.15 v12.0+ 解冻七问（加严）
+
+> **核心铁律**：v10.1 的解冻五问让 9 个新模块进入第二阶段。v11.0 收敛后，第三阶段（v12.0+）的解冻门槛加严为七问——必须在"五问"基础上额外证明"现有 55 模块的协同已无优化空间"且"新能力已通过三向切分 meta-hold-out 验证非过拟合"。
+
+```
+解冻七问（v12.0+ 触发）：
+
+① 决策重建覆盖？        （继承 v10.1）
+   现有 evidence-chain + replay-evidence 是否无法覆盖新能力的决策重建？
+
+② 提示词覆盖覆盖？      （继承 v10.1）
+   现有 prompt-template registry 是否无法承载新能力的提示词定制？
+
+③ 帕累托前沿？          （继承 v10.1）
+   新能力是否在四维帕累托前沿上严格支配现有最优解？
+
+④ 训练健康度？          （继承 v10.1）
+   新能力是否解决了一个 train_converged=false 的训练健康度问题？
+
+⑤ Dream 验证？          （继承 v10.1）
+   新能力是否通过 Dream-Rollout 验证为 breakthrough（非随机波动）？
+
+⑥ 55 模块协同已饱和？   （v11.0 新增）
+   是否经元反思确认：现有 55 模块的协同优化已无空间
+   （即：v10.3 对比反思 / v10.4 LLM 矿工 / v10.5 自主LR / v10.6 技能感知
+   / v10.7 密度门 / v10.8 暂存预算 / v10.9 三向切分 均已收敛且无新 Edit 产出）？
+
+⑦ meta-hold-out 验证？  （v11.0 新增）
+   新能力是否通过三向切分的 meta-hold-out 验证
+   （即：在 meta 验证集上 val_trend>0 AND meta_trend>0，非过拟合）？
+
+七问全中 → 解冻，进入第三阶段进化（v12.0+）
+任一未中 → 不解冻，继续维护期
+```
+
+### 解冻七问 vs 解冻五问
+
+| 维度 | v10.1 解冻五问 | v11.0 解冻七问 |
+|:-----|:---------------|:---------------|
+| 问题数 | 5 | **7**（+2 加严） |
+| 第 6 问 | 无 | 55 模块协同饱和度 |
+| 第 7 问 | 无 | meta-hold-out 非过拟合验证 |
+| 触发频率 | 每 10 epoch | **每季度** |
+| 门槛 | 中（五问全中） | **高**（七问全中 + 季度元反思） |
+| 适用阶段 | 第二阶段（v10.1-v10.9） | 第三阶段（v12.0+） |

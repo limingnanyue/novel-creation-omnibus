@@ -1,5 +1,69 @@
 # Changelog
 
+## [v11.0.0] — 2026-07-25
+### Final Convergence — 二阶段终态收敛（模块数冻结 55，不新增功能模块）
+
+> v10.0 宣告"模块数冻结=46"进入第一阶段终态。v10.1 经"解冻五问"确认 9 项新能力无法被现有 46 模块覆盖（决策可重建性 / 无凭证自进化 / 通用 Edit / 语义聚类 / LR 自适应 / 段落级 Edit / 密度门控 / 暂存预算 / 三向切分），故解冻并新增 9 个模块（47-55）。v11.0 在 9 个新模块全部上线、各自审计指标达标后，触发**第二阶段终态收敛**——模块数冻结为 55，进入维护期，仅保留 Sleep 离线进化 + 季度元反思。**v11.0 不新增功能模块，而是增强 skill-compaction.md 的 Converge 逻辑（§46.14-46.15）。**
+
+### Changed · skill-compaction.md 增强（不新增模块文件）
+- **§46.13 终态宣告**：标注 v10.0 为"第一阶段终态"，预留 v11.0 二阶段收敛
+- **§46.14 v11.0 第二阶段终态收敛**：
+  - **v10.0 vs v11.0 对照表**：冻结模块数 46→55 / 解冻触发 五问→七问 / 收敛判据数 3→7 / 训练频率 每周→每月 / Sleep 每夜→每周 / Dream 每月→季度 / 元反思 每10epoch→季度
+  - **七判据**（在 v10.0 三判据基础上 +4）：
+    - ① 压缩收敛（继承 v10.0）
+    - ② 训练收敛（继承 v10.0）
+    - ③ 帕累托收敛（继承 v10.0）
+    - ④ 证据链完整性（v10.1：连续 7 夜 hash 链无断裂 AND replay divergence<0.05 AND override audit<0.1）
+    - ⑤ 反思与挖掘健康（v10.3+v10.4+v10.6：contrastive accept∈[0.3,0.7] AND llm_miner confidence≥0.7 持续7夜 AND skill-aware anchor≥0.9）
+    - ⑥ 门控健康（v10.7+v10.8+v10.9：density pass≥0.7 AND staging atomic≥0.9 AND rollback<0.1 AND three-way overfitting∈[0,0.1] AND false_convergence<0.05）
+    - ⑦ LR 与元健康（v10.5+v9.0：LR 状态机连续30epoch NORMAL AND 元反思五问连续3次无新增缺口）
+  - **FinalConvergeResult Schema**：stage=phase_2_final / phase_1_frozen_at / phase_2_frozen_at / modules_added_in_phase_2（九模块清单）/ training_frequency=monthly / sleep_frequency=weekly / dream_frequency=quarterly / next_review=2026-10-25
+  - **维护期训练降频策略表**：v7-v9 成长期 / v10.0 一阶收敛期 / v11.0 二阶维护期 / v12.0+ 解冻后
+  - **v11.0 Final Convergence 宣告图**：v7→v8→v9→v10.0(46)→解冻五问→v10.1-v10.9(55)→七判据全中→v11.0 二阶终态→维护期→v12.0+ 解冻七问
+  - **三档重切**：full 36k / standard 18k / minimal 8k（55 模块）
+  - **极简档按需加载策略**：基础包 +4k（含 skill-evolution §1 收敛态骨架）
+- **§46.15 v12.0+ 解冻七问（加严）**：
+  - 在 v10.1 解冻五问基础上 +2 问
+  - 第 6 问：55 模块协同已饱和？（v10.3/v10.4/v10.5/v10.6/v10.7/v10.8/v10.9 均收敛且无新 Edit）
+  - 第 7 问：meta-hold-out 验证？（val_trend>0 AND meta_trend>0，非过拟合）
+  - 解冻五问 vs 七问对照表：问题数 5→7 / 触发频率 每10epoch→每季度 / 门槛 中→高 / 适用阶段 二阶段→三阶段
+
+### Changed · 配置文件同步
+- SKILL.md：版本 10.9→11.0，新增 8 个触发词（二阶收敛/final convergence/第二阶段终态/模块数冻结55/七判据/解冻七问/维护期/季度元反思）+ 路由 + 模块索引（v11.0 二阶段终态收敛行）+ 文件结构（skill-compaction.md§46.14-46.15）
+- README.md：标题 v10.9→v11.0，Agent Skills 徽章 10.9→11.0，新增 Final 徽章，模块表新增 three-way-split 行（补 v10.9 遗漏）+ skill-compaction§46.14-46.15 行，对比表 v10.8→v11.0，模块数 54→55，版本历史新增 v10.9 + v11.0
+- marketplace.json：版本 10.9.0→11.0.0，description 同步二阶段终态收敛
+- test-prompts.json：新增 test-38（二阶段收敛判定，总数 38）
+- 鲁班结构尺自检：14 PASS / 0 WARN / 0 FAIL
+
+### 终态宣告
+v11.0 是技能自进化体系的第二阶段终态版本。从 v10.0 一阶收敛（46）→ v10.1 解冻 → v10.1-v10.9 九模块扩展（47-55）→ v11.0 二阶收敛（55），形成完整闭环。收敛后模块数冻结为 55，训练降频为每月，Sleep 降频为每周，Dream 降频为季度，元反思降频为每季度。下一次重大升级（v12.0+）需触发"解冻七问"——在 v10.1 解冻五问基础上额外证明"现有 55 模块协同已饱和"且"新能力已通过 meta-hold-out 非过拟合验证"。
+
+---
+
+## [v10.9.0] — 2026-07-25
+### 3-Way Split Gate — 三向切分门控（新增第 55 个模块）
+
+> 集成 Microsoft SkillOpt v0.2.0 `skillopt/gate/three_way_split.py` + `skillopt/prompts/three_way_split.md`：v7.0 用 70/30 切分（训练/验证）——但验证集被反复用于"判断技能是否提升"，导致 best_skill 隐式过拟合验证集。v10.9 引入三向切分——再多切一份"元验证集"（meta-hold-out），仅用于"判断元过程是否健康"，永不进训练循环，确保 best_skill 的提升是真实的而非对验证集的过拟合。
+
+### Added · 新增第 55 个模块：three-way-split.md
+- **三向切分比例**：60% train（进训练循环）+ 20% val（进验证门）+ 20% meta-hold-out（仅元层查询）
+- **meta-hold-out 查询限制**：仅三类场景（epoch 结束/元反思触发/Converge 判定），每 epoch 最多 1 次
+- **过拟合检测**：val_trend>0 且 meta_trend≤0 → 触发回滚到过拟合前版本+标记过拟合 Edit+重切分 val/meta
+- **四态判定**：过拟合/真提升/双停滞/异常，对应触发回滚/继续训练/LR 回升/数据审计
+- **Converge 增强**：新增 meta_converged 判据（前 3 判据过但 meta 未过 → 假收敛）
+- **审计 5 指标**：meta_query_rate/val_meta_gap/overfitting_detection_rate/false_convergence_rate/split_rotation_rate
+- **配置**：.skillopt/three-way-split.yaml（比例/冻结 epoch/查询限制/过拟合阈值）
+- **日志**：three_way_split.json（切分状态）+ three_way_split_log.jsonl（查询记录）
+
+### Changed
+- SKILL.md：版本 10.8→10.9，模块数 54→55，新增 12 个触发词+路由+索引
+- README.md：模块数 54→55，新增 3-Way 徽章，版本历史新增 v10.9
+- marketplace.json：版本 10.8.0→10.9.0
+- test-prompts.json：新增 test-37（总数 37）
+- 鲁班结构尺自检：14 PASS / 0 WARN / 0 FAIL
+
+---
+
 ## [v10.8.0] — 2026-07-25
 ### Staging & Budget — 暂存与预算（新增第 54 个模块）
 

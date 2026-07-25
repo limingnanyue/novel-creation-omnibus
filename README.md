@@ -1,10 +1,10 @@
 <div align="center">
 
-# 🖋️ 小说创作全能工坊 v10.9
+# 🖋️ 小说创作全能工坊 v11.0
 
 > *「写小说最难的不是写，是写完不烂尾、不水、不带AI味。」*
 
-[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-10.9-blueviolet)](SKILL.md)
+[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-11.0-blueviolet)](SKILL.md)
 [![skills.sh](https://skills.sh/b/limingnanyue/novel-creation-omnibus)](https://skills.sh/limingnanyue/novel-creation-omnibus)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Modules](https://img.shields.io/badge/Modules-55-brightgreen)](references/modules/)
@@ -23,8 +23,9 @@
 [![Density](https://img.shields.io/badge/Density-%E8%AF%AD%E4%B9%89%E5%AF%86%E5%BA%A6%E9%97%A8-d63384)](references/modules/semantic-density.md)
 [![Staging](https://img.shields.io/badge/Staging-%E6%9A%82%E5%AD%98%E9%A2%84%E7%AE%97%7CAtomic-0ca6c2)](references/modules/staging-budget.md)
 [![3-Way](https://img.shields.io/badge/3--Way-%E4%B8%89%E5%90%91%E5%88%87%E5%88%86%7CMeta--Hold--out-6f42c1)](references/modules/three-way-split.md)
+[![Final](https://img.shields.io/badge/Final-%E4%BA%8C%E9%98%B6%E7%BB%88%E6%80%81%E6%94%B6%E6%95%9B%7C%E5%86%BB%E7%BB%9355-198754)](references/modules/skill-compaction.md)
 
-**从0到完本，55套工具按需加载——长篇网文、短篇虐文、番茄爆文、白描克制、五专家审计、技能自进化、夜间离线自进化、多目标元优化、自适应技能压缩、证据链与决策重建、无模型交接后端、多轮对比反思、LLM 矿工、自主学习率、技能感知反思、语义密度验证门、暂存与预算、三向切分门控，一个工坊搞定。**
+**从0到完本，55套工具按需加载——长篇网文、短篇虐文、番茄爆文、白描克制、五专家审计、技能自进化、夜间离线自进化、多目标元优化、自适应技能压缩、证据链与决策重建、无模型交接后端、多轮对比反思、LLM 矿工、自主学习率、技能感知反思、语义密度验证门、暂存与预算、三向切分门控、v11.0 二阶段终态收敛（模块数冻结55+七判据+解冻七问），一个工坊搞定。**
 
 [看效果](#效果示例) · [安装](#快速开始) · [触发方式](#触发方式) · [55个模块](#47个模块按需加载) · [它和同类有什么不同](#它和同类有什么不同) · [安全边界](#安全边界) · [验证与测试](#验证与测试)
 
@@ -221,13 +222,15 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 | `lr-autonomous` | 📈 **v10.5：accept率滑动窗口(N=10)+四档multiplier(1.2加大/1.0保持/0.8保守/2.0回升)+多维accept(Q/S/T/R短板效应)+LR回升探测(持续低accept触发×2跑3epoch)+局部最优逃逸+状态机(NORMAL/PROBING/ESCAPED/STUCK)+LR边界[0.001,0.3]** |
 | `skill-aware-reflection` | 🎯 **v10.6：skill_section_anchor段落定位+按模块族路由4模板(writing/evolution/audit/data)+段落级Edit(target_skill_section+old_text+new_text)+grounding_skill_hash校验(防基于过期技能反思)+与v7.0通用反思/v10.3对比反思并行协同+anchor验证率审计** |
 | `semantic-density` | 🌡️ **v10.7：三维密度(info_entropy信息熵+entity_density实体密度+claim_density论点密度)+四态门控(ACCEPT/ACCEPT_WITH_WARNING/REJECT_DILUTE稀薄/REJECT_HOLLOW空心)+稀薄段定位+watermark追溯+与v7.0串联(分数门后接密度门)+REJECT_DILUTE触发v10.6反思+audit 4指标(density_pass_rate/dilute_reject_rate/hollow_reject_rate/sparse_segment_count)** |
-| `staging-budget` | 📦 **🆕 v10.8：三预算(token 4000/time 600s/count 20)+暂存区状态机(STAGING→CHECKING→APPLYING→COMMITTED/ROLLED_BACK)+五类交叉冲突检测(同段/矛盾/累计越界/引用断裂/结构破坏)+4种解决策略(FIRST_WINS/HIGH_CONFIDENCE_WINS/HUMAN_REVIEW/AUTO_MERGE)+atomic apply整批应用+整批回滚+应用前备份.bak.{ts}+应用后跑v10.7密度门密度下降触发回滚+CONFLICT/ROLLED_BACK触发v10.6反思+audit 5指标(atomic_success_rate/conflict_rate/rollback_rate/avg_batch_size/budget_utilization)** |
+| `staging-budget` | 📦 **v10.8：三预算(token 4000/time 600s/count 20)+暂存区状态机(STAGING→CHECKING→APPLYING→COMMITTED/ROLLED_BACK)+五类交叉冲突检测(同段/矛盾/累计越界/引用断裂/结构破坏)+4种解决策略(FIRST_WINS/HIGH_CONFIDENCE_WINS/HUMAN_REVIEW/AUTO_MERGE)+atomic apply整批应用+整批回滚+应用前备份.bak.{ts}+应用后跑v10.7密度门密度下降触发回滚+CONFLICT/ROLLED_BACK触发v10.6反思+audit 5指标(atomic_success_rate/conflict_rate/rollback_rate/avg_batch_size/budget_utilization)** |
+| `three-way-split` | 🪞 **v10.9：60/20/20三向切分(train/val/meta-hold-out)+meta仅3场景查询(epoch_end/meta_reflect/converge_check)+过拟合信号(val升meta停滞→回滚到过拟合前版本+标记过拟合Edit+触发v9.0元反思+重切分val/meta)+4态判定(过拟合/真提升/双停滞/异常)+meta_converged加Converge第4判据(前3判据过但meta未过→假收敛触发回滚)+meta内容不进日志+审计5指标(meta_query_rate≤1/epoch/val_meta_gap<0.05/overfitting_detection_rate 0-0.1/false_convergence_rate<0.05/split_rotation_rate每10 epoch一次)** |
+| `skill-compaction§46.14-46.15` | 🏁 **🆕 v11.0：二阶段终态收敛(模块数冻结55)+七判据(compact/train/pareto/evidence/reflection/gate/meta)+FinalConvergeResult Schema+维护期训练降频(训练每月/Sleep每周/Dream季度/元反思季度)+三档重切(full 36k/standard 18k/minimal 8k)+解冻七问(加严:55协同饱和+meta-hold-out非过拟合)+v12.0+第三阶段进化门槛** |
 
 ## 它和同类有什么不同？
 
-| 维度 | 其他写作Skill | **本工坊 v10.8** |
+| 维度 | 其他写作Skill | **本工坊 v11.0** |
 |:-----|:-------------|:----------------|
-| 模块数 | 1-10个 | **54个**，覆盖写作全流程（v10.1 解冻，v10.8 扩展） |
+| 模块数 | 1-10个 | **55个**，覆盖写作全流程（v10.1 解冻→v10.9 扩展→v11.0 二阶收敛冻结） |
 | 技能自进化 | 无 | **SkillOpt 六步循环**+EditOp有界编辑+验证门+学习率预算+拒绝编辑缓冲+best_skill版本管理 |
 | 夜间离线自进化 | 无 | **SkillOpt-Sleep 四阶段**(Harvest→Mine→Replay→Consolidate)+跨书籍迁移+降级策略+sleep_history索引 |
 | 多目标元优化 | 无 | **四维帕累托**(质量×速度×token×留存)+Dream-Rollout探索+SlowUpdate EMA慢更新+元反思五问+跨书迁移三模式 |
@@ -421,6 +424,8 @@ novel-creation-omnibus/
 
 | 版本 | 亮点 |
 |:-----|:------|
+| **v11.0** | 🏁 🆕 二阶段终态收敛（Final Convergence）：模块数冻结55（不新增功能模块）+七判据(compact_converged/train_converged/pareto_converged/evidence_converged/reflection_converged/gate_converged/meta_converged)+FinalConvergeResult Schema(phase_1_frozen_at/phase_2_frozen_at/modules_added_in_phase_2九模块)+维护期训练降频(训练每月/Sleep每周/Dream季度/元反思季度)+三档重切(full 36k/standard 18k/minimal 8k)+解冻七问加严(在v10.1解冻五问基础上+第6问55模块协同饱和度+第7问meta-hold-out非过拟合验证)+v12.0+第三阶段进化门槛+skill-compaction.md§46.14-46.15增强 |
+| **v10.9** | 🪞 🆕 三向切分门控：60/20/20三向切分(train/val/meta-hold-out)+meta仅3场景查询(epoch_end/meta反思/converge判定)+过拟合信号(val升meta停滞→回滚到过拟合前版本+标记过拟合Edit+触发v9.0元反思+重切分val/meta)+4态判定(过拟合/真提升/双停滞/异常)+meta_converged加Converge第4判据(前3判据过但meta未过→假收敛触发回滚)+meta内容不进日志+审计5指标(meta_query_rate≤1/epoch/val_meta_gap<0.05/overfitting_detection_rate 0-0.1/false_convergence_rate<0.05/split_rotation_rate每10 epoch一次)+模块数54→55 |
 | **v10.8** | 📦 🆕 暂存与预算：三预算(token 4000/time 600s/count 20)+暂存区状态机(STAGING→CHECKING→APPLYING→COMMITTED/ROLLED_BACK)+五类交叉冲突检测(同段冲突old_text重叠/矛盾冲突语义相反/累计越界token超上限/引用断裂删段被引用/结构破坏删多章节)+4种解决策略(FIRST_WINS先入保留/HIGH_CONFIDENCE_WINS高置信保留/HUMAN_REVIEW人工裁决/AUTO_MERGE同段同语义LLM合并)+atomic apply整批应用+应用前备份best_skill.md.bak.{ts}+任一失败整批回滚+应用后跑v10.7密度门密度下降触发回滚+CONFLICT/ROLLED_BACK触发v10.6反思产新Edit+审计5指标(atomic_success_rate≥0.9/conflict_rate 0.05-0.15/rollback_rate<0.1/avg_batch_size 8-15/budget_utilization 0.7-0.9)+模块数53→54 |
 | **v10.7** | 🌡️ 🆕 语义密度验证门：三维密度指标(info_entropy信息熵去重后Shannon熵+entity_density实体密度NER/100token+claim_density论点密度/100token)+四态门控(ACCEPT≥0.7/ACCEPT_WITH_WARNING 0.5-0.7 watermark追溯/REJECT_DILUTE 0.3-0.5稀薄触发v10.6反思/REJECT_HOLLOW<0.3空心直接拒绝进rejected_edits)+稀薄段定位(start/end/text/reason)+与v7.0分数门串联(不替代)+REJECT_DILUTE触发v10.6技能感知反思产段落级Edit+审计4指标(density_pass_rate≥0.7/dilute_reject_rate 0.05-0.15/hollow_reject_rate<0.05/sparse_segment_count≤1)+模块数52→53 |
 | **v10.6** | 🎯 🆕 技能感知反思：skill_section_anchor段落定位(在best_skill.md中扫module段+失败信号关键词匹配1-3子段)+按模块族路由4模板(writing/evolution/audit/data)+段落级Edit(target_skill_section+old_text+new_text精确落点)+grounding_skill_hash校验(防基于过期技能反思)+anchor验证率审计+与v7.0通用反思/v10.3对比反思并行协同(不替代)+定位失败退回v7.0+模块数51→52 |
