@@ -1,23 +1,24 @@
 <div align="center">
 
-# 🖋️ 小说创作全能工坊 v10.0
+# 🖋️ 小说创作全能工坊 v10.1
 
 > *「写小说最难的不是写，是写完不烂尾、不水、不带AI味。」*
 
-[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-10.0-blueviolet)](SKILL.md)
+[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-10.1-blueviolet)](SKILL.md)
 [![skills.sh](https://skills.sh/b/limingnanyue/novel-creation-omnibus)](https://skills.sh/limingnanyue/novel-creation-omnibus)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Modules](https://img.shields.io/badge/Modules-46-brightgreen)](references/modules/)
+[![Modules](https://img.shields.io/badge/Modules-47-brightgreen)](references/modules/)
 [![AI 去味](https://img.shields.io/badge/AI%E5%8E%BB%E5%91%B3-L1--L4%E5%9B%9B%E5%B1%82%E7%A1%AC%E9%97%A8%E7%A6%81%E2%9C%A8-orange)](references/modules/anti-ai-polish.md)
 [![Audit](https://img.shields.io/badge/Audit-E1--E5%E4%BA%94%E4%B8%93%E5%AE%B6-red)](references/modules/audit-workflow.md)
 [![SkillOpt](https://img.shields.io/badge/SkillOpt-v0.2.0%20%E8%87%AA%E8%BF%9B%E5%8C%96-9cf)](references/modules/skill-evolution.md)
 [![Sleep](https://img.shields.io/badge/Sleep-%E5%A4%9C%E9%97%B4%E7%A6%BB%E7%BA%BF%E8%87%AA%E8%BF%9B%E5%8C%96-6f42c1)](references/modules/sleep-evolution.md)
 [![Meta](https://img.shields.io/badge/Meta-%E5%A4%9A%E7%9B%AE%E6%A0%87%E5%B8%95%E7%B4%AF%E6%89%98-d63384)](references/modules/meta-optimizer.md)
 [![Compaction](https://img.shields.io/badge/Compaction-%E5%8E%8B%E7%BC%A9%E6%94%B6%E6%95%9B%7C8k%20token%E9%83%A8%E7%BD%B2-198754)](references/modules/skill-compaction.md)
+[![Evidence](https://img.shields.io/badge/Evidence-%E8%AF%81%E6%8D%AE%E9%93%BE%7C%E8%A7%A3%E5%86%BB-6610f2)](references/modules/evidence-chain.md)
 
-**从0到完本，46套工具按需加载——长篇网文、短篇虐文、番茄爆文、白描克制、五专家审计、技能自进化、夜间离线自进化、多目标元优化、自适应技能压缩，一个工坊搞定。**
+**从0到完本，47套工具按需加载——长篇网文、短篇虐文、番茄爆文、白描克制、五专家审计、技能自进化、夜间离线自进化、多目标元优化、自适应技能压缩、证据链与决策重建，一个工坊搞定。**
 
-[看效果](#效果示例) · [安装](#快速开始) · [触发方式](#触发方式) · [46个模块](#46个模块按需加载) · [它和同类有什么不同](#它和同类有什么不同) · [安全边界](#安全边界) · [验证与测试](#验证与测试)
+[看效果](#效果示例) · [安装](#快速开始) · [触发方式](#触发方式) · [47个模块](#47个模块按需加载) · [它和同类有什么不同](#它和同类有什么不同) · [安全边界](#安全边界) · [验证与测试](#验证与测试)
 
 </div>
 
@@ -156,7 +157,7 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 - ✅ **节拍审计报告**（Dramatica 11拍定位 + 节拍×伏笔×角色协同检查）
 - ✅ **跨会话状态文件**（meta_review_log.jsonl + next_focus 注入）
 
-## 46个模块，按需加载
+## 47个模块，按需加载
 
 | 模块 | 说明 |
 |:-----|:-----|
@@ -204,17 +205,19 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 | `skill-evolution` | 🧬 **v7.0：SkillOpt六步循环(Rollout→Reflect→Aggregate→Select→Update→Evaluate)+EditOp有界编辑+验证门+学习率预算+拒绝编辑缓冲+best_skill版本管理** |
 | `sleep-evolution` | 😴 **v8.0：SkillOpt-Sleep四阶段(Harvest→Mine→Replay→Consolidate)+夜间离线+跨书籍迁移+降级策略+归档保留+sleep_history索引** |
 | `meta-optimizer` | 🎯 **v9.0：四维帕累托(质量×速度×token×留存)+Dream-Rollout探索+SlowUpdate EMA慢更新+元反思五问+跨书迁移三模式+增强版验证门** |
-| `skill-compaction` | 📦 **🆕 v10.0：Distill蒸馏+Cross-Benchmark三基准迁移(bench_A_long/bench_B_short/bench_C_commerce)+Compact四类差异化+Rollback-Guard版本回滚+Converge终态收敛(模块数冻结46)+三档部署(full/standard/minimal)+8k token零成本部署** |
+| `skill-compaction` | 📦 **v10.0：Distill蒸馏+Cross-Benchmark三基准迁移+Compact四类差异化+Rollback-Guard版本回滚+Converge终态收敛(模块数冻结46)+三档部署(full/standard/minimal)+8k token零成本部署** |
+| `evidence-chain` | 🔗 **🆕 v10.1：每夜evidence.jsonl五阶段链(harvest/mine/replay/reflect/gate)+hash完整性+prompt-template registry+user overrides三态+决策重建replay-evidence+解冻五问** |
 
 ## 它和同类有什么不同？
 
-| 维度 | 其他写作Skill | **本工坊 v10.0** |
+| 维度 | 其他写作Skill | **本工坊 v10.1** |
 |:-----|:-------------|:----------------|
-| 模块数 | 1-10个 | **46个**，覆盖写作全流程（终态冻结） |
+| 模块数 | 1-10个 | **47个**，覆盖写作全流程（v10.1 解冻） |
 | 技能自进化 | 无 | **SkillOpt 六步循环**+EditOp有界编辑+验证门+学习率预算+拒绝编辑缓冲+best_skill版本管理 |
 | 夜间离线自进化 | 无 | **SkillOpt-Sleep 四阶段**(Harvest→Mine→Replay→Consolidate)+跨书籍迁移+降级策略+sleep_history索引 |
 | 多目标元优化 | 无 | **四维帕累托**(质量×速度×token×留存)+Dream-Rollout探索+SlowUpdate EMA慢更新+元反思五问+跨书迁移三模式 |
 | 自适应技能压缩 | 无 | **Distill 蒸馏**+Cross-Benchmark 三基准迁移+Compact 四类差异化+Rollback-Guard 版本回滚+Converge 终态收敛+三档部署(full/standard/minimal)+8k token 零成本部署 |
+| 证据链与决策重建 | 无 | **每夜 evidence.jsonl 五阶段链**(harvest/mine/replay/reflect/gate)+hash 完整性+prompt-template registry+user overrides 三态+replay-evidence 决策重建+解冻五问 |
 | 去AI味 | 简单禁用词替换 | **L1-L4 四层硬门禁**+L3方法论三节+6类逐句审查+段落功能二分法+DeepSeek 734句式+模型感知 |
 | 专家审计 | 无 | **五专家面板(E1-E5)**+11维评估+6阶段流程+交叉审计+评分治理红线+预算护栏 |
 | 风格配置 | 无 | **8风格维度+7题材路由+8典型档位+风格漂移检测** |
@@ -320,7 +323,7 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 
 ## 验证与测试
 
-本仓库含 28 个测试用例（[examples/test-prompts.json](examples/test-prompts.json)），覆盖全部 46 个模块——含 v6.0 审计、v6.1 L1-L4 硬门禁/节拍审计、v6.2 风格配置/MBTI/温度词库/16维快照/评分治理红线、v7.0 SkillOpt 六步循环、v8.0 SkillOpt-Sleep 四阶段、v9.0 多目标帕累托+Dream+EMA、v10.0 技能压缩+蒸馏+跨基准迁移+版本回滚+终态收敛专项用例。
+本仓库含 29 个测试用例（[examples/test-prompts.json](examples/test-prompts.json)），覆盖全部 47 个模块——含 v6.0 审计、v6.1 L1-L4 硬门禁/节拍审计、v6.2 风格配置/MBTI/温度词库/16维快照/评分治理红线、v7.0 SkillOpt 六步循环、v8.0 SkillOpt-Sleep 四阶段、v9.0 多目标帕累托+Dream+EMA、v10.0 技能压缩+蒸馏+跨基准迁移+版本回滚+终态收敛、v10.1 证据链+提示模板注册+决策重建+解冻五问专项用例。
 
 **验收命令——章首连续性检查（core-writing 铁律）：**
 
@@ -358,7 +361,7 @@ novel-creation-omnibus/
 ├── CHANGELOG.md                      # 版本更新记录
 ├── LICENSE                           # MIT
 ├── examples/
-│   ├── test-prompts.json             # 28个测试用例（含 v6.0-v10.0 专项）
+│   ├── test-prompts.json             # 29个测试用例（含 v6.0-v10.1 专项）
 │   ├── demo-output.md                # v6.2 工具链协同输出示例
 │   └── sample-chapter.md             # 真实示例章节（约2000字，供工具分析）
 ├── assets/
@@ -370,7 +373,7 @@ novel-creation-omnibus/
 │   ├── check-skill-repo.sh           # 发布就绪度自检（鲁班结构尺）
 │   ├── gen-demo-gif.py               # 生成 demo.gif 的脚本
 │   └── install.sh                    # 一键安装脚本（含验证）
-└── references/modules/               # 46个模块，按需加载
+└── references/modules/               # 47个模块，按需加载
     ├── core-writing.md               # 长篇正文写作
     ├── anti-ai-polish.md             # 去AI味 v3.0（L1-L4 四层硬门禁）
     ├── audit-workflow.md             # 审计工作流 v3.0（五专家+评分治理红线）
@@ -383,7 +386,8 @@ novel-creation-omnibus/
     ├── skill-evolution.md            # v7.0 技能自进化引擎（SkillOpt 集成）
     ├── sleep-evolution.md            # v8.0 离线自进化引擎（SkillOpt-Sleep 集成）
     ├── meta-optimizer.md             # v9.0 多目标元优化器（帕累托+Dream+EMA）
-    ├── skill-compaction.md           # 🆕 v10.0 自适应技能压缩（Distill+Compact+Rollback+Converge）
+    ├── skill-compaction.md           # v10.0 自适应技能压缩（Distill+Compact+Rollback+Converge）
+    ├── evidence-chain.md             # 🆕 v10.1 证据链与提示注册（evidence.jsonl+registry+解冻）
     └── ...                           # 完整列表见 SKILL.md
 ```
 
@@ -391,6 +395,7 @@ novel-creation-omnibus/
 
 | 版本 | 亮点 |
 |:-----|:------|
+| **v10.1** | 🔗 🆕 证据链与提示模板注册表：每夜evidence.jsonl五阶段链(harvest/mine/replay/reflect/gate)+hash完整性+Evidence Record schema+prompt-template registry三态(default/user_override/pinned)+user overrides审计+决策重建replay-evidence三态(reproducible/diverged/incomplete)+divergence_log+解冻五问(元反思确认)+模块数46→47 |
 | **v10.0** | 📦 🆕 自适应技能压缩与零成本部署：Distill蒸馏提取能力骨架+Cross-Benchmark三基准迁移(bench_A_long/bench_B_short/bench_C_commerce)+Compact四类差异化处理+Rollback-Guard版本回滚三态(accept/accept_with_warning/rollback)+Converge终态收敛三判据(compact/train/pareto)+三档部署(full/standard/minimal)+8k token零成本部署+元能力不可压缩+回滚黑名单+训练降频策略+模块数冻结46（终态宣告） |
 | **v9.0** | 🎯 🆕 多目标元优化器：四维帕累托(质量×速度×token×留存)+composite_score加权公式+Dream-Rollout三步探索+SlowUpdate EMA慢更新三档α+正则化项巨变预警+元反思五问(每10epoch)+跨书迁移三模式(直接/抽象/能力)+增强版验证门(四action含pareto_dominated)+transfer_log.jsonl |
 | **v8.0** | 😴 🆕 离线自进化引擎：SkillOpt-Sleep 四阶段(Harvest→Mine→Replay→Consolidate)+夜间离线+跨书籍迁移三条件+降级策略四态+Replay三态判定(resolved/persistent/regression)+模式挖掘频次≥3过滤+归档保留策略+sleep_history索引 |

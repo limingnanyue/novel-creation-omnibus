@@ -1,5 +1,41 @@
 # Changelog
 
+## [v10.1.0] — 2026-07-25
+### Evidence Chain & Prompt Registry — 证据链与提示模板注册表（新增第 47 个模块，解冻宣告）
+
+> 集成 Microsoft SkillOpt v0.2.0 Unreleased `evidence.jsonl` chains + live prompt-template registry：把 v8.0 Sleep 的每夜决策过程从黑盒变为可重建、可审计的 evidence 链。**同时触发 v10.0 终态解冻——经元反思五问确认，进入第二阶段进化。**
+
+### 解冻宣告
+v10.0 宣告"模块数冻结=46"。v10.1 经元反思五问确认：现有模块无法覆盖"决策可重建性"与"提示词可定制性"，故解冻，模块数 46→47。
+
+### Added · 新增第 47 个模块：evidence-chain.md
+- **五阶段证据链**（来源：SkillOpt `evidence.jsonl` chains）
+  - 每夜 evidence.jsonl：harvest→mine→replay→reflect→gate 五阶段
+  - Evidence Record schema（含 evidence_id/stage/input/output/decision/rationale/hash）
+  - hash 链完整性验证（前后链不可篡改）
+  - 每夜产出人类可读 evidence_summary.md
+- **Prompt Template Registry**（来源：SkillOpt live prompt-template registry）
+  - 提示词不再硬编码，进 registry
+  - 三态：default（默认）/ user_override（用户覆盖）/ pinned（锁定）
+  - 覆盖审计：override_ts/override_by/override_reason/previous_override
+  - prompt-overrides.jsonl 落盘
+- **决策重建（Replay Evidence）**
+  - `replay-evidence --date {date}` 重建某夜决策
+  - 三态：reproducible（一致）/ diverged（不一致）/ incomplete（缺失）
+  - divergence_log 落盘
+- **解冻五问**
+  - ① 决策重建覆盖？② 提示词覆盖覆盖？③ 帕累托前沿？④ 训练健康度？⑤ Dream 验证？
+  - 五问全中 → 解冻
+
+### Changed
+- SKILL.md：版本 10.0→10.1，模块数 46→47，新增 14 个触发词+路由+索引
+- README.md：模块数 46→47，新增 Evidence 徽章，版本历史新增 v10.1
+- marketplace.json：版本 10.0.0→10.1.0
+- test-prompts.json：新增 test-29（总数 29）
+- 鲁班结构尺自检：14 PASS / 0 WARN / 0 FAIL
+
+---
+
 ## [v10.0.0] — 2026-07-25
 ### Skill-Compaction Integration — 自适应技能压缩与零成本部署（新增第 46 个模块，终态收敛）
 
