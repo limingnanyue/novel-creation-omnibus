@@ -278,7 +278,14 @@ triggers:
   - 按模块反思模板
   - 技能段定位反思
   - 段落级 Edit
-version: 10.6
+  - 语义密度
+  - semantic density
+  - 信息密度门
+  - density gate
+  - 稀薄文本检测
+  - 水分检测
+  - density_score
+version: 10.7
 last_updated: 2026-07-25
 ---
 
@@ -372,6 +379,7 @@ last_updated: 2026-07-25
 | "LLM 矿工" / "llm miner" / "智能模式挖掘" / "模式抽象" / "模式泛化" / "频次+置信度双门" / "语义聚类" / "模式骨架" / "观察池" / "Sleep 矿工升级" / "替代纯频次" | `llm-miner` |
 | "自主学习率" / "autonomous LR" / "lr_autonomous" / "动态学习率" / "accept 率自适应" / "学习率自调度" / "LR 回升" / "回升探测" / "局部最优逃逸" / "训练健康度自适应" | `lr-autonomous` |
 | "技能感知反思" / "skill-aware reflection" / "skill_grounded_reflect" / "反思带技能上下文" / "按模块反思模板" / "reflection grounding" / "技能段定位反思" / "段落级 Edit" / "反思模板路由" | `skill-aware-reflection` |
+| "语义密度" / "semantic density" / "信息密度门" / "density gate" / "novelty per token" / "信息熵验证" / "稀薄文本检测" / "水分检测" / "density_score" / "空心文本" / "论点密度" / "实体密度" | `semantic-density` |
 | 模糊指令 | 追问 |
 
 ---
@@ -434,6 +442,7 @@ last_updated: 2026-07-25
 | ⛏️ LLM 矿工 | `llm-miner.md` | 语义聚类(LLM判定同义)+抽象(模式骨架)+泛化(适用范围)+频次≥3 AND LLM置信度≥0.7双门+观察池三夜升级 | LLM矿工、智能模式挖掘、模式抽象、语义聚类、双门过滤 |
 | 📈 自主学习率 | `lr-autonomous.md` | accept率滑动窗口(N=10)+四档multiplier(1.2/1.0/0.8/2.0)+LR回升探测(持续低accept触发)+局部最优逃逸+状态机(NORMAL/PROBING/ESCAPED/STUCK) | 自主学习率、动态LR、accept率自适应、回升探测、局部最优逃逸 |
 | 🎯 技能感知反思 | `skill-aware-reflection.md` | skill_section_anchor段落定位+按模块族路由4模板(writing/evolution/audit/data)+段落级Edit(target_skill_section+old_text+new_text)+grounding_skill_hash校验+与v7.0/v10.3并行协同 | 技能感知反思、反思带技能上下文、段落级Edit、技能段定位、反思模板路由 |
+| 🌡️ 语义密度验证门 | `semantic-density.md` | 三维密度(info_entropy+entity_density+claim_density)+四态门控(ACCEPT/ACCEPT_WITH_WARNING/REJECT_DILUTE/REJECT_HOLLOW)+稀薄段定位+watermark追溯+与v7.0串联+v10.6反思协同 | 语义密度、信息密度门、稀薄文本检测、水分检测、density_score、空心文本 |
 
 ---
 
@@ -542,5 +551,6 @@ novel-creation-omnibus/
     ├── contrastive-reflection.md     # 多轮对比反思（v10.3 新增，第49个模块）
     ├── llm-miner.md                  # LLM 矿工（v10.4 新增，第50个模块）
     ├── lr-autonomous.md              # 自主学习率（v10.5 新增，第51个模块）
-    └── skill-aware-reflection.md     # 技能感知反思（v10.6 新增，第52个模块）
+    ├── skill-aware-reflection.md     # 技能感知反思（v10.6 新增，第52个模块）
+    └── semantic-density.md           # 语义密度验证门（v10.7 新增，第53个模块）
 ```

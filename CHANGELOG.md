@@ -1,5 +1,36 @@
 # Changelog
 
+## [v10.7.0] — 2026-07-25
+### Semantic Density Gate — 语义密度验证门（新增第 53 个模块）
+
+> 集成 Microsoft SkillOpt v0.2.0 `skillopt/gate/semantic_density.py` + `skillopt/prompts/semantic_density.md`：在 v7.0 分数门之后串联一道"密度门"——用每 token 信息熵+实体密度+论点密度三维指标，识别"看似达标实则水"的输出，避免 best_skill 被稀薄 rollout 污染。
+
+### Added · 新增第 53 个模块：semantic-density.md
+- **三维密度指标**：
+  - `info_entropy`（信息熵）：去重/去模板/去套话后的 Shannon 熵归一化
+  - `entity_density`（实体密度）：每 100 token 命名实体数（人/地/物/事件）
+  - `claim_density`（论点密度）：每 100 token 论点数（动作/转折/因果/决策）
+- **四态门控**：
+  - `ACCEPT`（≥0.7，密实）→ 进 best_skill
+  - `ACCEPT_WITH_WARNING`（0.5-0.7，边缘）→ 进 best_skill 但加 watermark 可追溯
+  - `REJECT_DILUTE`（0.3-0.5，稀薄）→ 触发 v10.6 技能感知反思产段落级 Edit
+  - `REJECT_HOLLOW`（<0.3，空心）→ 直接拒绝，进 rejected_edits 缓冲
+- **稀薄段定位**：start/end/text/reason 四字段
+- **与 v7.0 串联**：分数门通过后才跑密度门，两门都过才进 best_skill
+- **与 v10.6 反思协同**：REJECT_DILUTE 触发技能感知反思产段落级 Edit
+- **审计 4 指标**：density_pass_rate(≥0.7) + dilute_reject_rate(0.05-0.15) + hollow_reject_rate(<0.05) + sparse_segment_count(≤1)
+- **配置**：.skillopt/semantic-density.yaml（权重 0.4/0.3/0.3 + 阈值四档）
+- **日志**：semantic_density_log.jsonl
+
+### Changed
+- SKILL.md：版本 10.6→10.7，模块数 52→53，新增 9 个触发词+路由+索引
+- README.md：模块数 52→53，新增 Density 徽章，版本历史新增 v10.7
+- marketplace.json：版本 10.6.0→10.7.0
+- test-prompts.json：新增 test-35（总数 35）
+- 鲁班结构尺自检：14 PASS / 0 WARN / 0 FAIL
+
+---
+
 ## [v10.6.0] — 2026-07-25
 ### Skill-Aware Reflection — 技能感知反思（新增第 52 个模块）
 
