@@ -35,41 +35,51 @@
 
 ## 效果示例
 
-![demo](assets/demo.gif)
+![小说创作全能工坊](https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=open%20novel%20manuscript%20on%20dark%20oak%20desk%20glowing%20character%20silhouettes%20cultivator%20night%20shift%20taxi%20driver%20mystery%20detective%20post%20apocalyptic%20survivor%20inkwell%20fountain%20pen%20half%20cup%20coffee%20warm%20yellow%20desk%20lamp%20cinematic%20top%20down%20composition%20photorealistic%20detailed%20style&image_size=landscape_16_9)
 
-> 上图为脚本真实运行录屏（3帧循环）。完整章节示例见 [examples/sample-chapter.md](examples/sample-chapter.md)，工具输出见 [examples/demo-output.md](examples/demo-output.md)。
+> 上图为工坊主题封面（v11.0）。脚本真实运行录屏见 [assets/demo.gif](assets/demo.gif)（3 帧循环），完整章节示例见 [examples/sample-chapter.md](examples/sample-chapter.md)，工具输出见 [examples/demo-output.md](examples/demo-output.md)。
 
-### 示例 1 · 白描克制正文（core-writing + anti-ai-polish + restrained-writing）
+### 示例 1 · 规则怪谈开篇（new-genres + opening-hooks + anti-ai-polish）
 
-**输入：** "写夜班出租车司机接到一单去殡仪馆的女孩，要克制白描，不留AI味"
+**输入：** "写个规则怪谈，办公室夜班题材，第一章要抓人，零AI味"
 
 **输出节选：**
 
 ```
-标题：《夜班最后一单》
+标题：《夜班写字楼·第七层规则》
 
 第一章
 
-烟灰缸满了。
+工位上的灯只剩我一盏。
 
-老周把车停在路边，下车倒了倒。风一吹，烟灰扑脸上，他咳了两声。
+我盯着屏幕右下角，23:47。
 
-凌晨两点四十。环城高速上就他一辆车。
+电梯间的声音又响了。不是到站的"叮"，是金属摩擦的"咔哒"。
 
-手机响了。拼车单，目的地城西殡仪馆。
+我数了数，第七下。
 
-他愣了一下，接了。
+【规则三】夜间听到电梯异响超过五次，立即离开，不要回头。
 
-上车的是个女的，二十出头，白裙子，头发湿着。
+我合上笔记本，站起来。
 
-"师傅，走高速。"
+走道尽头，安全出口的绿指示灯灭了。
 
-"殡仪馆这会儿不开门。"
+我摸出手机，给老张发消息："我先走了。"
 
-"我知道。"
+显示已读。
+
+老张坐在我对面，他没抬头。
+
+我推门进楼梯间，往下走。走到十二楼，听见上面有人喊我名字。
+
+我没回头。
+
+【规则七】楼梯间有人叫你名字，不要应答，不要回头，直到走出大楼。
+
+但那个声音，是我自己的。
 ```
 
-<sub>↑ 章首"烟灰缸满了"无时间词；300字内入题；零 em-dash、零"像"字比喻、零 AI 意象；对话不完整（"我知道。"）；真人门检命中（具体细节：零三年刀疤/八年/小卖部）——过 L1-L4 四层硬门禁</sub>
+<sub>↑ 章首"工位上的灯只剩我一盏"无时间词直接入场景；300字内入题且抛出规则悬念；零 em-dash、零"像"字比喻、零 AI 意象；规则条目冷硬编号（规则三/规则七）+ 章末"那个声音是我自己的"真假钩子（4维全中：悬念/信息差/情绪/动作断点）；对话克制（"我先走了。"不完整）；规则怪谈 §28.1 模板 + opening-hooks 章末钩子4型 + L1-L4 四层硬门禁全通过</sub>
 
 ### 示例 2 · 五专家审计报告（audit-workflow · E1-E5 + 11 维评分）
 
@@ -94,7 +104,7 @@
   人物分: 8.5/10
 
 [E4 一致性·CT]  16维事实快照对账: 15/16 通过
-  ⚠ CT-3 道具一致性: 第 5 段"烟灰缸满了" vs 上章"烟灰缸刚倒过" → 时间线冲突
+  ⚠ CT-3 道具一致性: 第 5 段"主角左手戴表" vs 上章"主角从不戴表" → 人设冲突
   一致性分: 7.9/10（硬指标扣分）
 
 [E5 商业·留存]  章末留存预测: 78%（高于 70% 红线）
