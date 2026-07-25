@@ -10,8 +10,8 @@
   "plugins": [
     {
       "name": "novel-creation-omnibus",
-      "description": "小说创作全能工坊 v9.0 — 45套工具从0到完本一条龙：长篇正文、大纲细纲、世界观人物、番茄爆文、白描克制、通感痛觉、去AI味(L1-L4四层硬门禁+DeepSeek 734句式+6类逐句审查+段落功能二分法+6大模型策略)、五专家审计(E1-E5+11维评估+评分治理红线)、风格配置(8维度+7题材路由)、MBTI 16型对白声线、语言温度词库、Dramatica 11拍节拍、三库协同+16维事实快照+5态伏笔状态机、技能自进化引擎(SkillOpt六步循环+EditOp有界编辑+验证门+学习率预算+拒绝编辑缓冲+best_skill版本管理)、夜间离线自进化(SkillOpt-Sleep四阶段Harvest→Mine→Replay→Consolidate+跨书籍迁移+降级策略)、多目标元优化(四维帕累托质量×速度×token×留存+Dream-Rollout探索+SlowUpdate EMA慢更新+元反思五问+跨书迁移三模式+增强版验证门)、描写技法、多线叙事、节奏动力学、世界体系、修改工作流、副线编织、氛围渲染、市场战略。按需加载，token友好。",
-              "version": "9.0.0",
+      "description": "小说创作全能工坊 v10.0 — 46套工具从0到完本一条龙：长篇正文、大纲细纲、世界观人物、番茄爆文、白描克制、通感痛觉、去AI味(L1-L4四层硬门禁+DeepSeek 734句式+6类逐句审查+段落功能二分法+6大模型策略)、五专家审计(E1-E5+11维评估+评分治理红线)、风格配置(8维度+7题材路由)、MBTI 16型对白声线、语言温度词库、Dramatica 11拍节拍、三库协同+16维事实快照+5态伏笔状态机、技能自进化引擎(SkillOpt六步循环+EditOp有界编辑+验证门+学习率预算+拒绝编辑缓冲+best_skill版本管理)、夜间离线自进化(SkillOpt-Sleep四阶段Harvest→Mine→Replay→Consolidate+跨书籍迁移+降级策略)、多目标元优化(四维帕累托质量×速度×token×留存+Dream-Rollout探索+SlowUpdate EMA慢更新+元反思五问+跨书迁移三模式+增强版验证门)、自适应技能压缩(Distill蒸馏+Cross-Benchmark三基准迁移+Compact四类差异化+Rollback-Guard版本回滚+Converge终态收敛+三档部署full/standard/minimal+8k token零成本部署+模块数冻结46)、描写技法、多线叙事、节奏动力学、世界体系、修改工作流、副线编织、氛围渲染、市场战略。按需加载，token友好。",
+              "version": "10.0.0",
       "author": {
         "name": "limingnanyue",
         "url": "https://github.com/limingnanyue"

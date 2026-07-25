@@ -214,5 +214,13 @@
     "expected_outcome": "composite_score 加权计算(0.40Q+0.25S+0.20T+0.15R)；帕累托支配检查；Dream-Rollout 用独立第三份验证集；SlowUpdate EMA 在 embedding 空间做(α=0.3标准档)；正则化>0.3触发巨变预警；元反思五问每10epoch；增强版验证门四action(含pareto_dominated)；transfer_log.jsonl 落盘",
     "module": "meta-optimizer",
     "difficulty": "hard"
+  },
+  {
+    "id": "test-28",
+    "name": "v10.0 自适应技能压缩·Distill+Cross-Benchmark+Compact+Rollback+Converge",
+    "prompt": "跑技能压缩五阶段：Distill 蒸馏提取能力骨架 + Cross-Benchmark 三基准迁移验证 + Compact 瘦身产出 best_skill_min.md + Rollback-Guard 版本回滚兜底 + Converge 终态收敛判定。",
+    "expected_outcome": "CapabilityMap schema(cap_id/intent/skeleton/support_count/keep)；三基准(bench_A_long长篇+bench_B_short短篇+bench_C_commerce商业)迁移分数≥0.95通过；Compact 四类差异化(核心骨架/次要能力/冗余示例/元能力)；best_skill_min.md 体积压缩率≤0.40；Rollback-Guard 三态(accept≤3%/accept_with_warning 3-5%/rollback>5%)；Converge 三判据(compact/train/pareto)；模块数冻结=46；元能力(skill/sleep/meta/compaction)不可压缩；回滚黑名单含 ban_until；三档部署(full/standard/minimal)；minimal≤8k token；compact_log_v{N}.jsonl 落盘",
+    "module": "skill-compaction",
+    "difficulty": "hard"
   }
 ]

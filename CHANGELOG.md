@@ -1,5 +1,52 @@
 # Changelog
 
+## [v10.0.0] — 2026-07-25
+### Skill-Compaction Integration — 自适应技能压缩与零成本部署（新增第 46 个模块，终态收敛）
+
+> 集成 Microsoft SkillOpt v0.2.0 `distill` / `compact` / `cross-benchmark-transfer` 实验控制：把 v7.0-v9.0 训练循环膨胀的 `best_skill.md` 压缩回可零成本部署的 minimal 版本（≤8k token），同时通过三基准迁移验证 + 版本回滚兜底 + 终态收敛判定，确保压缩不丢核心能力。**v10.0 是技能自进化体系的终态版本——模块数冻结为 46。**
+
+### Added · 新增第 46 个模块：skill-compaction.md（自适应技能压缩）
+- **Distill 蒸馏**（来源：SkillOpt `distill`）
+  - 提取每模块核心能力骨架（≤3 行）
+  - 按 support_count × success_rate 排序，高权重保留骨架，低权重压缩为引用
+  - CapabilityMap schema（含 cap_id/intent/skeleton/support_count/keep 字段）
+  - 三纪律：不得删总纲铁律/安全边界/路由表/冲突裁决表
+- **Cross-Benchmark 三基准迁移**（来源：SkillOpt `cross-benchmark-transfer`）
+  - 三基准集：bench_A_long（长篇网文+Claude）/ bench_B_short（短篇虐文+DeepSeek）/ bench_C_commerce（番茄爆文+Qwen）
+  - transfer_score = min(三基准 Q) / best_skill Q，阈值 ≥ 0.95 通过
+  - 任一基准分数 < 0.90 → 该模块不进 Compact 阶段
+- **Compact 瘦身**（来源：SkillOpt `compact`）
+  - 四类内容差异化处理：核心骨架（保留完整）/ 次要能力（骨架+1示例）/ 冗余示例（引用化）/ 元能力（不压缩）
+  - 产出 best_skill_min.md（standard 档 ≤16k token / minimal 档 ≤8k token）
+  - compact_log_v{N}.jsonl 落盘（每模块 before/after token）
+- **Rollback-Guard 版本回滚兜底**
+  - 三态：accept（loss ≤3%）/ accept_with_warning（3%-5%）/ rollback（>5%）
+  - 自动回滚 + 失败路径进 blacklist（含 ban_until 字段）
+  - 元能力模块强制不可压缩（skill-evolution/sleep-evolution/meta-optimizer/skill-compaction 自身）
+- **Converge 终态收敛三判据**
+  - ① compact_converged：连续 3 次 Compact 提升 < 0.005
+  - ② train_converged：连续 5 epoch best_score 提升 < 0.01
+  - ③ pareto_converged：连续 3 次 Dream-Rollout 无 breakthrough
+  - 三判据全中 → 模块数冻结 = 46，训练降频为每周
+- **三档部署**
+  - full（30k+ token，大模型+长篇）/ standard（16k token，中模型+日常）/ minimal（8k token，小模型+单章）
+  - 极简档按需加载策略：基础包恒定（~4k）+ 任务触发加载（~4k 预算）
+- **四模块协同矩阵**
+  - v7.0 训练（每章）→ v8.0 离线（每夜）→ v9.0 多目标（每 epoch）→ v10.0 压缩（收敛后）
+  - 训练用 best_skill.md（完整版），部署用 best_skill_min.md（压缩版）
+
+### Changed
+- SKILL.md：版本 9.0→10.0，模块数 45→46，新增 skill-compaction 路由+索引+文件结构，新增 18 个触发词
+- README.md：标题/徽章/模块数 45→46，新增 Compaction 徽章，对比表新增"自适应技能压缩"行，版本历史新增 v10.0
+- marketplace.json：版本 9.0.0→10.0.0，description 同步
+- test-prompts.json：新增 test-28 技能压缩用例（总数 28）
+- 鲁班结构尺自检：14 PASS / 0 WARN / 0 FAIL（全绿）
+
+### 终态宣告
+v10.0 是技能自进化体系的终态版本。从 v7.0 训练循环 → v8.0 离线进化 → v9.0 多目标优化 → v10.0 压缩收敛，形成完整闭环。收敛后模块数冻结为 46，训练降频，仅保留 Sleep 离线进化。下一次重大升级（v11.0+）需触发"解冻"流程——证明有新能力无法通过现有 46 模块覆盖，且经元反思五问确认。
+
+---
+
 ## [v9.0.0] — 2026-07-25
 ### Multi-Objective Meta-Optimizer — 多目标元优化器集成（新增第 45 个模块）
 
