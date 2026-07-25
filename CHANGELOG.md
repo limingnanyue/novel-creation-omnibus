@@ -1,5 +1,52 @@
 # Changelog
 
+## [v6.0.0] — 2026-07-22
+### Major Integration — novel-audit-v6.0.0 资产集成
+
+### Added
+- **新增模块 `audit-workflow.md`**（第41个模块）：五专家面板(E1-E5)、
+  11维评估矩阵、6阶段审计流程、CC1-CC6交叉审计、跨会话状态机
+  (meta_review_log.jsonl)、降级链。来源 novel-audit-v6.0.0 专家面板架构。
+
+### Enhanced（4个现有模块升级到 v2.0）
+- **anti-ai-polish.md v2.0**：集成 DeepSeek 句式黑名单系统
+  - 734条句式模板（A级564），优先级MAX
+  - 51个高频意象词（cat22，整词命中即报警）
+  - 小说创作高频A级句式（cat6：开篇/人物/对话/动作/心理/情感/冲突/转折/结尾）
+  - 情感/环境/外貌A级句式（cat14-17）
+  - 特定场景A级句式（cat21：修仙/悬疑/商战/宫廷/末世）
+  - 白名单系统（5类圈内术语豁免，避免误杀）
+  - min_hits阈值表（避免单词误杀）
+  - AI味打分公式（A级×3 + A-级×2 + 意象词×1.5）
+- **plot-engineering.md v2.0**：集成 Dramatica 11拍节拍结构
+  - 全书11拍序列（B1日常→B11新世界，含位置百分比区间）
+  - 节拍审计要点（结构完整性检查 + 节奏错位诊断）
+  - 戏剧角色7型（主角/对手/理性/情感/守护者/欺骗者/陪衬）
+  - 爽点密度与反差判定（E2专家语义判断）
+- **narrative-weaving.md v2.0**：集成伏笔库系统 + 事实快照
+  - 伏笔库5态状态机（active/recalling/resolved/broken/dropped）
+  - type与max_gap映射（main=60/mid=30/short=10/gag=3章）
+  - 伏笔字段定义（id/type/trigger_keywords/recall_keywords/max_gap/status）
+  - 16维事实快照（characters/items/locations/time/abilities/relationships/foreshadow）
+  - 钩子真假判定（真钩子vs假悬念四类对照）
+- **revision-workflow.md v2.0**：集成一致性检查 + 交叉审计
+  - 8类CT一致性检查（CT1时间/CT2地点/CT3道具/CT4信息越界/CT5性格/CT6设定/CT7数量/CT8称谓）
+  - 6个交叉区（CC1-CC6：对白×人设/伏笔×回收/人物×剧情/世界观×设定/钩子×留存/节奏呼吸感）
+  - 4条仲裁规则（去重/冲突消解优先级/互补合并/无法调和标注conflict_pending）
+
+### Changed
+- SKILL.md：版本升级到 v6.0，模块数 40→41，新增审计触发词
+  （审计/审稿/体检/诊断/专家会诊/多视角审查/质量评估）
+- 模块索引新增 audit-workflow 条目
+- 文件结构新增 audit-workflow.md
+
+### 资产来源
+- novel-audit-v6.0.0（用户提供的 zip 包）
+- 提取文件：deepseek_ai_sentence_blacklist.json / ai_flavor_patterns.json /
+  ai_flavor_whitelist.json / dramatica_beats.json / foreshadow_bank.json /
+  renovel_consistency.json / cross_cut_matrix.md / panel.md / meta_critic.md /
+  llm_evaluator_11d.json / snapshot_schema_15d.json
+
 ## [v5.9.4] — 2026-07-22
 ### Self-Contained Tooling & Full Birth-Checklist Pass
 

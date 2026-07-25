@@ -150,5 +150,109 @@ A1 → A2 → B1 → A3 → B2 → C1 → A4 → A&B交汇 → A&B&C交汇
 
 ---
 
-**版本：v1.0 | 最后更新：2026-06-16**
+**版本：v2.0 | 最后更新：2026-07-22 | 集成 novel-audit-v6.0.0 伏笔库系统**
 **关联模块：** scene-crafting（场景基础）、plot-engineering（情节设计）、state-tracking（状态追踪）
+
+---
+
+## 6. 伏笔库系统（v6.0 集成）
+
+> 来源：novel-audit-v6.0.0 · `foreshadow_bank.json`（v1.0）
+> 四桶生命周期管理：active（待回收）/ resolved（已回收）/ broken（失约）/ dropped（主动放弃）
+
+### 6.1 伏笔字段定义
+
+| 字段 | 类型 | 说明 |
+|:-----|:-----|:-----|
+| `id` | string | F001 形式稳定编号 |
+| `registered_at_chapter` | int | 登记章节号 |
+| `type` | enum | `main` / `mid` / `short` / `gag` |
+| `summary` | string | 一句话伏笔摘要 |
+| `trigger_keywords` | string[] | 登记时出现的关键词（自动回收检测用） |
+| `recall_keywords` | string[] | 预期回收时应出现的词（可后补） |
+| `max_gap` | int | 最大回收间隔章数（按 type 自动赋值） |
+| `status` | enum | `active` / `recalling` / `resolved` / `broken` / `dropped` |
+| `resolved_at_chapter` | int | 回收章节号（仅 resolved） |
+| `notes` | string | 可选备注 |
+
+### 6.2 type 与 max_gap 映射（生命周期阈值）
+
+| type | 默认 max_gap（章） | 用途 |
+|:-----|:-------------------|:-----|
+| `main` | 60 | 主线伏笔（贯穿全书） |
+| `mid` | 30 | 中线伏笔（跨卷） |
+| `short` | 10 | 短线伏笔（卷内） |
+| `gag` | 3 | 段子/小彩蛋级 |
+
+### 6.3 五态状态机
+
+```
+active  ──(检测到 recall_keywords)──>  recalling  ──(确认回收)──>  resolved
+active  ──(超过 max_gap 未回收)──────>  broken（失约）
+active  ──(作者主动放弃)─────────────>  dropped
+recalling ──(回收与事实矛盾)─────────>  broken
+```
+
+**迁移规则**
+- `active → recalling`：后续章节检测到 `recall_keywords` 命中
+- `recalling → resolved`：确认回收且与事实库无矛盾
+- `任意态 → broken`：超过 `max_gap` 未回收，或回收时与事实矛盾（E4 判定）
+- `任意态 → dropped`：作者主动放弃
+
+### 6.4 伏笔示例
+
+```json
+{
+  "id": "F001",
+  "registered_at_chapter": 3,
+  "type": "main",
+  "summary": "父亲遗物中的玉佩纹路与主角胎记一致",
+  "trigger_keywords": ["玉佩", "纹路", "胎记"],
+  "recall_keywords": ["纹路", "血脉", "玉佩"],
+  "max_gap": 60,
+  "status": "active"
+}
+```
+
+---
+
+## 7. 16 维事实快照（上下文追踪）
+
+> 来源：novel-audit-v6.0.0 · `snapshot_schema_15d.json`（v1.4，实列 16 字段）
+> 每章抽取并维护这 16 维状态，作为一致性判定的权威依据。
+
+| # | 字段 | 含义 |
+|:---|:-----|:-----|
+| 1 | `characters_known` | 已知角色 |
+| 2 | `characters_mentioned` | 被提及角色 |
+| 3 | `characters_present` | 在场角色 |
+| 4 | `items_held` | 持有道具 |
+| 5 | `items_lost` | 失去道具 |
+| 6 | `items_gained` | 获得道具 |
+| 7 | `locations_reached` | 到达地点 |
+| 8 | `locations_left` | 离开地点 |
+| 9 | `locations_described` | 描写地点 |
+| 10 | `time_markers` | 时间标记 |
+| 11 | `time_of_day` | 时段 |
+| 12 | `abilities_revealed` | 已揭示能力 |
+| 13 | `abilities_used` | 已使用能力 |
+| 14 | `relationships_state` | 关系状态 |
+| 15 | `foreshadow_planted` | 已埋伏笔 |
+| 16 | `foreshadow_recalled` | 已回收伏笔 |
+
+> 三库协同：`context_bank.json`（16维快照）+ `foreshadow_bank.json`（伏笔库）+ 角色卡 = 事实一致性判定的权威依据链。
+
+---
+
+## 8. 钩子真假判定
+
+脚本能检测"有没有钩子词"，但判不出"钩子钩不钩得住人"。需人工判定：
+
+| 钩子类型 | 真钩子特征 | 假悬念特征 |
+|:---------|:-----------|:-----------|
+| 信息悬念 | 读者真想知道答案 | 答案读者已经猜到 |
+| 情感悬念 | 读者关心角色命运 | 读者不关心角色 |
+| 危机悬念 | 威胁真实可信 | 威胁明显会化解 |
+| 反转悬念 | 有伏笔支撑 | 纯粹为反转而反转 |
+
+**判定标准**：读完章末，读者是否会主动想"然后呢"？不想=假悬念。
