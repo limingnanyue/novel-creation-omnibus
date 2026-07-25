@@ -27,7 +27,7 @@
 
 **从0到完本，55套工具按需加载——长篇网文、短篇虐文、番茄爆文、白描克制、五专家审计、技能自进化、夜间离线自进化、多目标元优化、自适应技能压缩、证据链与决策重建、无模型交接后端、多轮对比反思、LLM 矿工、自主学习率、技能感知反思、语义密度验证门、暂存与预算、三向切分门控、v11.0 二阶段终态收敛（模块数冻结55+七判据+解冻七问），一个工坊搞定。**
 
-[看效果](#效果示例) · [安装](#快速开始) · [触发方式](#触发方式) · [55个模块](#47个模块按需加载) · [它和同类有什么不同](#它和同类有什么不同) · [安全边界](#安全边界) · [验证与测试](#验证与测试)
+[看效果](#效果示例) · [安装](#快速开始) · [触发方式](#触发方式) · [55个模块](#55个模块按需加载) · [它和同类有什么不同](#它和同类有什么不同) · [安全边界](#安全边界) · [验证与测试](#验证与测试)
 
 </div>
 
@@ -38,6 +38,8 @@
 ![demo](assets/demo.gif)
 
 > 上图为脚本真实运行录屏（3帧循环）。完整章节示例见 [examples/sample-chapter.md](examples/sample-chapter.md)，工具输出见 [examples/demo-output.md](examples/demo-output.md)。
+
+### 示例 1 · 白描克制正文（core-writing + anti-ai-polish + restrained-writing）
 
 **输入：** "写夜班出租车司机接到一单去殡仪馆的女孩，要克制白描，不留AI味"
 
@@ -68,6 +70,105 @@
 ```
 
 <sub>↑ 章首"烟灰缸满了"无时间词；300字内入题；零 em-dash、零"像"字比喻、零 AI 意象；对话不完整（"我知道。"）；真人门检命中（具体细节：零三年刀疤/八年/小卖部）——过 L1-L4 四层硬门禁</sub>
+
+### 示例 2 · 五专家审计报告（audit-workflow · E1-E5 + 11 维评分）
+
+**输入：** "审计这章，五专家会诊"
+
+**输出节选：**
+
+```
+=== Phase 0 专家独立审读 ===
+
+[E1 语感·去AI]  命中 L2 硬门禁 2 处
+  - 第 3 段"不禁想到" → AI 高频内心独白词，建议改动作+对话
+  - 第 7 段 em-dash 残留 → 删除或改逗号
+  语感分: 7.8/10
+
+[E2 剧情·钩子]  章末钩子判定: 真钩子（4维全中：悬念/信息差/情绪/动作断点）
+  因果链完整，但中段节奏偏慢（密度曲线 0.4，低于 0.6 阈值）
+  剧情分: 8.2/10
+
+[E3 人物·对白]  MBTI 声线校验: INTJ 主角对白符合度 0.92
+  潜台词层级: L2（有暗线但未到 L3 双关）
+  人物分: 8.5/10
+
+[E4 一致性·CT]  16维事实快照对账: 15/16 通过
+  ⚠ CT-3 道具一致性: 第 5 段"烟灰缸满了" vs 上章"烟灰缸刚倒过" → 时间线冲突
+  一致性分: 7.9/10（硬指标扣分）
+
+[E5 商业·留存]  章末留存预测: 78%（高于 70% 红线）
+  爽点密度: 1.2/千字（达标）  虐点密度: 0.3/千字（偏低）
+  商业分: 8.0/10
+
+=== Phase 2 交叉审计 CC1-CC6 ===
+⭐ 主要矛盾: CC2（E1 语感 vs E3 人物）—— E1 要求删"不禁想到"，E3 认为该词承载 INTJ 内省特征
+   仲裁: 采纳 E1，改用动作外化（"他捏了捏方向盘"）替代内省词
+
+=== Phase 3 11维加权评分 ===
+总分: 8.08/10   主要矛盾已标注   评分治理红线 P0: 未触发
+```
+
+<sub>↑ spawn 模式并行派生 5 个子 Agent；11 维加权；硬门禁命中触发总分上限锁；交叉审计标注主要矛盾并仲裁</sub>
+
+### 示例 3 · 技能自进化工作流（skill-evolution + sleep-evolution + skill-compaction · v7.0→v11.0）
+
+**输入：** "训练技能，跑一个 epoch 自进化 + 夜间 sleep + 收敛判定"
+
+**输出节选：**
+
+```
+=== v7.0 SkillOpt 六步循环（epoch #47）===
+
+① Rollout   → 生成 12 章候选，5 章通过 L1-L4 硬门禁
+② Reflect   → 3 个失败样本触发反思（2 个 v10.3 对比反思 + 1 个 v10.6 技能感知反思）
+               v10.6 定位: best_skill.md §anti-ai-polish L2 门禁段
+               Edit: target_skill_section=L2门禁, old_text="禁用'不禁想到'",
+                     new_text="禁用'不禁想到'+'暗自思忖'+'在这个瞬间他意识到'三类同义AI高频词"
+                     grounding_skill_hash=0x3f7a... ✓ 校验通过
+③ Aggregate → v10.4 LLM 矿工语义聚类: 3 个失败模式归并为 1 类"内心独白AI高频词"
+               composite_confidence=0.82（频次 4 ≥3 AND LLM 置信度 0.82 ≥0.7）✓ 双门通过
+④ Select    → 1 个通用 Edit 入选（scope=universal, support_count=4）
+⑤ Update    → v10.8 暂存区: STAGING→CHECKING→APPLYING→COMMITTED
+               atomic apply 成功（atomic_success_rate=0.93 ≥0.9 ✓）
+               v10.7 密度门: info_entropy=0.78, entity_density=2.1, claim_density=1.8
+               density_score=0.81 ≥0.7 → ACCEPT ✓
+⑥ Evaluate  → best_score: 8.41 → 8.47（Δ=+0.06）
+               v10.5 LR: accept_rate=0.58 → multiplier=1.0（保持），状态机 NORMAL
+
+=== v8.0 SkillOpt-Sleep 夜间离线（夜 #12）===
+
+Harvest  → 收割 47 个会话样本
+Mine     → v10.4 LLM 矿工: 提取 3 个候选模式，2 个进 Replay
+Replay   → 2 个模式重放，1 个 resolved，1 个 persistent
+Consolidate → 产出 1 个 Edit，写入 best_skill.md
+evidence.jsonl 五阶段链落盘，hash 链完整性校验 ✓
+
+=== v10.9 三向切分门控（epoch #47）===
+
+split_id=split_005  ratios: train 60% / val 20% / meta-hold-out 20%
+val_score=8.47 (trend +0.06)   meta_score=8.45 (trend +0.04)
+trend_signal: 真提升（val↑ AND meta↑）→ 继续训练
+overfitting_detection_rate=0.02 ∈ [0, 0.1] ✓   false_convergence_rate=0.01 <0.05 ✓
+
+=== v11.0 二阶段终态收敛判定 ===
+
+七判据:
+  ① compact_converged:  连续 3 次 Compact Δ<0.005      ✓ (Δ=0.003)
+  ② train_converged:    连续 5 epoch Δ<0.01            ✓ (Δ=0.006)
+  ③ pareto_converged:   连续 3 次 Dream 无 breakthrough ✓
+  ④ evidence_converged: 7 夜 hash 链无断裂              ✓ (divergence=0.02<0.05)
+  ⑤ reflection_converged: contrastive accept=0.45∈[0.3,0.7] ✓
+  ⑥ gate_converged:     density_pass=0.78, staging_atomic=0.93 ✓
+  ⑦ meta_converged:     LR NORMAL 持续 30 epoch        ✓
+
+→ 七判据全中，技能进入第二阶段终态
+→ FinalConvergeResult: stage=phase_2_final, module_count=55, frozen_at=2026-07-25T23:59:00Z
+→ 维护期降频: 训练每月 / Sleep 每周 / Dream 季度 / 元反思季度
+→ 下次 review: 2026-10-25（解冻需过 v12.0+ 解冻七问）
+```
+
+<sub>↑ v7.0 训练 → v8.0 离线 → v9.0 多目标 → v10.0 压缩 → v10.1-v10.9 九模块协同 → v11.0 七判据收敛，完整闭环</sub>
 
 ---
 
@@ -214,7 +315,7 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 | `skill-evolution` | 🧬 **v7.0：SkillOpt六步循环(Rollout→Reflect→Aggregate→Select→Update→Evaluate)+EditOp有界编辑+验证门+学习率预算+拒绝编辑缓冲+best_skill版本管理** |
 | `sleep-evolution` | 😴 **v8.0：SkillOpt-Sleep四阶段(Harvest→Mine→Replay→Consolidate)+夜间离线+跨书籍迁移+降级策略+归档保留+sleep_history索引** |
 | `meta-optimizer` | 🎯 **v9.0：四维帕累托(质量×速度×token×留存)+Dream-Rollout探索+SlowUpdate EMA慢更新+元反思五问+跨书迁移三模式+增强版验证门** |
-| `skill-compaction` | 📦 **v10.0：Distill蒸馏+Cross-Benchmark三基准迁移+Compact四类差异化+Rollback-Guard版本回滚+Converge终态收敛(模块数冻结46)+三档部署(full/standard/minimal)+8k token零成本部署** |
+| `skill-compaction` | 📦 **v10.0：Distill蒸馏+Cross-Benchmark三基准迁移+Compact四类差异化+Rollback-Guard版本回滚+Converge终态收敛+三档部署(full/standard/minimal)+8k token零成本部署+🆕v11.0§46.14二阶段终态收敛(模块数冻结55+七判据+解冻七问)** |
 | `evidence-chain` | 🔗 **v10.1：每夜evidence.jsonl五阶段链(harvest/mine/replay/reflect/gate)+hash完整性+prompt-template registry+user overrides三态+决策重建replay-evidence+解冻五问** |
 | `handoff-backend` | 🤝 **v10.2：无模型/API key的Sleep+PROMPTS.md/pending.json双文件交接+exit code 3协议(0完成/1错误/3等待)+无状态恢复+mined tasks每夜锁定(保护held-out gate)+fresh-context subagent(防训练集泄露)+3-6轮/夜** |
 | `contrastive-reflection` | 🔀 **v10.3：失败vs成功配对+七维差异特征(句式/结构/词汇/节奏/伏笔/信息密度/情绪)+频次≥3聚合+token/时间预算三档(快速20k/标准50k/深度100k)+通用Edit(scope=universal修这一类)+与v7.0单失败并行** |
@@ -345,7 +446,7 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 
 ## 验证与测试
 
-本仓库含 33 个测试用例（[examples/test-prompts.json](examples/test-prompts.json)），覆盖全部 51 个模块——含 v6.0 审计、v6.1 L1-L4 硬门禁/节拍审计、v6.2 风格配置/MBTI/温度词库/16维快照/评分治理红线、v7.0 SkillOpt 六步循环、v8.0 SkillOpt-Sleep 四阶段、v9.0 多目标帕累托+Dream+EMA、v10.0 技能压缩+蒸馏+跨基准迁移+版本回滚+终态收敛、v10.1 证据链+提示模板注册+决策重建+解冻五问、v10.2 交接后端+exit code 3+无状态恢复+fresh-context subagent、v10.3 多轮对比反思+七维差异+频次≥3 聚合+通用 Edit、v10.4 LLM 矿工+语义聚类+抽象泛化+双门过滤+观察池、v10.5 自主学习率+accept 率+回升探测+局部最优逃逸 专项用例。
+本仓库含 38 个测试用例（[examples/test-prompts.json](examples/test-prompts.json)），覆盖全部 55 个模块——含 v6.0 审计、v6.1 L1-L4 硬门禁/节拍审计、v6.2 风格配置/MBTI/温度词库/16维快照/评分治理红线、v7.0 SkillOpt 六步循环、v8.0 SkillOpt-Sleep 四阶段、v9.0 多目标帕累托+Dream+EMA、v10.0 技能压缩+蒸馏+跨基准迁移+版本回滚+终态收敛、v10.1 证据链+提示模板注册+决策重建+解冻五问、v10.2 交接后端+exit code 3+无状态恢复+fresh-context subagent、v10.3 多轮对比反思+七维差异+频次≥3 聚合+通用 Edit、v10.4 LLM 矿工+语义聚类+抽象泛化+双门过滤+观察池、v10.5 自主学习率+accept 率+回升探测+局部最优逃逸、v10.6 技能感知反思+段落级 Edit+模板路由+grounding 校验、v10.7 语义密度验证门+三维密度+四态门控+稀薄段定位、v10.8 暂存与预算+三预算+五类冲突+atomic apply、v10.9 三向切分+过拟合检测+假收敛判定、v11.0 二阶段终态收敛+七判据+解冻七问 专项用例。
 
 **验收命令——章首连续性检查（core-writing 铁律）：**
 
@@ -383,7 +484,7 @@ novel-creation-omnibus/
 ├── CHANGELOG.md                      # 版本更新记录
 ├── LICENSE                           # MIT
 ├── examples/
-│   ├── test-prompts.json             # 32个测试用例（含 v6.0-v10.4 专项）
+│   ├── test-prompts.json             # 38个测试用例（含 v6.0-v11.0 专项）
 │   ├── demo-output.md                # v6.2 工具链协同输出示例
 │   └── sample-chapter.md             # 真实示例章节（约2000字，供工具分析）
 ├── assets/
@@ -395,7 +496,7 @@ novel-creation-omnibus/
 │   ├── check-skill-repo.sh           # 发布就绪度自检（鲁班结构尺）
 │   ├── gen-demo-gif.py               # 生成 demo.gif 的脚本
 │   └── install.sh                    # 一键安装脚本（含验证）
-└── references/modules/               # 54个模块，按需加载
+└── references/modules/               # 55个模块，按需加载
     ├── core-writing.md               # 长篇正文写作
     ├── anti-ai-polish.md             # 去AI味 v3.0（L1-L4 四层硬门禁）
     ├── audit-workflow.md             # 审计工作流 v3.0（五专家+评分治理红线）
@@ -408,7 +509,7 @@ novel-creation-omnibus/
     ├── skill-evolution.md            # v7.0 技能自进化引擎（SkillOpt 集成）
     ├── sleep-evolution.md            # v8.0 离线自进化引擎（SkillOpt-Sleep 集成）
     ├── meta-optimizer.md             # v9.0 多目标元优化器（帕累托+Dream+EMA）
-    ├── skill-compaction.md           # v10.0 自适应技能压缩（Distill+Compact+Rollback+Converge）
+    ├── skill-compaction.md           # v10.0 自适应技能压缩（Distill+Compact+Rollback+Converge）+ 🆕v11.0§46.14 二阶段终态收敛
     ├── evidence-chain.md             # v10.1 证据链与提示注册（evidence.jsonl+registry+解冻）
     ├── handoff-backend.md            # v10.2 Handoff Backend 交接后端（无模型 Sleep+exit 3+fresh-context）
     ├── contrastive-reflection.md     # v10.3 多轮对比反思（失败vs成功+七维差异+通用Edit）
@@ -416,7 +517,8 @@ novel-creation-omnibus/
     ├── lr-autonomous.md              # v10.5 自主学习率（accept率+回升探测+状态机）
     ├── skill-aware-reflection.md     # v10.6 技能感知反思（段落级Edit+模板路由+grounding校验）
     ├── semantic-density.md           # v10.7 语义密度验证门（三维密度+四态门控+稀薄段定位）
-    ├── staging-budget.md             # 🆕 v10.8 暂存与预算（三预算+五类冲突+atomic apply）
+    ├── staging-budget.md             # v10.8 暂存与预算（三预算+五类冲突+atomic apply）
+    ├── three-way-split.md            # v10.9 三向切分门控（60/20/20+过拟合检测+假收敛）
     └── ...                           # 完整列表见 SKILL.md
 ```
 
