@@ -1,5 +1,54 @@
 # Changelog
 
+## [v8.0.0] — 2026-07-25
+### SkillOpt-Sleep Integration — 离线自进化引擎集成（新增第 44 个模块）
+
+> 集成 Microsoft SkillOpt v0.2.0 `skillopt-sleep` CLI 方法论：夜间离线复盘过去会话，挖掘反复出现的失败模式，重放代表性任务，在验证门后巩固已验证的技能编辑——不打扰日间写作。
+
+### Added · 新增第 44 个模块：sleep-evolution.md（离线自进化引擎）
+- **Sleep 四阶段流水线**（来源：SkillOpt-Sleep `skillopt-sleep` CLI）
+  - ① Harvest（会话收割）→ ② Mine（模式挖掘）→ ③ Replay（任务重放）→ ④ Consolidate（技能巩固）
+  - 完整契约表：每阶段输入/输出/必做动作/禁忌
+- **Harvest 会话收割**
+  - 6 类输入源（章节输出/审计报告/meta_review_log/rejected_edits/读者反馈/风格档案）
+  - sessions.jsonl schema（session_id/ts/chapter/score/band/failures/audit_path）
+  - 时间窗口默认 7 天（可配置 1-30 天）
+  - 会话数 < 10 自动降级
+- **Mine 模式挖掘**
+  - 三步流程（失败聚类→频次过滤→根因归并）
+  - patterns.json schema（pattern_id/frequency/root_cause/representative_session/suggested_edit/confidence）
+  - 频次阈值 min_support=3（偶发错误不触发 Replay）
+  - 模式挖掘审计清单（频次/根因/代表性/置信度/互斥）
+- **Replay 任务重放**
+  - 用当前 best_skill 重跑代表性失败任务
+  - Replay 三态判定（resolved/persistent/regression）
+  - replay_results.json schema（pattern_id/original_failure/new_outcome/new_score/score_delta/raw_patch）
+- **Consolidate 技能巩固**
+  - 复用 v7.0 六步循环的 Aggregate→Select→Update→Evaluate→Gate
+  - sleep_log.jsonl 落盘（sleep_id/window_days/sessions_harvested/patterns_mined/gate_action/score_delta）
+  - 与 v7.0 日间训练的协同时序（日间训练→夜间 Sleep→次日读最新 best_skill）
+- **跨书籍 Sleep（高级模式）**
+  - 跨书籍迁移三条件（题材相近/失败模式通用/验证集严格提升）
+  - 迁移失败时 Edit 进书籍 A 专属缓冲，不影响书籍 B
+- **Sleep 调度与触发**
+  - 三种触发（定时凌晨02:00/手动/阈值缓冲池>50）
+  - 前置检查五项（日间训练未结束/会话数/ best_skill存在/磁盘/验证集一致）
+  - 降级策略四态（会话不足/磁盘不足/验证集污染/日间训练中）
+- **归档保留策略**
+  - sleep_<date>/ 目录归档（sessions/patterns/replay_results/consolidate_patch/gate_result/sleep_log_entry）
+  - sleep_history.jsonl 历史索引
+  - 最近30次完整保留，30-90次仅摘要，90次以上删除
+  - accept 产物永不删除（best_skill 溯源）
+
+### Changed
+- SKILL.md：版本 7.0→8.0，模块数 43→44，新增 sleep-evolution 路由+索引+文件结构，新增 8 个触发词
+- README.md：标题/徽章/模块数 43→44，新增 Sleep 徽章，对比表新增"夜间离线自进化"行，版本历史新增 v8.0
+- marketplace.json：版本 7.0.0→8.0.0，description 同步
+- test-prompts.json：新增 test-26 Sleep 四阶段用例（总数 26）
+- 鲁班结构尺自检：14 PASS / 0 WARN / 0 FAIL（全绿）
+
+---
+
 ## [v7.0.0] — 2026-07-25
 ### SkillOpt Integration — 技能自进化引擎集成（新增第 43 个模块）
 

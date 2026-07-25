@@ -198,5 +198,13 @@
     "expected_outcome": "六步循环跑通（Rollout→Reflect→Aggregate→Select→Update→Evaluate）；EditOp 仅用 ADD/DELETE/REPLACE；学习率档位符合衰减规则；验证门 GateResult(action=accept/reject/tie)；best_skill.meta.json 落盘；rejected_edits.jsonl 缓冲池更新",
     "module": "skill-evolution",
     "difficulty": "hard"
+  },
+  {
+    "id": "test-26",
+    "name": "v8.0 离线自进化·SkillOpt-Sleep 四阶段",
+    "prompt": "跑一次 sleep 夜间自进化：收割过去7天会话，挖掘失败模式，重放代表性任务，验证门后巩固技能。",
+    "expected_outcome": "四阶段跑通（Harvest→Mine→Replay→Consolidate）；Mine 频次≥3过滤；Replay 三态判定(resolved/persistent/regression)；Consolidate 复用 v7.0 验证门；sleep_log.jsonl 落盘；会话数<10降级为仅 Harvest+Mine",
+    "module": "sleep-evolution",
+    "difficulty": "hard"
   }
 ]

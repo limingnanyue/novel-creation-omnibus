@@ -1,20 +1,21 @@
 <div align="center">
 
-# 🖋️ 小说创作全能工坊 v7.0
+# 🖋️ 小说创作全能工坊 v8.0
 
 > *「写小说最难的不是写，是写完不烂尾、不水、不带AI味。」*
 
-[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-7.0-blueviolet)](SKILL.md)
+[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-8.0-blueviolet)](SKILL.md)
 [![skills.sh](https://skills.sh/b/limingnanyue/novel-creation-omnibus)](https://skills.sh/limingnanyue/novel-creation-omnibus)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Modules](https://img.shields.io/badge/Modules-43-brightgreen)](references/modules/)
+[![Modules](https://img.shields.io/badge/Modules-44-brightgreen)](references/modules/)
 [![AI 去味](https://img.shields.io/badge/AI%E5%8E%BB%E5%91%B3-L1--L4%E5%9B%9B%E5%B1%82%E7%A1%AC%E9%97%A8%E7%A6%81%E2%9C%A8-orange)](references/modules/anti-ai-polish.md)
 [![Audit](https://img.shields.io/badge/Audit-E1--E5%E4%BA%94%E4%B8%93%E5%AE%B6-red)](references/modules/audit-workflow.md)
 [![SkillOpt](https://img.shields.io/badge/SkillOpt-v0.2.0%20%E8%87%AA%E8%BF%9B%E5%8C%96-9cf)](references/modules/skill-evolution.md)
+[![Sleep](https://img.shields.io/badge/Sleep-%E5%A4%9C%E9%97%B4%E7%A6%BB%E7%BA%BF%E8%87%AA%E8%BF%9B%E5%8C%96-6f42c1)](references/modules/sleep-evolution.md)
 
-**从0到完本，43套工具按需加载——长篇网文、短篇虐文、番茄爆文、白描克制、五专家审计、技能自进化，一个工坊搞定。**
+**从0到完本，44套工具按需加载——长篇网文、短篇虐文、番茄爆文、白描克制、五专家审计、技能自进化、夜间离线自进化，一个工坊搞定。**
 
-[看效果](#效果示例) · [安装](#快速开始) · [触发方式](#触发方式) · [43个模块](#43个模块按需加载) · [它和同类有什么不同](#它和同类有什么不同) · [安全边界](#安全边界) · [验证与测试](#验证与测试)
+[看效果](#效果示例) · [安装](#快速开始) · [触发方式](#触发方式) · [44个模块](#44个模块按需加载) · [它和同类有什么不同](#它和同类有什么不同) · [安全边界](#安全边界) · [验证与测试](#验证与测试)
 
 </div>
 
@@ -99,6 +100,7 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 | **伏笔对账** | "对账伏笔库，有失约的吗" |
 | **MBTI 声线** | "按 INTJ 给主角定对白声线" |
 | **技能自进化** | "训练技能，跑一个 epoch 自进化" |
+| **夜间自进化** | "跑一次 sleep，夜间巩固技能" |
 
 完整触发词列表见 [SKILL.md](SKILL.md) 路由表。
 
@@ -151,7 +153,7 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 - ✅ **节拍审计报告**（Dramatica 11拍定位 + 节拍×伏笔×角色协同检查）
 - ✅ **跨会话状态文件**（meta_review_log.jsonl + next_focus 注入）
 
-## 43个模块，按需加载
+## 44个模块，按需加载
 
 | 模块 | 说明 |
 |:-----|:-----|
@@ -196,14 +198,16 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 | `market-strategy` | 市场战略：平台分析/读者画像/IP评估 |
 | `audit-workflow` | 🔍 **五专家面板(E1-E5)/11维评估/6阶段流程/交叉审计/跨会话状态机/评分治理红线P0/预算护栏/完整专家schema** |
 | `style-configuration` | 🎨 **v6.2：8风格维度+7题材路由+8典型档位+风格漂移检测+题材×11维评估器权重调整** |
-| `skill-evolution` | 🧬 **🆕 v7.0：SkillOpt六步循环(Rollout→Reflect→Aggregate→Select→Update→Evaluate)+EditOp有界编辑+验证门+学习率预算+拒绝编辑缓冲+best_skill版本管理** |
+| `skill-evolution` | 🧬 **v7.0：SkillOpt六步循环(Rollout→Reflect→Aggregate→Select→Update→Evaluate)+EditOp有界编辑+验证门+学习率预算+拒绝编辑缓冲+best_skill版本管理** |
+| `sleep-evolution` | 😴 **🆕 v8.0：SkillOpt-Sleep四阶段(Harvest→Mine→Replay→Consolidate)+夜间离线+跨书籍迁移+降级策略+归档保留+sleep_history索引** |
 
 ## 它和同类有什么不同？
 
-| 维度 | 其他写作Skill | **本工坊 v7.0** |
+| 维度 | 其他写作Skill | **本工坊 v8.0** |
 |:-----|:-------------|:----------------|
-| 模块数 | 1-10个 | **43个**，覆盖写作全流程 |
+| 模块数 | 1-10个 | **44个**，覆盖写作全流程 |
 | 技能自进化 | 无 | **SkillOpt 六步循环**+EditOp有界编辑+验证门+学习率预算+拒绝编辑缓冲+best_skill版本管理 |
+| 夜间离线自进化 | 无 | **SkillOpt-Sleep 四阶段**(Harvest→Mine→Replay→Consolidate)+跨书籍迁移+降级策略+sleep_history索引 |
 | 去AI味 | 简单禁用词替换 | **L1-L4 四层硬门禁**+L3方法论三节+6类逐句审查+段落功能二分法+DeepSeek 734句式+模型感知 |
 | 专家审计 | 无 | **五专家面板(E1-E5)**+11维评估+6阶段流程+交叉审计+评分治理红线+预算护栏 |
 | 风格配置 | 无 | **8风格维度+7题材路由+8典型档位+风格漂移检测** |
@@ -309,7 +313,7 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 
 ## 验证与测试
 
-本仓库含 25 个测试用例（[examples/test-prompts.json](examples/test-prompts.json)），覆盖全部 43 个模块——含 v6.0 审计、v6.1 L1-L4 硬门禁/节拍审计、v6.2 风格配置/MBTI/温度词库/16维快照/评分治理红线、v7.0 SkillOpt 六步循环专项用例。
+本仓库含 26 个测试用例（[examples/test-prompts.json](examples/test-prompts.json)），覆盖全部 44 个模块——含 v6.0 审计、v6.1 L1-L4 硬门禁/节拍审计、v6.2 风格配置/MBTI/温度词库/16维快照/评分治理红线、v7.0 SkillOpt 六步循环、v8.0 SkillOpt-Sleep 四阶段专项用例。
 
 **验收命令——章首连续性检查（core-writing 铁律）：**
 
@@ -347,7 +351,7 @@ novel-creation-omnibus/
 ├── CHANGELOG.md                      # 版本更新记录
 ├── LICENSE                           # MIT
 ├── examples/
-│   ├── test-prompts.json             # 25个测试用例（含 v6.0-v7.0 专项）
+│   ├── test-prompts.json             # 26个测试用例（含 v6.0-v8.0 专项）
 │   ├── demo-output.md                # v6.2 工具链协同输出示例
 │   └── sample-chapter.md             # 真实示例章节（约2000字，供工具分析）
 ├── assets/
@@ -369,7 +373,8 @@ novel-creation-omnibus/
     ├── dialogue-mastery.md           # 对话大师 v2.0（MBTI 16型声线档案）
     ├── emotional-climax.md           # 情绪高潮 v2.0（语言温度词库）
     ├── style-configuration.md        # v6.2 风格配置系统
-    ├── skill-evolution.md            # 🆕 v7.0 技能自进化引擎（SkillOpt 集成）
+    ├── skill-evolution.md            # v7.0 技能自进化引擎（SkillOpt 集成）
+    ├── sleep-evolution.md            # 🆕 v8.0 离线自进化引擎（SkillOpt-Sleep 集成）
     └── ...                           # 完整列表见 SKILL.md
 ```
 
@@ -377,6 +382,7 @@ novel-creation-omnibus/
 
 | 版本 | 亮点 |
 |:-----|:------|
+| **v8.0** | 😴 🆕 离线自进化引擎：SkillOpt-Sleep 四阶段(Harvest→Mine→Replay→Consolidate)+夜间离线+跨书籍迁移三条件+降级策略四态+Replay三态判定(resolved/persistent/regression)+模式挖掘频次≥3过滤+归档保留策略+sleep_history索引 |
 | **v7.0** | 🧬 🆕 技能自进化引擎：SkillOpt 六步循环(Rollout→Reflect→Aggregate→Select→Update→Evaluate)+EditOp有界编辑(ADD/DELETE/REPLACE)+验证门+学习率预算三档衰减+拒绝编辑缓冲三态迁移+best_skill.md版本管理+五维验证分数+训练/验证集70/30隔离 |
 | **v6.2** | 🆕 风格配置系统(8维度+7路由) + 评分治理红线P0 + MBTI 16型对白声线 + 语言温度词库 + 16维事实快照schema |
 | **v6.1** | 🔧 去AI味L1-L4四层硬门禁+L3方法论三节+6类逐句审查+段落功能二分法；剧情设计钩子真假4维+伪因果+节拍×伏笔×角色协同矩阵；上下文三库协同+5态伏笔状态机+跨会话状态机 |
