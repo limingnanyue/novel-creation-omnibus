@@ -1,5 +1,51 @@
 # Changelog
 
+## [v9.0.0] — 2026-07-25
+### Multi-Objective Meta-Optimizer — 多目标元优化器集成（新增第 45 个模块）
+
+> 集成 Microsoft SkillOpt v0.2.0 `SlowUpdateResult` / multi-objective / dream-rollout 实验控制：从单目标质量优化升级为四维帕累托优化，加 epoch 级慢更新 EMA 和 dream-rollout 探索。
+
+### Added · 新增第 45 个模块：meta-optimizer.md（多目标元优化器）
+- **四维帕累托优化**（来源：SkillOpt multi-objective 实验控制）
+  - 四目标：Q质量(0.40) × S速度(0.25) × T token效率(0.20) × R留存(0.15)
+  - composite_score 加权公式
+  - 帕累托支配判定（任一目标严格劣化即 reject）
+- **Dream-Rollout 探索**（来源：SkillOpt dream-rollout 实验控制）
+  - 三步：Speculate（推测激进 Edit 组合）→ Rollout（做梦验证）→ Filter（帕累托前沿过滤）
+  - 独立第三份验证集（dream 集）
+  - 三纪律：dream 集独立/不直接更新 best/产物归档 30 天
+  - 每 5 epoch 一次，breakthrough 才进正式训练循环
+- **SlowUpdate EMA 慢更新**（来源：SkillOpt `SlowUpdateResult`）
+  - EMA 公式：best_skill_ema(t) = α×best_skill(t) + (1-α)×best_skill_ema(t-1)
+  - α 三档：保守 0.1 / 标准 0.3 / 激进 0.5
+  - 在 embedding 空间做 EMA（非字面文本）
+  - 正则化项 > 0.3 触发巨变预警 + 强制降级 α
+- **元反思五问**（每 10 epoch 一次）
+  - ① 学习率健康度（accept 率 20%-60%）
+  - ② 缓冲池健康度（趋势稳定/增长/缩小）
+  - ③ 帕累托前沿移动（全维推进/过拟合质量/plateau）
+  - ④ 验证门判定分布（accept/reject/tie 比例）
+  - ⑤ best_skill 溯源（parent 链健康/频繁回滚）
+  - meta_reflect_log.jsonl 落盘
+- **跨书迁移三模式**
+  - 直接迁移（完整 Edit，题材相近时）
+  - 抽象迁移（Edit 意图，需 optimizer 重新解码）
+  - 能力迁移（训练好的 sub-skill，通用性强）
+  - transfer_log.jsonl 落盘（含 source/target score_delta）
+- **增强版验证门**
+  - 四 action：accept / reject / tie / pareto_dominated
+  - GateResult 增强：current_scores(Q/S/T/R) + new_scores + pareto_comparison
+  - 帕累托被支配即 reject（即使 composite_score 略高）
+
+### Changed
+- SKILL.md：版本 8.0→9.0，模块数 44→45，新增 meta-optimizer 路由+索引+文件结构，新增 15 个触发词
+- README.md：标题/徽章/模块数 44→45，新增 Meta 徽章，对比表新增"多目标元优化"行，版本历史新增 v9.0
+- marketplace.json：版本 8.0.0→9.0.0，description 同步
+- test-prompts.json：新增 test-27 多目标帕累托用例（总数 27）
+- 鲁班结构尺自检：14 PASS / 0 WARN / 0 FAIL（全绿）
+
+---
+
 ## [v8.0.0] — 2026-07-25
 ### SkillOpt-Sleep Integration — 离线自进化引擎集成（新增第 44 个模块）
 

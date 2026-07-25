@@ -206,5 +206,13 @@
     "expected_outcome": "四阶段跑通（Harvest→Mine→Replay→Consolidate）；Mine 频次≥3过滤；Replay 三态判定(resolved/persistent/regression)；Consolidate 复用 v7.0 验证门；sleep_log.jsonl 落盘；会话数<10降级为仅 Harvest+Mine",
     "module": "sleep-evolution",
     "difficulty": "hard"
+  },
+  {
+    "id": "test-27",
+    "name": "v9.0 多目标元优化·四维帕累托+Dream+EMA",
+    "prompt": "跑多目标帕累托优化：四维(Q/S/T/R)前沿判定 + Dream-Rollout 突破探索 + SlowUpdate EMA 慢更新 + 元反思五问。",
+    "expected_outcome": "composite_score 加权计算(0.40Q+0.25S+0.20T+0.15R)；帕累托支配检查；Dream-Rollout 用独立第三份验证集；SlowUpdate EMA 在 embedding 空间做(α=0.3标准档)；正则化>0.3触发巨变预警；元反思五问每10epoch；增强版验证门四action(含pareto_dominated)；transfer_log.jsonl 落盘",
+    "module": "meta-optimizer",
+    "difficulty": "hard"
   }
 ]
