@@ -1,5 +1,116 @@
 # Changelog
 
+## [v6.1.0] — 2026-07-25
+### Deep Optimization — 着重强化去AI味/剧情设计/上下文流程
+
+> 基于用户提供的 novel-audit-v6.0.0.zip 完整资产（含 experts/E1-E5、panel.md、meta_critic.md、cross_cut_matrix.md、ai_flavor_patterns.json、ai_flavor_whitelist.json 等核心文件）进行深度优化升级。
+
+### Enhanced · anti-ai-polish.md v2.0 → v3.0（去AI味重点强化）
+- **新增 L1-L4 四层硬门禁体系**（D1 维度安全底线）
+  - L1 句式正则层：DeepSeek 734 句式 + R1-R11 + Gate + qu-ai-wei 51 条
+  - L2 人感禁令层：em-dash / "像"字 / 文言腔 / 拟人 / 网文黑名单
+  - L3 方法论语义层：真人门检 / 过度消毒 / AI 不敢写
+  - L4 量化指标层：困惑度 / TTR / 可读性 / 句长方差
+  - 硬约束：命中即扣分，不可被专家上调绕过
+- **新增 L3 方法论三节硬门禁**（最关键的"人味"判据）
+  - 一、真人门检判据：6 类真人强信号（自纠/方言/自嘲/具体细节/口吻/访谈实录）
+  - 二、过度消毒反制判据：3 类必须保留的毛边（个人化/具体感受/圈层表达）
+  - 三、AI 不敢写测试判据：5 类"AI 不敢写"信号（自嘲/不确定/冒犯/降格/私人细节）
+- **新增 6 类逐句审查判据**（E1 必经，覆盖全文每句）
+  - 文言文表达 / 电报式简略句式 / 比喻排比密度 / 解说腔 / 节奏断点 / AI 套话残留
+  - **电报式 6 变体图谱**（脚本抓不到的漏检）：
+    A 省略主语连环 / B 虚词清零 / C 名词孤岛 / D 对话电报 / E 心理电报 / F 动作电报
+  - 每变体含判据+抓例+放行例+放行场景
+- **新增段落功能二分法**（解说腔/电报体的真正判据）
+  - 解说腔 vs 人感的 4 维对照（段落功能/判别口诀/典型样貌/节奏特征）
+  - 判别口诀："找不到一个正在经历此刻的角色身体" = 解说腔
+- **新增逐句审查输出格式**（sentence_review schema）
+  - reviewer / review_time / total / passed / failed / pass_rate / failures
+  - pass_rate < 0.85 触发深度复审
+
+### Enhanced · plot-engineering.md v2.0 → v3.0（剧情设计重点强化）
+- **新增钩子真假 4 维判定**（E2 专家必判）
+  - 信息悬念 / 情感悬念 / 危机悬念 / 反转悬念
+  - 每类含真钩子特征 vs 假悬念特征对照
+  - 假悬念 5 种典型病灶（答案太明显/威胁不真实/角色没人气/反转无伏笔/章末空钩）
+- **新增伪因果判定**（CC3 交叉区核心）
+  - 真因果 vs 伪因果 4 维对照（推动力/后果承担/可预测性/替代可能性）
+  - 伪因果 5 大典型（机械降神/巧合堆叠/反派降智/金手指越权/剧情需要式行为）
+  - 4 类修复方向
+- **新增节拍 × 伏笔 × 角色协同矩阵**
+  - 节拍 × 伏笔投放/回收矩阵（11 拍 × 4 类伏笔的投放/回收时机）
+  - 节拍 × 戏剧角色 7 型就位表（11 拍 × 7 角色的就位状态）
+  - 节拍审计三维交叉检查清单
+- **新增章末钩子设计 4 型**
+  - 信息悬念型 / 危机悬念型 / 反转悬念型 / 情感悬念型
+  - 章末钩子 5 大失败模式（空钩/假钩/慢钩/断钩/重复钩）
+  - 章末钩子与下一章章首的衔接规则
+
+### Enhanced · narrative-weaving.md v2.0 → v3.0（上下文流程重点强化）
+- **新增三库协同·上下文恢复流程**
+  - 三库职责划分（context_bank / foreshadow_bank / characters）
+  - 写章前的三库查询流程（4 步必经流程）
+  - 写章后的三库更新流程（4 步必经流程）
+- **新增 5 态伏笔状态机详细迁移规则**
+  - 完整状态机图（active/recalling/resolved/broken/dropped）
+  - 5 条迁移规则细化（触发条件 + 检测方）
+  - 伏笔审计 5 个硬指标预警
+- **新增跨会话状态机·meta_review_log**
+  - 状态文件位置（.novel_state/<book-id>/meta_review_log.jsonl）
+  - 完整 JSONL schema（misjudgments/omissions/principal_contradiction_check/next_focus）
+  - 下次审计时的注入流程
+  - 自省纪律（fix_action 必须可执行）
+
+### Enhanced · audit-workflow.md v1.0 → v2.0（审计工作流强化）
+- **新增 spawn / solo 双路径执行**
+  - 双路径对照（spawn 并行 vs solo 串行）
+  - solo 串行纪律（每轮只戴一顶帽子）
+  - 自动降级链（spawn → solo → code-only）
+- **新增 11 维评估器与专家完整映射**
+  - 11 维 × 5 专家完整映射表（含主审/协同/硬指标软指标标注）
+  - 第一梯队（0.10 权重，6 项硬核维度）
+  - 第二梯队（0.08 权重，5 项软指标）
+  - 评分规则（硬门禁命中 → 总分上限锁 3.0）
+- **新增 Phase 0-5 详细操作清单**
+  - 每阶段的输入/禁忌/输出/必做动作
+  - 4 类修改方案对照（A 精准手术 / B 稳健提升 / C 风格重塑 / D 结构重构）
+- **新增 finding 完整 schema**
+  - 11 字段完整定义（含 cross_cut / code_supplement / llm_vs_code / exempt 等）
+
+### Enhanced · state-tracking.md v1.0 → v2.0（状态追踪强化）
+- **新增三库联动**（与 narrative-weaving §9 深度集成）
+  - 写章前查询三库流程
+  - 写章后更新三库流程
+- **新增 5 态伏笔状态机检查清单**
+  - 5 状态追踪动作
+  - 5 个硬指标预警
+- **新增跨会话状态机·meta_review_log 集成**
+
+### Changed
+- SKILL.md：版本升级到 v6.1
+  - description 新增 v6.1 强化说明
+  - 新增触发词：逐句审查/电报体/解说腔/段落功能二分法/伪因果/机械降神/节拍/Dramatica/伏笔状态机/三库协同/跨会话状态
+- 各模块版本号统一升级（v2.0 → v3.0 / v1.0 → v2.0）
+- 关联模块交叉引用更新
+
+### 资产来源
+- novel-audit-v6.0.0.zip（449MB，含 experts/ 全套 + kb/ 知识库 + config/ 配置）
+- 重点提取文件：
+  - experts/E1_tone.md（18KB，L1-L4 四层硬门禁 + 6 类逐句审查判据 + 段落功能二分法 + L3 方法论三节）
+  - experts/E2_plot.md（钩子真假判定 + 伪因果判定 + CC3 交叉区）
+  - experts/E4_consistency.md（事实一致性优先级 + 6+1 道门禁）
+  - experts/cross_cut_matrix.md（6 个交叉区 + 4 条仲裁规则）
+  - experts/panel.md（spawn/solo 双路径 + Phase 0-4 编排契约）
+  - experts/meta_critic.md（E0 自省官 + meta_review_log.jsonl）
+  - config/dramatica_beats.json（11 拍 + 7 戏剧角色）
+  - config/foreshadow_bank.json（5 态状态机）
+  - config/renovel_consistency.json（8 类 CT 检查）
+  - config/llm_evaluator_11d.json（11 维评估器）
+  - config/ai_flavor_patterns.json（qu-ai-wei 51 条 + Humanizer-zh 24 模式）
+  - config/ai_flavor_whitelist.json（5 类白名单）
+
+---
+
 ## [v6.0.0] — 2026-07-22
 ### Major Integration — novel-audit-v6.0.0 资产集成
 

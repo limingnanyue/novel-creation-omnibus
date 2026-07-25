@@ -47,3 +47,81 @@
 ```
 
 ---
+
+## 11.4 三库联动·v6.1 集成
+
+> 与 `narrative-weaving.md` §9 三库协同深度集成。状态追踪 = 三库的查询与更新。
+
+### 写章前·查询三库（必经）
+
+```
+1. context_bank.json 末条 → 提取 16 维事实快照
+   ├─ characters_present (在场角色) → 不让不在场角色说话
+   ├─ items_held (持有道具) → 不用未持有的道具
+   ├─ locations_reached (已到地点) → 不瞬移
+   ├─ time_markers (时间标记) → 不时间倒流
+   ├─ abilities_revealed (已揭示能力) → 不用未获得的能力
+   └─ relationships_state (关系状态) → 称谓/态度延续
+
+2. foreshadow_bank.json → 检查伏笔状态
+   ├─ active 桶 → 临近 max_gap 的伏笔必须本章回收
+   ├─ active 桶 → recall_keywords 可在本章触发的标记 recalling
+   └─ broken 桶 → 失约伏笔需在本章修补或转 dropped
+
+3. characters.json → 角色档案
+   ├─ MBTI → 对白声线判定
+   ├─ 关系网络 → 称谓/态度
+   └─ 能力上限 → 行为合理性
+```
+
+### 写章后·更新三库（必经）
+
+```
+1. 抽取本章 16 维事实快照 → 追加到 context_bank.json
+2. 登记/迁移本章伏笔 → 更新 foreshadow_bank.json
+3. 角色重大变化 → 更新 characters.json
+4. 落盘 → 下一章写前可读取
+```
+
+---
+
+## 11.5 5 态伏笔状态机（v6.1 集成）
+
+> 详见 `narrative-weaving.md` §9.4。本节仅列状态追踪的检查清单。
+
+| 状态 | 含义 | 追踪动作 |
+|:-----|:-----|:---------|
+| `active` | 已埋未收 | 跟踪章数，临近 max_gap 时预警 |
+| `recalling` | 检测到回收关键词 | 提醒 E4 复核事实相容性 |
+| `resolved` | 已回收 | 记录回收章节，统计回收密度 |
+| `broken` | 失约（超期/矛盾） | 列入修补清单 |
+| `dropped` | 主动放弃 | 标记放弃原因 |
+
+### 5 个硬指标预警
+
+| 指标 | 阈值 | 触发动作 |
+|:-----|:-----|:---------|
+| active 桶伏笔数 | > 15 | 警告：伏笔过载 |
+| broken 桶伏笔数 | > 0 | 警告：有失约伏笔 |
+| 单条 active 伏笔年龄 | > max_gap × 0.8 | 警告：临近超期 |
+| resolved 桶近 5 章回收数 | = 0 | 警告：长期无回收 |
+| active 桶 main 类型伏笔数 | > 5 | 警告：主线伏笔过多 |
+
+---
+
+## 11.6 跨会话状态机·meta_review_log（v6.1 集成）
+
+> 详见 `narrative-weaving.md` §10。状态追踪必须维护此文件。
+
+```
+.novel_state/<book-id>/meta_review_log.jsonl
+```
+
+- 每章一条 JSONL，含 `misjudgments` / `omissions` / `next_focus`
+- 下次写章/审计前**必须**读取末条 `next_focus`，注入到本次工作的上下文
+- 这是整个体系**唯一可靠的跨会话状态传递路径**
+
+---
+
+**版本：v2.0 | 最后更新：2026-07-25 | 集成三库联动 + 5 态伏笔状态机 + 跨会话状态机**
+**关联模块：** narrative-weaving（多线叙事/三库协同）、audit-workflow（审计工作流）、core-writing（正文写作）

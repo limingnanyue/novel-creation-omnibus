@@ -165,5 +165,188 @@ Phase 0 启动时，读取 `meta_review_log.jsonl` 末条的 `next_focus`，注�
 
 ---
 
-**版本：v1.0 | 最后更新：2026-07-22 | 集成 novel-audit-v6.0.0 专家面板架构**
-**关联模块：** anti-ai-polish（去AI味）、revision-workflow（修改流程）、quality-control（质量门控）、plot-engineering（剧情审计）、narrative-weaving（伏笔审计）
+## 9. spawn / solo 双路径执行（v6.1 新增）
+
+> 来源：novel-audit-v6.0.0 · `panel.md` v5.5.2
+
+专家组（E1-E5）是**纯 prompt 角色卡**，必须由主 Agent 激活才能运行。激活方式有两种，**输出契约完全一致**（均走 `expert_output_schema.md`），聚合层无需区分来源。
+
+### 9.1 双路径对照
+
+| 路径 | 触发条件 | 行为 | 成本/速度 |
+|:-----|:---------|:-----|:----------|
+| `spawn`（默认并行） | 主 Agent 具备子 Agent 派生能力 | 并行派生 5 个 `general-purpose` 子 Agent，各自加载一张角色卡审读 | 快，占子 Agent 配额 |
+| `solo`（降级串行） | 主 Agent **不具备**派生能力，或派生失败 | 主 Agent **自己串行扮演** E1→E5，逐个加载角色卡自审，一人分饰五角 | 慢（串行），不依赖派生能力 |
+
+### 9.2 solo 串行纪律
+
+每轮**只戴一顶帽子**：
+
+1. 读取 `experts/E<n>_*.md` 全文，**切换为该专家人设**（仅承担该专家职责，不越界评其他维度）
+2. 取章节正文 + 该专家负责维度的清单切片（与 spawn 完全一致的输入切片规则）
+3. 以该专家视角产出符合 `expert_output_schema.md` 的 findings，`expert` 字段如实填 `E<n>`
+4. E1 轮次须额外执行逐句审查（逐句阅读全文，逐句标记 passed/failed，输出 `sentence_review`）
+5. 退出人设，进入下一专家
+
+> **关键**：solo 不是"放弃专家组"，而是"换主 Agent 亲自演"。产出仍是 5 份 `expert_findings.json`，Phase 2 交叉审计 / Phase 3 聚合 / Phase 4 修改方案照常执行，双轨报告结构不变。
+
+### 9.3 自动降级链
+
+```
+默认 → spawn（并行派生 5 个子 Agent）
+       → 主 Agent 无派生能力或派生失败 → solo（串行扮演 E1-E5）
+       → token 超限 → 仅跑代码层（word-count + check-continuity）
+       → 仅做 E1 去AI味 + E4 一致性（最高优先级两项）
+全程不中断
+```
+
+### 9.4 solo 选择规则
+
+主 Agent 启动专家组前先自检——若当前运行时无子 Agent 工具（无 Task/Agent 派生入口），或派生调用返回失败，**自动切 solo**，**不中断、不退化为 code-only**。仅当用户显式选 `code-only` 或预算超限时才跳过专家组。
+
+---
+
+## 10. 11 维评估器与专家映射对照（v6.1 强化）
+
+> 来源：novel-audit-v6.0.0 · `llm_evaluator_11d.json`（v1.4）+ `panel.md` v5.7.0
+
+### 10.1 11 维 × 5 专家完整映射
+
+| 维度 | 标签 | 权重 | 主审专家 | 协同专家 | 硬指标/软指标 |
+|:-----|:-----|:-----|:---------|:---------|:--------------|
+| E1 语气一致性 | tone | **0.10** | E1 | — | 硬核 |
+| E2 视角稳定性 | pov | **0.10** | E1 | — | 硬核 |
+| E3 角色好感度 | likeability | 0.08 | E3 | — | 软指标 |
+| E4 节奏感 | pacing | 0.08 | E1 | E5 | 软指标 |
+| E5 对白自然度 | dialogue_naturalness | **0.10** | E1 | E3 | 硬核 |
+| E6 描写质量 | description_quality | 0.08 | E1 | — | 软指标 |
+| E7 情感共鸣 | emotional_resonance | **0.10** | E3 | — | 硬核 |
+| E8 世界观一致 | world_consistency | **0.10** | E4 | E2 | 硬核 |
+| E9 剧情推进 | plot_advancement | **0.10** | E2 | — | 硬核 |
+| E10 读者钩子 | reader_hook | 0.08 | E2 | E5 | 软指标 |
+| E11 商业吸引力 | commercial_appeal | 0.08 | E5 | — | 软指标 |
+
+### 10.2 第一梯队（0.10，6 项硬核维度）
+
+> "写得好不好"的硬核——必须 ≥ 4 分，否则触发深度复审
+
+- **E1 语气一致性** / **E2 视角稳定性** → E1 主审
+- **E5 对白自然度** → E1+E3 协同（CC1 交叉区）
+- **E7 情感共鸣** → E3 主审
+- **E8 世界观一致** → E4 主审（CT6 设定矛盾兜底）
+- **E9 剧情推进** → E2 主审（伪因果判定）
+
+### 10.3 第二梯队（0.08，5 项软指标）
+
+> "卖得好不好"的软指标——低于 3.5 列入必改清单
+
+- **E3 角色好感度** / **E4 节奏感** / **E6 描写质量** / **E10 读者钩子** / **E11 商业吸引力**
+
+### 10.4 评分规则
+
+- 每维度 1-5 分打分，加权汇总
+- 加权总分 ≥ 4.0 = 优秀 / 3.5-4.0 = 合格 / < 3.5 = 必改
+- 低于 3.5 的维度列入必改清单
+- 硬门禁命中（AI 句式≥1/CT 矛盾/事实硬伤）→ 总分上限锁 3.0
+
+---
+
+## 11. Phase 0-5 详细操作清单（v6.1 强化）
+
+### Phase 0 · 专家独立审读（先读正文，独立判断）
+
+**输入**：① 章节正文（或分块）；② 该专家负责维度的审计内容清单切片；③ `meta_review_log.jsonl` 末条的 `next_focus`（若有）
+
+**禁忌**：不投喂全维度全量；不投喂其他专家结论；不投喂代码层结论
+
+**输出**：5 份符合 `expert_output_schema.md` 的 `expert_findings.json`
+
+**E1 必做**：逐句审查（覆盖文言文/电报式6变体/AI套话/比喻排比/解说腔/节奏断点六类，每句 passed/failed）
+
+### Phase 1 · 代码层辅助校验
+
+**命令**：
+```bash
+python3 scripts/word-count-tool.py <chapter>      # 对话比/AI味密度/段落分布
+python3 scripts/novel-tools.py --check-continuity <dir>  # 章首禁用词
+```
+
+**三项辅助职责**：
+1. **量化校验**：为专家判断提供确定性数值对照
+2. **硬门禁兜底**：AI 句式≥1 / 6+1 道门禁 / 事实矛盾——命中即记 S1/S2，**不可被专家覆盖**
+3. **遗漏补查**：硬指标点若专家 findings 未涉及，自动补入并标注 `[code-supplement]`
+
+### Phase 2 · 交叉审计 + 主要矛盾判定
+
+**6 个交叉区**（CC1-CC6）按 `cross_cut_matrix.md` 仲裁规则去重/消歧/合并
+
+**必做**：
+- 列矛盾清单
+- 标 ⭐ 主要矛盾（不是 findings 平铺）
+- 判对抗性（冲突是否可调和）
+- 选主攻方向（伤其十指不如断其一指）
+
+### Phase 3 · 综合评级（双轨）
+
+- 11 维加权打分（每维度并列「专家分 / 代码分 / 差异解读」）
+- §2 按"⭐主要矛盾 → 次要矛盾（按 severity）"结构渲染
+- 硬门禁命中 → 总分上限锁 3.0
+
+### Phase 4 · 修改方案（4 类）
+
+| 方案 | 适用 | 改动幅度 |
+|:-----|:-----|:---------|
+| **A 精准手术** | 个别硬伤修复 | ≤5% 字数 |
+| **B 稳健提升** | 多维度优化 | 5%-15% 字数 |
+| **C 风格重塑** | 整体语感问题 | 15%-30% 字数 |
+| **D 结构重构** | 主要矛盾在结构层 | >30% 字数 |
+
+**方案首页必须标注**："本次修改主攻 [Phase 2 主要矛盾]"
+S3 级与主要矛盾无因果关联的列入"暂缓清单"
+
+### Phase 5 · 审计自省（meta-review）
+
+- 复盘审计本身：有没有误判？有没有遗漏？
+- `misjudgments` / `omissions` 为空时必须写明"未发现，原因是…"
+- 每条问题必须配一条可执行的 `fix_action`
+- 落盘到 `.novel_state/<book-id>/meta_review_log.jsonl`
+
+---
+
+## 12. finding 完整 schema（v6.1 强化）
+
+```json
+{
+  "id": "E2-003",
+  "expert": "E2",
+  "severity": "S2",
+  "dimension": "D2",
+  "location": "第14章第3段",
+  "evidence": "原文摘录…",
+  "llm_judgment": "章末钩子是假悬念，读者已猜到答案",
+  "fix_direction": "改为信息悬念：让读者不知道主角是否会发现真相",
+  "confidence": 0.85,
+  "cross_cut": "CC2",
+  "code_supplement": false,
+  "llm_vs_code": "expert_strict",
+  "exempt": false,
+  "exempt_reason": null
+}
+```
+
+**字段说明**：
+
+| 字段 | 含义 |
+|:-----|:-----|
+| `severity` | S1 致命 / S2 严重 / S3 中等 / S4 轻微 |
+| `confidence` | 0.0-1.0，专家判断置信度 |
+| `cross_cut` | 涉及的交叉区（CC1-CC6），无则 null |
+| `code_supplement` | 是否代码层补查（专家未涉及但硬指标点） |
+| `llm_vs_code` | 专家×代码分歧：`corroborated`（一致）/ `expert_strict`（专家严）/ `code_strict`（代码严） |
+| `exempt` | 是否豁免（白名单/合理理由） |
+| `exempt_reason` | 豁免理由（必填 if exempt=true） |
+
+---
+
+**版本：v2.0 | 最后更新：2026-07-25 | 集成 spawn/solo 双路径 + 11 维专家完整映射 + Phase 0-5 详细清单 + finding 完整 schema**
+**关联模块：** anti-ai-polish（去AI味）、revision-workflow（修改流程）、quality-control（质量门控）、plot-engineering（剧情审计）、narrative-weaving（伏笔审计）、state-tracking（状态追踪）

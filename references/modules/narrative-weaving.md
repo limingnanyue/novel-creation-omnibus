@@ -256,3 +256,192 @@ recalling ──(回收与事实矛盾)─────────>  broken
 | 反转悬念 | 有伏笔支撑 | 纯粹为反转而反转 |
 
 **判定标准**：读完章末，读者是否会主动想"然后呢"？不想=假悬念。
+
+---
+
+## 9. 三库协同·上下文恢复流程（v6.1 新增）
+
+> 来源：novel-audit-v6.0.0 · `panel.md` v5.5.2 + `E4_consistency.md`
+> **核心铁律**：AI 无法跨会话记忆，落盘是唯一可靠的上下文恢复机制。写每章前必须读三库，写完必须更新三库。
+
+### 9.1 三库职责划分
+
+| 库 | 文件 | 职责 | 维护时机 |
+|:---|:-----|:-----|:---------|
+| **事实快照库** | `context_bank.json` | 16 维事实状态（角色/道具/地点/时间/能力/关系） | 每章写完后更新 |
+| **伏笔登记库** | `foreshadow_bank.json` | 4 桶生命周期（active/resolved/broken/dropped） | 每章写完后更新 |
+| **角色档案库** | `characters.json` | MBTI/声线/口头禅/关系网/能力上限 | 角色登场时建立，重大变化时更新 |
+
+### 9.2 写章前的三库查询流程（必经）
+
+```
+Step 1: 读取 context_bank.json 末条
+        ├─ 提取 characters_present（在场角色）→ 不能让不在场角色说话
+        ├─ 提取 items_held（持有道具）→ 不能用未持有的道具
+        ├─ 提取 locations_reached（已到地点）→ 不能瞬移
+        ├─ 提取 time_markers（时间标记）→ 不能时间倒流
+        └─ 提取 abilities_revealed（已揭示能力）→ 不能用未获得的能力
+
+Step 2: 读取 foreshadow_bank.json
+        ├─ active 桶 → 检查是否有 max_gap 临近超期的伏笔（必须本章回收）
+        ├─ active 桶 → 检查是否有 recall_keywords 在本章可触发的伏笔
+        └─ broken 桶 → 检查是否需要在本章修补失约伏笔
+
+Step 3: 读取 characters.json
+        ├─ 提取在场角色的 MBTI → 对白声线判定
+        ├─ 提取角色关系状态 → 称谓/态度判定
+        └─ 提取角色能力上限 → 行为合理性判定
+
+Step 4: 综合三库 → 生成本章"上下文约束清单"
+        ├─ 必须出现的角色/道具/地点
+        ├─ 必须回收的伏笔
+        ├─ 必须遵守的能力上限
+        └─ 必须延续的关系状态
+```
+
+### 9.3 写章后的三库更新流程（必经）
+
+```
+Step 1: 抽取本章 16 维事实快照 → 追加到 context_bank.json
+Step 2: 登记/迁移本章伏笔 → 更新 foreshadow_bank.json
+        ├─ 新投放的伏笔 → 加入 active 桶
+        ├─ 检测到 recall_keywords 的 → active → recalling → resolved
+        ├─ 超过 max_gap 未回收的 → active → broken
+        └─ 作者明确放弃的 → active → dropped
+Step 3: 角色重大变化（觉醒/受伤/关系变化）→ 更新 characters.json
+Step 4: 落盘 → 下一章写前可读取
+```
+
+### 9.4 5 态伏笔状态机详细迁移规则
+
+```
+                    [登记]
+                       │
+                       ▼
+                   ┌────────┐
+            ┌─────>│ active │<─────┐
+            │      └────┬───┘      │
+            │           │          │ [作者放弃]
+            │           │          │
+            │ [检测到    │          │
+            │ recall_   │          │
+            │ keywords] │          │
+            │           ▼          │
+            │      ┌──────────┐    │
+            │      │recalling │    │
+            │      └────┬─────┘    │
+            │           │          │
+            │     ┌─────┴──────┐   │
+            │     │            │   │
+            │ [确认回收]  [回收与    │
+            │     │       事实矛盾] │
+            │     ▼            │   │
+            │ ┌────────┐       ▼   │
+            │ │resolved│   ┌──────┐│
+            │ └────────┘   │broken││
+            └──────────────┴──────┘│
+                                  │
+                          [超 max_gap]
+                                  │
+                                  ▼
+                              ┌──────┐
+                              │broken│
+                              └──────┘
+
+            [作者主动放弃]
+                  │
+                  ▼
+              ┌───────┐
+              │dropped│
+              └───────┘
+```
+
+**迁移规则细化**：
+
+| 迁移 | 触发条件 | 检测方 |
+|:-----|:---------|:-------|
+| `active → recalling` | 后续章节检测到 `recall_keywords` 命中 | 脚本（关键词匹配） |
+| `recalling → resolved` | 确认回收且与 `context_bank` 无矛盾 | E4 专家（事实判定） |
+| `active → broken` | 超过 `max_gap` 未回收 | 脚本（章数计数） |
+| `recalling → broken` | 回收与事实矛盾（如改了既定设定） | E4 专家（事实判定） |
+| `任意 → dropped` | 作者主动放弃 | 作者显式声明 |
+
+### 9.5 伏笔审计的 5 个硬指标
+
+| 指标 | 阈值 | 触发动作 |
+|:-----|:-----|:---------|
+| `active` 桶伏笔数 | > 15 | 警告：伏笔过载，读者记不住 |
+| `broken` 桶伏笔数 | > 0 | 警告：有失约伏笔，需修补或转为 dropped |
+| 单条 `active` 伏笔年龄 | > max_gap × 0.8 | 警告：临近超期，必须本章或下章回收 |
+| `resolved` 桶近 5 章回收数 | = 0 | 警告：长期无回收，读者会忘 |
+| `active` 桶 main 类型伏笔数 | > 5 | 警告：主线伏笔过多，B10 决战难收 |
+
+---
+
+## 10. 跨会话状态机·meta_review_log（v6.1 新增）
+
+> 来源：novel-audit-v6.0.0 · `meta_critic.md`
+> **「AI 无法跨会话记忆，落盘是唯一可靠的跟进机制——你的自省不落到文件里，等于没自省。」**
+
+### 10.1 状态文件位置
+
+```
+.novel_state/<book-id>/meta_review_log.jsonl
+```
+
+每章一条 JSONL，含：
+
+```json
+{
+  "chapter": 14,
+  "timestamp": "2026-07-25T10:30:00Z",
+  "misjudgments": [
+    {
+      "finding_ref": "E2-003",
+      "type": "专家误判",
+      "evidence": "判定章末钩子为假悬念，但实际读者反馈良好",
+      "root_cause": "专家对悬念强度的阈值偏高",
+      "fix_action": "下调 E2 钩子判定阈值 0.1"
+    }
+  ],
+  "omissions": [
+    {
+      "evidence": "第 12 段'他知道，事情没那么简单'是空钩，未被审查",
+      "root_cause": "L1 句式正则未覆盖此句式",
+      "fix_action": "追加到 deepseek_ai_sentence_blacklist.json cat6"
+    }
+  ],
+  "principal_contradiction_check": {
+    "verdict": "言之有物",
+    "reasoning": "主要矛盾判定为'爽点密度不足'，修改后读者反馈显著改善"
+  },
+  "next_focus": [
+    "下章重点盯 E1 电报体变体 D（对白电报）",
+    "下章重点检查 F003 伏笔是否触发 recalling"
+  ]
+}
+```
+
+### 10.2 下次审计时的注入流程
+
+```
+Phase 0 启动前：
+  ├─ 读取 meta_review_log.jsonl 末条
+  ├─ 提取 next_focus 数组
+  ├─ 注入到 E1-E5 各专家的 prompt 上下文
+  └─ 注入到代码层（脚本关注重点）
+```
+
+> 这是整个体系**唯一可靠的跨会话状态传递路径**。没有这个文件，下次审计等于从头开始。
+
+### 10.3 自省纪律
+
+- `misjudgments` / `omissions` 为空时，必须写明"未发现，原因是…"
+- 禁止"审计质量有待提高"这类无信息量描述
+- 每条问题必须配一条可执行的 `fix_action`（改哪个文件、加哪条规则、调哪个阈值）
+- `next_focus` 必须具体到"下章盯什么"，禁止笼统
+
+---
+
+**版本：v3.0 | 最后更新：2026-07-25 | 集成三库协同 + 5 态伏笔状态机详细迁移 + 跨会话状态机**
+**关联模块：** state-tracking（状态追踪）、audit-workflow（审计工作流）、revision-workflow（修改流程）、plot-engineering（节拍×伏笔协同）
