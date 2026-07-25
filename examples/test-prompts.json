@@ -278,5 +278,13 @@
     "expected_outcome": "三维密度(info_entropy信息熵去重后Shannon熵+entity_density实体密度NER/100token+claim_density论点密度/100token)；权重0.4/0.3/0.3；四态门控(ACCEPT≥0.7/ACCEPT_WITH_WARNING 0.5-0.7 watermark/REJECT_DILUTE 0.3-0.5触发v10.6反思/REJECT_HOLLOW<0.3进rejected_edits)；稀薄段定位(start/end/text/reason)；与v7.0分数门串联(不替代)；REJECT_DILUTE触发v10.6技能感知反思产段落级Edit；semantic_density_log.jsonl落盘；audit 4指标(density_pass_rate≥0.7/dilute_reject_rate 0.05-0.15/hollow_reject_rate<0.05/sparse_segment_count≤1)",
     "module": "semantic-density",
     "difficulty": "hard"
+  },
+  {
+    "id": "test-36",
+    "name": "v10.8 暂存预算·三预算+五类冲突+atomic apply",
+    "prompt": "跑暂存与预算：三预算(token/time/count) + 暂存区状态机 + 五类交叉冲突检测 + atomic apply 整批应用 + 整批回滚。",
+    "expected_outcome": "三预算(token 4000/time 600s/count 20 任一达上限触发)；暂存区状态机(STAGING→CHECKING→APPLYING→COMMITTED/ROLLED_BACK 含CONFLICT分支)；五类交叉冲突检测(同段冲突old_text重叠/矛盾冲突语义相反/累计越界token超上限/引用断裂删段被引用/结构破坏删多章节)；4解决策略(FIRST_WINS/HIGH_CONFIDENCE_WINS/HUMAN_REVIEW/AUTO_MERGE)；atomic apply(应用前备份best_skill.md.bak.{ts}+逐个应用+任一失败整批回滚)；与v7.0 Update协同(暂存区入口+Evaluate在COMMITTED后跑)；与v10.6反思协同(CONFLICT/ROLLED_BACK触发)；与v10.7密度协同(应用后跑密度门密度下降触发回滚)；staging_budget_log.jsonl落盘；audit 5指标(atomic_success_rate≥0.9/conflict_rate 0.05-0.15/rollback_rate<0.1/avg_batch_size 8-15/budget_utilization 0.7-0.9)",
+    "module": "staging-budget",
+    "difficulty": "hard"
   }
 ]

@@ -1,13 +1,13 @@
 <div align="center">
 
-# 🖋️ 小说创作全能工坊 v10.7
+# 🖋️ 小说创作全能工坊 v10.8
 
 > *「写小说最难的不是写，是写完不烂尾、不水、不带AI味。」*
 
-[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-10.7-blueviolet)](SKILL.md)
+[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-10.8-blueviolet)](SKILL.md)
 [![skills.sh](https://skills.sh/b/limingnanyue/novel-creation-omnibus)](https://skills.sh/limingnanyue/novel-creation-omnibus)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Modules](https://img.shields.io/badge/Modules-53-brightgreen)](references/modules/)
+[![Modules](https://img.shields.io/badge/Modules-54-brightgreen)](references/modules/)
 [![AI 去味](https://img.shields.io/badge/AI%E5%8E%BB%E5%91%B3-L1--L4%E5%9B%9B%E5%B1%82%E7%A1%AC%E9%97%A8%E7%A6%81%E2%9C%A8-orange)](references/modules/anti-ai-polish.md)
 [![Audit](https://img.shields.io/badge/Audit-E1--E5%E4%BA%94%E4%B8%93%E5%AE%B6-red)](references/modules/audit-workflow.md)
 [![SkillOpt](https://img.shields.io/badge/SkillOpt-v0.2.0%20%E8%87%AA%E8%BF%9B%E5%8C%96-9cf)](references/modules/skill-evolution.md)
@@ -21,10 +21,11 @@
 [![Auto LR](https://img.shields.io/badge/Auto%20LR-%E8%87%AA%E4%B8%BB%E5%AD%A6%E4%B9%A0%E7%8E%87-20c997)](references/modules/lr-autonomous.md)
 [![Skill-Aware](https://img.shields.io/badge/Skill%20Aware-%E6%8A%80%E8%83%BD%E6%84%9F%E7%9F%A5%E5%8F%8D%E6%80%9D-7950f2)](references/modules/skill-aware-reflection.md)
 [![Density](https://img.shields.io/badge/Density-%E8%AF%AD%E4%B9%89%E5%AF%86%E5%BA%A6%E9%97%A8-d63384)](references/modules/semantic-density.md)
+[![Staging](https://img.shields.io/badge/Staging-%E6%9A%82%E5%AD%98%E9%A2%84%E7%AE%97%7CAtomic-0ca6c2)](references/modules/staging-budget.md)
 
-**从0到完本，53套工具按需加载——长篇网文、短篇虐文、番茄爆文、白描克制、五专家审计、技能自进化、夜间离线自进化、多目标元优化、自适应技能压缩、证据链与决策重建、无模型交接后端、多轮对比反思、LLM 矿工、自主学习率、技能感知反思、语义密度验证门，一个工坊搞定。**
+**从0到完本，54套工具按需加载——长篇网文、短篇虐文、番茄爆文、白描克制、五专家审计、技能自进化、夜间离线自进化、多目标元优化、自适应技能压缩、证据链与决策重建、无模型交接后端、多轮对比反思、LLM 矿工、自主学习率、技能感知反思、语义密度验证门、暂存与预算，一个工坊搞定。**
 
-[看效果](#效果示例) · [安装](#快速开始) · [触发方式](#触发方式) · [53个模块](#47个模块按需加载) · [它和同类有什么不同](#它和同类有什么不同) · [安全边界](#安全边界) · [验证与测试](#验证与测试)
+[看效果](#效果示例) · [安装](#快速开始) · [触发方式](#触发方式) · [54个模块](#47个模块按需加载) · [它和同类有什么不同](#它和同类有什么不同) · [安全边界](#安全边界) · [验证与测试](#验证与测试)
 
 </div>
 
@@ -163,7 +164,7 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 - ✅ **节拍审计报告**（Dramatica 11拍定位 + 节拍×伏笔×角色协同检查）
 - ✅ **跨会话状态文件**（meta_review_log.jsonl + next_focus 注入）
 
-## 53个模块，按需加载
+## 54个模块，按需加载
 
 | 模块 | 说明 |
 |:-----|:-----|
@@ -218,13 +219,14 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 | `llm-miner` | ⛏️ **v10.4：LLM语义聚类(同义归一)+抽象(模式骨架)+泛化(适用范围)+频次≥3 AND LLM置信度≥0.7双门过滤+观察池(低置信高频/高置信低频)+连续3夜升级/7夜降级+Pattern Schema** |
 | `lr-autonomous` | 📈 **v10.5：accept率滑动窗口(N=10)+四档multiplier(1.2加大/1.0保持/0.8保守/2.0回升)+多维accept(Q/S/T/R短板效应)+LR回升探测(持续低accept触发×2跑3epoch)+局部最优逃逸+状态机(NORMAL/PROBING/ESCAPED/STUCK)+LR边界[0.001,0.3]** |
 | `skill-aware-reflection` | 🎯 **v10.6：skill_section_anchor段落定位+按模块族路由4模板(writing/evolution/audit/data)+段落级Edit(target_skill_section+old_text+new_text)+grounding_skill_hash校验(防基于过期技能反思)+与v7.0通用反思/v10.3对比反思并行协同+anchor验证率审计** |
-| `semantic-density` | 🌡️ **🆕 v10.7：三维密度(info_entropy信息熵+entity_density实体密度+claim_density论点密度)+四态门控(ACCEPT/ACCEPT_WITH_WARNING/REJECT_DILUTE稀薄/REJECT_HOLLOW空心)+稀薄段定位+watermark追溯+与v7.0串联(分数门后接密度门)+REJECT_DILUTE触发v10.6反思+audit 4指标(density_pass_rate/dilute_reject_rate/hollow_reject_rate/sparse_segment_count)** |
+| `semantic-density` | 🌡️ **v10.7：三维密度(info_entropy信息熵+entity_density实体密度+claim_density论点密度)+四态门控(ACCEPT/ACCEPT_WITH_WARNING/REJECT_DILUTE稀薄/REJECT_HOLLOW空心)+稀薄段定位+watermark追溯+与v7.0串联(分数门后接密度门)+REJECT_DILUTE触发v10.6反思+audit 4指标(density_pass_rate/dilute_reject_rate/hollow_reject_rate/sparse_segment_count)** |
+| `staging-budget` | 📦 **🆕 v10.8：三预算(token 4000/time 600s/count 20)+暂存区状态机(STAGING→CHECKING→APPLYING→COMMITTED/ROLLED_BACK)+五类交叉冲突检测(同段/矛盾/累计越界/引用断裂/结构破坏)+4种解决策略(FIRST_WINS/HIGH_CONFIDENCE_WINS/HUMAN_REVIEW/AUTO_MERGE)+atomic apply整批应用+整批回滚+应用前备份.bak.{ts}+应用后跑v10.7密度门密度下降触发回滚+CONFLICT/ROLLED_BACK触发v10.6反思+audit 5指标(atomic_success_rate/conflict_rate/rollback_rate/avg_batch_size/budget_utilization)** |
 
 ## 它和同类有什么不同？
 
-| 维度 | 其他写作Skill | **本工坊 v10.7** |
+| 维度 | 其他写作Skill | **本工坊 v10.8** |
 |:-----|:-------------|:----------------|
-| 模块数 | 1-10个 | **53个**，覆盖写作全流程（v10.1 解冻，v10.7 扩展） |
+| 模块数 | 1-10个 | **54个**，覆盖写作全流程（v10.1 解冻，v10.8 扩展） |
 | 技能自进化 | 无 | **SkillOpt 六步循环**+EditOp有界编辑+验证门+学习率预算+拒绝编辑缓冲+best_skill版本管理 |
 | 夜间离线自进化 | 无 | **SkillOpt-Sleep 四阶段**(Harvest→Mine→Replay→Consolidate)+跨书籍迁移+降级策略+sleep_history索引 |
 | 多目标元优化 | 无 | **四维帕累托**(质量×速度×token×留存)+Dream-Rollout探索+SlowUpdate EMA慢更新+元反思五问+跨书迁移三模式 |
@@ -389,7 +391,7 @@ novel-creation-omnibus/
 │   ├── check-skill-repo.sh           # 发布就绪度自检（鲁班结构尺）
 │   ├── gen-demo-gif.py               # 生成 demo.gif 的脚本
 │   └── install.sh                    # 一键安装脚本（含验证）
-└── references/modules/               # 53个模块，按需加载
+└── references/modules/               # 54个模块，按需加载
     ├── core-writing.md               # 长篇正文写作
     ├── anti-ai-polish.md             # 去AI味 v3.0（L1-L4 四层硬门禁）
     ├── audit-workflow.md             # 审计工作流 v3.0（五专家+评分治理红线）
@@ -409,7 +411,8 @@ novel-creation-omnibus/
     ├── llm-miner.md                  # v10.4 LLM 矿工（语义聚类+抽象泛化+双门过滤）
     ├── lr-autonomous.md              # v10.5 自主学习率（accept率+回升探测+状态机）
     ├── skill-aware-reflection.md     # v10.6 技能感知反思（段落级Edit+模板路由+grounding校验）
-    ├── semantic-density.md           # 🆕 v10.7 语义密度验证门（三维密度+四态门控+稀薄段定位）
+    ├── semantic-density.md           # v10.7 语义密度验证门（三维密度+四态门控+稀薄段定位）
+    ├── staging-budget.md             # 🆕 v10.8 暂存与预算（三预算+五类冲突+atomic apply）
     └── ...                           # 完整列表见 SKILL.md
 ```
 
@@ -417,6 +420,7 @@ novel-creation-omnibus/
 
 | 版本 | 亮点 |
 |:-----|:------|
+| **v10.8** | 📦 🆕 暂存与预算：三预算(token 4000/time 600s/count 20)+暂存区状态机(STAGING→CHECKING→APPLYING→COMMITTED/ROLLED_BACK)+五类交叉冲突检测(同段冲突old_text重叠/矛盾冲突语义相反/累计越界token超上限/引用断裂删段被引用/结构破坏删多章节)+4种解决策略(FIRST_WINS先入保留/HIGH_CONFIDENCE_WINS高置信保留/HUMAN_REVIEW人工裁决/AUTO_MERGE同段同语义LLM合并)+atomic apply整批应用+应用前备份best_skill.md.bak.{ts}+任一失败整批回滚+应用后跑v10.7密度门密度下降触发回滚+CONFLICT/ROLLED_BACK触发v10.6反思产新Edit+审计5指标(atomic_success_rate≥0.9/conflict_rate 0.05-0.15/rollback_rate<0.1/avg_batch_size 8-15/budget_utilization 0.7-0.9)+模块数53→54 |
 | **v10.7** | 🌡️ 🆕 语义密度验证门：三维密度指标(info_entropy信息熵去重后Shannon熵+entity_density实体密度NER/100token+claim_density论点密度/100token)+四态门控(ACCEPT≥0.7/ACCEPT_WITH_WARNING 0.5-0.7 watermark追溯/REJECT_DILUTE 0.3-0.5稀薄触发v10.6反思/REJECT_HOLLOW<0.3空心直接拒绝进rejected_edits)+稀薄段定位(start/end/text/reason)+与v7.0分数门串联(不替代)+REJECT_DILUTE触发v10.6技能感知反思产段落级Edit+审计4指标(density_pass_rate≥0.7/dilute_reject_rate 0.05-0.15/hollow_reject_rate<0.05/sparse_segment_count≤1)+模块数52→53 |
 | **v10.6** | 🎯 🆕 技能感知反思：skill_section_anchor段落定位(在best_skill.md中扫module段+失败信号关键词匹配1-3子段)+按模块族路由4模板(writing/evolution/audit/data)+段落级Edit(target_skill_section+old_text+new_text精确落点)+grounding_skill_hash校验(防基于过期技能反思)+anchor验证率审计+与v7.0通用反思/v10.3对比反思并行协同(不替代)+定位失败退回v7.0+模块数51→52 |
 | **v10.5** | 📈 🆕 自主学习率：accept率滑动窗口(N=10)+四档multiplier(1.2加大/1.0保持/0.8保守/2.0回升)+多维accept(Q/S/T/R短板效应最差维度定LR)+LR回升探测(持续低accept<0.1达5epoch触发×2跑3epoch)+局部最优逃逸(探测成功接受新LR/失败回退触发Dream-Rollout)+状态机(NORMAL/PROBING/ESCAPED/STUCK)+LR边界[0.001,0.3]+与v7.0(三档作上下界)/v9.0(元反思检查健康度)协同+模块数50→51 |

@@ -1,5 +1,37 @@
 # Changelog
 
+## [v10.8.0] — 2026-07-25
+### Staging & Budget — 暂存与预算（新增第 54 个模块）
+
+> 集成 Microsoft SkillOpt v0.2.0 `skillopt/update/staging_budget.py` + `skillopt/prompts/staging_budget.md`：让 v7.0 Update 步骤从"逐个即时应用 Edit"升级为"先入暂存区、攒到预算阈值后整批原子应用"，避免单 Edit 通过验证但组合后冲突/越界的问题。
+
+### Added · 新增第 54 个模块：staging-budget.md
+- **三种预算**：token(4000) + time(600s) + count(20)，任一达上限触发 atomic apply
+- **暂存区状态机**：STAGING → CHECKING → APPLYING → COMMITTED / ROLLED_BACK（含 CONFLICT 分支）
+- **五类交叉冲突检测**：
+  - 同段冲突（old_text 重叠）
+  - 矛盾冲突（语义相反）
+  - 累计越界（token 超 best_skill 体积上限）
+  - 引用断裂（删段被另一 Edit 引用）
+  - 结构破坏（删多章节）
+- **四种解决策略**：FIRST_WINS / HIGH_CONFIDENCE_WINS / HUMAN_REVIEW / AUTO_MERGE
+- **原子应用**：备份 best_skill.md.bak.{ts} → 逐个应用 → 任一失败整批回滚
+- **与 v7.0 Update 协同**：暂存区在 Update 步骤入口，Evaluate 在 COMMITTED 后跑
+- **与 v10.6 反思协同**：CONFLICT/ROLLED_BACK 触发技能感知反思产新 Edit
+- **与 v10.7 密度协同**：应用后跑密度门，密度下降触发整批回滚
+- **审计 5 指标**：atomic_success_rate(≥0.9) + conflict_rate(0.05-0.15) + rollback_rate(<0.1) + avg_batch_size(8-15) + budget_utilization(0.7-0.9)
+- **配置**：.skillopt/staging-budget.yaml（预算+策略+备份+密度协同开关）
+- **日志**：staging_budget_log.jsonl
+
+### Changed
+- SKILL.md：版本 10.7→10.8，模块数 53→54，新增 11 个触发词+路由+索引
+- README.md：模块数 53→54，新增 Staging 徽章，版本历史新增 v10.8
+- marketplace.json：版本 10.7.0→10.8.0
+- test-prompts.json：新增 test-36（总数 36）
+- 鲁班结构尺自检：14 PASS / 0 WARN / 0 FAIL
+
+---
+
 ## [v10.7.0] — 2026-07-25
 ### Semantic Density Gate — 语义密度验证门（新增第 53 个模块）
 
