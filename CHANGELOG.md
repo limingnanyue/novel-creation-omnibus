@@ -1,9 +1,31 @@
 # Changelog
 
 ## [Unreleased] — 2026-07-25
-### Examples Refresh — 实例更新（v6.2 工具链演示补完）
+### Examples Refresh — 实例更新（v6.2 工具链演示补完 + 去AI味示例重写）
 
-### Added
+### Changed · 示例章节去AI味重写
+- `examples/sample-chapter.md`: 替换示例章节
+  - 旧：《刚被裁，全人类进了数据副本》（陈默/林晚，被裁程序员）
+    - AI 味问题：L2 "像"字比喻 ×3（"像念一道判决书"/"像在说今天天气不好"/"这话听着像安慰"）
+    - AI 意象："暖黄色的光落在她脸上"
+    - 章末 AI 味："也许真的不一样了"
+    - 解说腔："可安慰在这个时候一点用都没有"
+  - 新：《夜班最后一单》（老周/女乘客，夜班出租车司机拉到去殡仪馆的女孩）
+    - 过 L1-L4 四层硬门禁：零 em-dash、零"像"字比喻、零 AI 意象
+    - 真人门检命中：自嘲（"你有病啊大半夜的"）、具体细节（零三年刀疤/八年/小卖部）、口吻（"几点了都"）
+    - 章末钩子：信息悬念型（照片背面字）+ "天快亮了"
+    - 字数 775，对话占比 26.5%，AI 味密度 1.29 处/千字（低）
+- `examples/demo-output.md`: 全部工具链数据同步切换为"夜班最后一单"
+  - 风格档案：电影感档 → 纪实白描档（genre=悬疑）
+  - MBTI 声线：ISTJ/ENFJ → ISTP（老周）/ INFJ（女乘客）/ ESFJ（老婆）
+  - 温度词：0→0→-1→+2→+1 递进
+  - 五专家审计：总分 8.78（Band A），CC2 照片伏笔待回收
+  - 16 维快照：3 条伏笔（main 照片/mid 来世/short 零三年那人）
+  - Dramatica 节拍：B1日常+B2触发+B3初拒+B5假象胜利
+- `README.md`: 效果示例节选同步切换为"夜班最后一单"
+- `assets/demo.gif`: 重新生成（3 帧，47 KB，采集新章节真实工具输出）
+
+### Added · 测试用例扩展
 - `examples/test-prompts.json`: 新增 8 个测试用例（test-17 ~ test-24），总数 16 → 24
   - test-17 v6.0 审计工作流·五专家会诊（audit-workflow）
   - test-18 v6.1 去AI味·L1-L4 四层硬门禁（anti-ai-polish）
@@ -13,11 +35,6 @@
   - test-22 v6.2 情绪高潮·语言温度词库（emotional-climax）
   - test-23 v6.2 多线叙事·16 维事实快照抽取（narrative-weaving）
   - test-24 v6.2 审计·评分治理红线 P0（audit-workflow）
-- `examples/demo-output.md`: 重写为 v6.2 工具链协同输出示例
-  - 10 节内容：正文 → 字数/AI味 → 风格档案 → MBTI 声线 → 温度词分析
-    → 五专家审计（11维评分+CC1-CC6+修改方案+P0自检+meta_review_log）
-    → 16 维事实快照 → Dramatica 节拍定位 → 工具链协同总结
-  - 完整覆盖 v6.2 四大新系统：风格配置 / MBTI 16 型 / 语言温度词库 / 评分治理红线 P0
 
 ### Changed
 - README.md：测试用例数 16 → 24，文件结构注释同步更新
