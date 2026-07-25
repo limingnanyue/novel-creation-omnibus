@@ -126,5 +126,69 @@
     "expected_outcome": "输出平台对比，差异化三问分析，竞争度评估，给出平台选择决策和签约门槛对照",
     "module": "market-strategy",
     "difficulty": "easy"
+  },
+  {
+    "id": "test-17",
+    "name": "v6.0 审计工作流·五专家会诊",
+    "prompt": "对这章做五专家会诊：E1语感/E2剧情/E3人物/E4一致性/E5商业，标出主要矛盾并给修改方案。",
+    "expected_outcome": "Phase 0-5 全流程跑通，11 维加权评分，CC1-CC6 交叉审计标⭐主要矛盾，输出 A/B/C/D 修改方案，落盘 meta_review_log.jsonl",
+    "module": "audit-workflow",
+    "difficulty": "hard"
+  },
+  {
+    "id": "test-18",
+    "name": "v6.1 去AI味·L1-L4 四层硬门禁",
+    "prompt": "对这章逐句审查，跑 L1-L4 四层硬门禁：句式正则/人感禁令/方法论语义/量化指标，电报体6变体也查。",
+    "expected_outcome": "L1 命中 DeepSeek 734 句式 + R1-R11 即判 AI 味；L2 命中 em-dash/像字/文言腔；L3 命中真人门检/过度消毒/AI不敢写；L4 困惑度/TTR/句长方差越阈值扣 S2；pass_rate<0.85 触发深度复审",
+    "module": "anti-ai-polish",
+    "difficulty": "hard"
+  },
+  {
+    "id": "test-19",
+    "name": "v6.1 情节工程·Dramatica 11 拍节拍审计",
+    "prompt": "查这章在 Dramatica 11 拍的什么位置，做钩子真假4维判定 + 伪因果判定 + 节拍×伏笔×角色协同检查。",
+    "expected_outcome": "11 拍定位（B1-B11）+ 位置百分比区间；钩子真假4维（信息/情感/危机/反转悬念）；伪因果5大典型排查；节拍×伏笔投放/回收矩阵对照；章末钩子4型分类",
+    "module": "plot-engineering",
+    "difficulty": "hard"
+  },
+  {
+    "id": "test-20",
+    "name": "v6.2 风格配置·定档与漂移检测",
+    "prompt": "给这本书定个调：都市商战电影感档。生成 style_config.json 并做风格漂移检测。",
+    "expected_outcome": "8 维度配置落盘（writing_style/tone/pov/tense/pace/scene_density/dialogue_style/description_density）；lock_until_chapter=10；drift_threshold 设置；7 题材路由命中都市题材；输出题材×11维评估器权重调整矩阵",
+    "module": "style-configuration",
+    "difficulty": "normal"
+  },
+  {
+    "id": "test-21",
+    "name": "v6.2 对话大师·MBTI 16 型声线",
+    "prompt": "按 INTJ 给主角定对白声线，按 ENFP 给配角定声线，写一段两人对话并做声线一致性检查。",
+    "expected_outcome": "INTJ 节奏中/冷峻、词汇系统/逻辑/战略、口头禅\"效率/没必要\"；ENFP 节奏快/跳跃、词汇可能/创意、口头禅\"你知道吗/我想\"；4 气质组对照（NT vs NF）；输出 E3 专家声线判定 4 步流程",
+    "module": "dialogue-mastery",
+    "difficulty": "normal"
+  },
+  {
+    "id": "test-22",
+    "name": "v6.2 情绪高潮·语言温度词库",
+    "prompt": "写一段愤怒高潮戏，用语言温度词库控制温度递进，给出温度值和微表情锚定。",
+    "expected_outcome": "愤怒温度+3（怒吼/咆哮/暴怒）；微表情（瞳孔收缩/嘴角抽搐/指节发白）；温度递进原则（不堆叠）；冷热对比（冷词-1~-2穿插）；MBTI 契合（如 INTJ 用冷嘲/逻辑反击而非怒吼）",
+    "module": "emotional-climax",
+    "difficulty": "hard"
+  },
+  {
+    "id": "test-23",
+    "name": "v6.2 多线叙事·16 维事实快照抽取",
+    "prompt": "把这章做 16 维事实快照抽取，更新 context_bank.json，并对账 foreshadow_bank 5 态状态机。",
+    "expected_outcome": "16 维字段完整（characters_known/mentioned/present + items_held/lost/gained + locations_reached/left/described + time_markers/time_of_day + abilities_revealed/used + relationships_state + foreshadow_planted/recalled）；5 态迁移（active→recalling→resolved）；E4 一致性检查 8 类 CT 触发",
+    "module": "narrative-weaving",
+    "difficulty": "hard"
+  },
+  {
+    "id": "test-24",
+    "name": "v6.2 审计·评分治理红线 P0",
+    "prompt": "审计完成后做评分治理自检：4 条禁令 + 5 档 band + 复评纪律 + 预算护栏。",
+    "expected_outcome": "禁令1禁止覆写/禁令2禁止主观调分/禁令3禁止评级操纵/禁令4禁止LLM覆盖确定性结果；5 档 band（A/B/C/D🔒/F🔒）；复评最大3轮+解冻门；预算护栏 token 软上限 60000+超限降级 code-only",
+    "module": "audit-workflow",
+    "difficulty": "normal"
   }
 ]

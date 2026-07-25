@@ -295,7 +295,7 @@ npx skills add limingnanyue/novel-creation-omnibus -g
 
 ## 验证与测试
 
-本仓库含 16 个测试用例（[examples/test-prompts.json](examples/test-prompts.json)），覆盖全部 42 个模块。
+本仓库含 24 个测试用例（[examples/test-prompts.json](examples/test-prompts.json)），覆盖全部 42 个模块——含 v6.0 审计、v6.1 L1-L4 硬门禁/节拍审计、v6.2 风格配置/MBTI/温度词库/16维快照/评分治理红线专项用例。
 
 **验收命令——章首连续性检查（core-writing 铁律）：**
 
@@ -333,8 +333,8 @@ novel-creation-omnibus/
 ├── CHANGELOG.md                      # 版本更新记录
 ├── LICENSE                           # MIT
 ├── examples/
-│   ├── test-prompts.json             # 16个测试用例
-│   ├── demo-output.md                # 真实输出示例
+│   ├── test-prompts.json             # 24个测试用例（含 v6.0-v6.2 专项）
+│   ├── demo-output.md                # v6.2 工具链协同输出示例
 │   └── sample-chapter.md             # 真实示例章节（约2000字，供工具分析）
 ├── assets/
 │   ├── demo.gif                      # 终端运行录屏（3帧循环）

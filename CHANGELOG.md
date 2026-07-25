@@ -1,5 +1,30 @@
 # Changelog
 
+## [Unreleased] — 2026-07-25
+### Examples Refresh — 实例更新（v6.2 工具链演示补完）
+
+### Added
+- `examples/test-prompts.json`: 新增 8 个测试用例（test-17 ~ test-24），总数 16 → 24
+  - test-17 v6.0 审计工作流·五专家会诊（audit-workflow）
+  - test-18 v6.1 去AI味·L1-L4 四层硬门禁（anti-ai-polish）
+  - test-19 v6.1 情节工程·Dramatica 11 拍节拍审计（plot-engineering）
+  - test-20 v6.2 风格配置·定档与漂移检测（style-configuration）
+  - test-21 v6.2 对话大师·MBTI 16 型声线（dialogue-mastery）
+  - test-22 v6.2 情绪高潮·语言温度词库（emotional-climax）
+  - test-23 v6.2 多线叙事·16 维事实快照抽取（narrative-weaving）
+  - test-24 v6.2 审计·评分治理红线 P0（audit-workflow）
+- `examples/demo-output.md`: 重写为 v6.2 工具链协同输出示例
+  - 10 节内容：正文 → 字数/AI味 → 风格档案 → MBTI 声线 → 温度词分析
+    → 五专家审计（11维评分+CC1-CC6+修改方案+P0自检+meta_review_log）
+    → 16 维事实快照 → Dramatica 节拍定位 → 工具链协同总结
+  - 完整覆盖 v6.2 四大新系统：风格配置 / MBTI 16 型 / 语言温度词库 / 评分治理红线 P0
+
+### Changed
+- README.md：测试用例数 16 → 24，文件结构注释同步更新
+- 鲁班结构尺自检：14 PASS / 0 WARN / 0 FAIL（全绿）
+
+---
+
 ## [v6.2.0] — 2026-07-25
 ### Asset Completion — 深度资产补完（5 大资产集成）
 
