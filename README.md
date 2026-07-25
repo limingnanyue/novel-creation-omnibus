@@ -411,10 +411,66 @@ novel-creation-omnibus/
 
 ## 致谢
 
-- 鲁班 | Luban 打磨框架：https://github.com/LearnPrompt/luban-skill
-- novel-audit-v6.0.0 资产集成：五专家面板/评分治理/Dramatica节拍/MBTI 16型/温度词库/16维事实快照
-- Microsoft SkillOpt v0.2.0 自进化方法论：六步训练循环/EditOp有界编辑/验证门/学习率预算/拒绝编辑缓冲
+本项目站在以下项目与方法论的肩膀上，按集成版本依次致谢：
+
+### 📚 框架与方法论
+
+- **鲁班 | Luban 打磨框架** — https://github.com/LearnPrompt/luban-skill
+  - 验料 / 访行 / 过尺 / 慢刨 / 回炉 五动作，结构尺 / 实测尺 / 活体尺 三把尺子
+  - 本项目的 `scripts/check-skill-repo.sh` 即鲁班结构尺的自托管实现
+
+### 📦 novel-audit-v6.0.0 资产集成（v6.0-v6.2 核心）
+
+> 来自最强小说审计资产包 `novel-audit-v6.0.0`，本项目去AI味/剧情/上下文/审计四大核心系统的母版。
+
+- **去 AI 味系统**（[anti-ai-polish.md](references/modules/anti-ai-polish.md)）
+  - L1-L4 四层硬门禁（句式正则 / 人感禁令 / 方法论语义 / 量化指标）
+  - DeepSeek 734 句式黑名单 + 51 意象词 + 白名单系统
+  - 6 类逐句审查判据 + 段落功能二分法 + 6 大模型感知策略
+- **剧情设计系统**（[plot-engineering.md](references/modules/plot-engineering.md)）
+  - Dramatica 11 拍节拍结构
+  - 钩子真假 4 维判定 + 伪因果 5 大典型
+  - 节拍 × 伏笔 × 角色协同矩阵 + 章末钩子 4 型
+- **上下文流程系统**（[narrative-weaving.md](references/modules/narrative-weaving.md) + [state-tracking.md](references/modules/state-tracking.md)）
+  - 三库协同（context_bank / foreshadow_bank / characters）
+  - 16 维事实快照 + 5 态伏笔状态机（active/recalling/resolved/broken/dropped）
+  - 跨会话状态机 meta_review_log
+- **审计工作流系统**（[audit-workflow.md](references/modules/audit-workflow.md)）
+  - 五专家面板 E1-E5（语感 / 剧情 / 人物 / 一致性 / 商业）
+  - 11 维评估矩阵 + 6 阶段审计流程 + 交叉审计 CC1-CC6
+  - 评分治理红线 P0 四禁令 + 5 档 band + 预算护栏
+- **风格配置系统**（[style-configuration.md](references/modules/style-configuration.md)）
+  - 8 风格维度 + 7 题材路由 + 8 典型档位 + 风格漂移检测
+- **对话与情绪系统**（[dialogue-mastery.md](references/modules/dialogue-mastery.md) + [emotional-climax.md](references/modules/emotional-climax.md)）
+  - MBTI 16 型对白声线档案 + 4 气质组对照
+  - 语言温度词库（8 类热词 + 冷词库 + 微表情库 + 温度递进原则）
+
+### 🧬 Microsoft SkillOpt v0.2.0 自进化方法论（v7.0-v10.0）
+
+> https://github.com/microsoft/SkillOpt — 把技能文档当作可训练状态，用深度学习的纪律优化它。
+
+- **v7.0 技能自进化引擎**（[skill-evolution.md](references/modules/skill-evolution.md)）
+  - 六步训练循环 Rollout→Reflect→Aggregate→Select→Update→Evaluate
+  - EditOp 有界编辑（ADD/DELETE/REPLACE）+ 验证门 + 学习率预算 + 拒绝编辑缓冲
+- **v8.0 离线自进化引擎**（[sleep-evolution.md](references/modules/sleep-evolution.md)）
+  - SkillOpt-Sleep 四阶段 Harvest→Mine→Replay→Consolidate
+  - 夜间离线 + 跨书籍迁移 + 降级策略 + 归档保留
+- **v9.0 多目标元优化器**（[meta-optimizer.md](references/modules/meta-optimizer.md)）
+  - 四维帕累托（质量 × 速度 × token × 留存）+ Dream-Rollout 探索
+  - SlowUpdate EMA 慢更新 + 元反思五问 + 跨书迁移三模式
+- **v10.0 自适应技能压缩**（[skill-compaction.md](references/modules/skill-compaction.md)）
+  - Distill 蒸馏 + Cross-Benchmark 三基准迁移 + Compact 四类差异化
+  - Rollback-Guard 版本回滚 + Converge 终态收敛 + 8k token 零成本部署
+
+### 🛠️ 工具与环境
+
+- **Pillow (PIL)** — `assets/demo.gif` 录屏渲染依赖
+- **ripgrep** — `scripts/check-skill-repo.sh` 鲁班结构尺底层检索
 - 持续迭代于 Hermes Agent 环境
+
+### 🙏 致谢声明
+
+本项目不直接复制上述项目的代码，而是将其方法论与判据内化为 Markdown 模块。所有引用都已标注来源；如原作者认为标注不当或希望调整，欢迎提 issue 沟通。
 
 ## License
 
