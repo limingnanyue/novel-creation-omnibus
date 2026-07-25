@@ -254,5 +254,13 @@
     "expected_outcome": "四步流程(Extract→Cluster→Abstract→Generalize)；语义聚类(LLM判定同义，如'他不禁想到'='他暗自思忖')；抽象(pattern_skeleton去掉具体章节保留通用特征)；泛化(applicable_scenes+applicable_modules)；双门过滤(频次≥3 AND LLM置信度≥0.7)；观察池(低置信高频/高置信低频)；连续3夜升级进Replay/7夜降级丢弃；Pattern schema(pattern_id/miner/cluster_members/semantic_label/pattern_skeleton/instances/freq/llm_confidence/composite_confidence/filter_decision)；与v8.0协同(在Mine候选池上聚类)；与v10.3协同(抽象骨架喂给对比反思)",
     "module": "llm-miner",
     "difficulty": "hard"
+  },
+  {
+    "id": "test-33",
+    "name": "v10.5 自主学习率·accept率+回升探测",
+    "prompt": "跑自主学习率：accept率滑动窗口 + 四档multiplier + LR回升探测 + 状态机。",
+    "expected_outcome": "accept率滑动窗口(N=10)；四档multiplier(1.2/1.0/0.8/2.0)；多维accept(Q/S/T/R短板效应)；LR回升探测(持续低accept触发×2跑3epoch)；状态机(NORMAL/PROBING/ESCAPED/STUCK)；LR边界[0.001,0.3]；lr_autonomous_log.jsonl落盘",
+    "module": "lr-autonomous",
+    "difficulty": "hard"
   }
 ]

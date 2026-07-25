@@ -263,7 +263,16 @@ triggers:
   - 语义聚类
   - 模式骨架
   - 观察池
-version: 10.4
+  - 自主学习率
+  - autonomous LR
+  - lr_autonomous
+  - 动态学习率
+  - accept 率自适应
+  - 学习率自调度
+  - LR 回升
+  - 回升探测
+  - 局部最优逃逸
+version: 10.5
 last_updated: 2026-07-25
 ---
 
@@ -355,6 +364,7 @@ last_updated: 2026-07-25
 | "handoff backend" / "交接后端" / "无模型 Sleep" / "无 API key Sleep" / "PROMPTS.md" / "pending.json" / "exit code 3" / "fresh-context subagent" / "无凭证自进化" / "/skillopt-sleep-handoff" | `handoff-backend` |
 | "多轮对比反思" / "contrastive reflection" / "失败 vs 成功" / "对照样本" / "正负样本对照" / "通用 Edit" / "频次排序" / "multi-rollout" / "对比反思" / "对照组反思" | `contrastive-reflection` |
 | "LLM 矿工" / "llm miner" / "智能模式挖掘" / "模式抽象" / "模式泛化" / "频次+置信度双门" / "语义聚类" / "模式骨架" / "观察池" / "Sleep 矿工升级" / "替代纯频次" | `llm-miner` |
+| "自主学习率" / "autonomous LR" / "lr_autonomous" / "动态学习率" / "accept 率自适应" / "学习率自调度" / "LR 回升" / "回升探测" / "局部最优逃逸" / "训练健康度自适应" | `lr-autonomous` |
 | 模糊指令 | 追问 |
 
 ---
@@ -415,6 +425,7 @@ last_updated: 2026-07-25
 | 🤝 Handoff Backend 交接后端 | `handoff-backend.md` | 无模型/API key的Sleep+PROMPTS.md/pending.json+exit code 3协议+无状态恢复+mined tasks每夜锁定+fresh-context subagent保护held-out gate+3-6轮/夜 | 交接后端、无凭证自进化、无API key Sleep、PROMPTS.md |
 | 🔀 多轮对比反思 | `contrastive-reflection.md` | 失败vs成功配对+七维差异特征提取+频次≥3聚合+token/时间预算三档+通用Edit(scope=universal)+与v7.0并行 | 对比反思、失败vs成功、通用Edit、频次排序 |
 | ⛏️ LLM 矿工 | `llm-miner.md` | 语义聚类(LLM判定同义)+抽象(模式骨架)+泛化(适用范围)+频次≥3 AND LLM置信度≥0.7双门+观察池三夜升级 | LLM矿工、智能模式挖掘、模式抽象、语义聚类、双门过滤 |
+| 📈 自主学习率 | `lr-autonomous.md` | accept率滑动窗口(N=10)+四档multiplier(1.2/1.0/0.8/2.0)+LR回升探测(持续低accept触发)+局部最优逃逸+状态机(NORMAL/PROBING/ESCAPED/STUCK) | 自主学习率、动态LR、accept率自适应、回升探测、局部最优逃逸 |
 
 ---
 
@@ -521,5 +532,6 @@ novel-creation-omnibus/
     ├── evidence-chain.md             # 证据链与提示注册（v10.1 新增，解冻后第47个模块）
     ├── handoff-backend.md            # Handoff Backend 交接后端（v10.2 新增，第48个模块）
     ├── contrastive-reflection.md     # 多轮对比反思（v10.3 新增，第49个模块）
-    └── llm-miner.md                  # LLM 矿工（v10.4 新增，第50个模块）
+    ├── llm-miner.md                  # LLM 矿工（v10.4 新增，第50个模块）
+    └── lr-autonomous.md              # 自主学习率（v10.5 新增，第51个模块）
 ```

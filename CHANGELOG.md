@@ -1,5 +1,35 @@
 # Changelog
 
+## [v10.5.0] — 2026-07-25
+### Autonomous Learning Rate — 自主学习率（新增第 51 个模块）
+
+> 集成 Microsoft SkillOpt v0.2.0 `skillopt/optimizer/lr_autonomous.py` + `skillopt/prompts/lr_autonomous.md`：让 v7.0 学习率从"三档固定衰减"升级为"基于 accept 率的连续自适应"，并加入 LR 回升探测机制逃逸局部最优。
+
+### Added · 新增第 51 个模块：lr-autonomous.md
+- **Accept 率滑动窗口**：最近 N=10 epoch 的 Edit accept 率
+- **四档 multiplier**：
+  - accept≥0.6 → ×1.2（加大探索）
+  - 0.3≤accept<0.6 → ×1.0（保持）
+  - 0.1≤accept<0.3 → ×0.8（保守）
+  - accept<0.1 持续 5 epoch → ×2.0（回升探测）
+- **多维 accept 率**：Q/S/T/R 四维，最差维度决定 LR（短板效应）
+- **LR 回升探测**：持续低 accept 触发临时加倍，跑 3 epoch 探测
+  - 探测成功（accept>0.3）→ 接受新 LR，记 escape_log
+  - 探测失败 → 回退 LR，触发 Dream-Rollout
+- **状态机**：NORMAL → PROBING → ESCAPED/STUCK → NORMAL
+- **LR 边界**：[0.001, 0.3]
+- **与 v7.0 协同**：v7.0 三档作为上下界，v10.5 在界内连续自适应
+- **与 v9.0 协同**：元反思检查 LR 健康度+探测成功率
+
+### Changed
+- SKILL.md：版本 10.4→10.5，模块数 50→51，新增 10 个触发词+路由+索引
+- README.md：模块数 50→51，版本历史新增 v10.5
+- marketplace.json：版本 10.4.0→10.5.0
+- test-prompts.json：新增 test-33（总数 33）
+- 鲁班结构尺自检：14 PASS / 0 WARN / 0 FAIL
+
+---
+
 ## [v10.4.0] — 2026-07-25
 ### LLM Miner — 大模型矿工（新增第 50 个模块）
 
