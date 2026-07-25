@@ -190,5 +190,13 @@
     "expected_outcome": "禁令1禁止覆写/禁令2禁止主观调分/禁令3禁止评级操纵/禁令4禁止LLM覆盖确定性结果；5 档 band（A/B/C/D🔒/F🔒）；复评最大3轮+解冻门；预算护栏 token 软上限 60000+超限降级 code-only",
     "module": "audit-workflow",
     "difficulty": "normal"
+  },
+  {
+    "id": "test-25",
+    "name": "v7.0 技能自进化·SkillOpt 六步循环",
+    "prompt": "训练技能，跑一个 epoch 自进化：用近30章做训练集，held-out 9章做验证门。",
+    "expected_outcome": "六步循环跑通（Rollout→Reflect→Aggregate→Select→Update→Evaluate）；EditOp 仅用 ADD/DELETE/REPLACE；学习率档位符合衰减规则；验证门 GateResult(action=accept/reject/tie)；best_skill.meta.json 落盘；rejected_edits.jsonl 缓冲池更新",
+    "module": "skill-evolution",
+    "difficulty": "hard"
   }
 ]

@@ -1,5 +1,50 @@
 # Changelog
 
+## [v7.0.0] — 2026-07-25
+### SkillOpt Integration — 技能自进化引擎集成（新增第 43 个模块）
+
+> 集成 Microsoft SkillOpt v0.2.0（https://github.com/microsoft/SkillOpt）方法论：把技能文档当作冻结 agent 的可训练状态，用深度学习的纪律优化它——epoch/batch/learning-rate/validation-gate，但不碰模型权重。
+
+### Added · 新增第 43 个模块：skill-evolution.md（技能自进化引擎）
+- **SkillOpt 六步训练循环**（来源：SkillOpt v0.2.0 engine 模块）
+  - ① Rollout → ② Reflect → ③ Aggregate → ④ Select → ⑤ Update → ⑥ Evaluate
+  - 完整契约表：每阶段输入/输出/必做动作/禁忌
+- **EditOp 有界编辑三操作**（来源：SkillOpt `Edit` / `EditOp` 类型）
+  - ADD / DELETE / REPLACE 三种原子操作，不得整文件重写
+  - Edit 完整 schema：op/content/target/support_count/source_type/merge_level/update_origin/update_target
+  - 有界编辑五条纪律（target 可定位/ADD 先读原文/DELETE 查交叉引用/REPLACE 保功能位/数量受学习率约束）
+- **验证门 Validation Gate**（来源：SkillOpt `GateResult` / `GateAction`）
+  - GateResult schema：action(accept/reject/tie)/current_skill/current_score/best_skill/best_score/best_step
+  - 判定规则：新分数 > 旧分数 + min_delta(0.05) 才 accept
+  - held-out 验证集 70/30 隔离
+  - 五维验证分数 D1语感/D2钩子/D3人物/D4一致性/D5商业（精简版，单章<30秒）
+- **学习率预算三档衰减**（来源：SkillOpt textual learning rate）
+  - 快档 0.3（epoch 1-3 大改）/ 中档 0.15（epoch 4-6 微调）/ 慢档 0.05（epoch 7+ 精修）
+  - 学习率只能衰减不能回升
+  - 预算超支按 support_count 降序截断
+- **拒绝编辑缓冲三态迁移**（来源：SkillOpt rejected-edit buffer）
+  - buffered → retried → promoted/permanent_drop
+  - 连续 3 轮被拒或未被 Select 选中即永久移除
+  - 缓冲池审计清单（大小膨胀/反复重试/放弃原因/互斥 Edit）
+- **best_skill.md 版本管理**
+  - 始终保留 best_skill.md 作为部署产物
+  - epoch 级目录归档（skill_before/after + patch + gate_result + rollout_results）
+  - best_skill.meta.json：version/best_score/parent_version/rollback_path
+- **与现有模块联动**
+  - Reflect 阶段调用 audit-workflow 五专家
+  - Rollout 阶段调用 anti-ai-polish L1-L4（D1）
+  - Reflect 调用 plot-engineering 节拍审计（D2）/ dialogue-mastery MBTI（D3）
+  - Evaluate 调用 narrative-weaving 16维快照（D4）/ style-configuration 漂移检测（D5）
+  - state-tracking 负责跨 epoch 状态保存
+
+### Changed
+- SKILL.md：版本 6.2→7.0，模块数 42→43，新增 skill-evolution 路由+索引+文件结构，新增 9 个触发词
+- README.md：标题/徽章/模块数 42→43，新增 SkillOpt 徽章，对比表新增"技能自进化"行，版本历史新增 v7.0
+- marketplace.json：版本 6.2.0→7.0.0，description 同步
+- 鲁班结构尺自检：14 PASS / 0 WARN / 0 FAIL（全绿）
+
+---
+
 ## [Unreleased] — 2026-07-25
 ### Examples Refresh — 实例更新（v6.2 工具链演示补完 + 去AI味示例重写）
 
